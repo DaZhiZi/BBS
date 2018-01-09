@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>用户中心</title>
+    <link rel="stylesheet" href="/source/bootstrap/css/bootstrap.css">
+    <link rel="stylesheet" href="/source/common.css">
+    <link rel="stylesheet" href="/user/user.css">
+</head>
+<body>
+<div class="nav-outer">
+    <div class="nav-inner">
+        <a class="brand" href="/">
+            <img src="/images/cnode.jpg">
+        </a>
+        <form id="search-form" class="navbar-search">
+            <input type="text" name="q" class="search-input" value="">
+        </form>
+
+        <ul class="pull-right nav-bar">
+            <li><a href="/">首页</a></li>
+            <li><a href="/admin">管理员</a></li>
+            <li><a href="/theme">主题</a></li>
+            <li><a href="/about">关于</a></li>
+            <li><a href="/login">注册</a></li>
+            <li><a href="/login">登录</a></li>
+        </ul>
+    </div>
+</div>
+
+<div class="main-content">
+    <div class="slide">
+        <div class="panel">
+            <div class="header">
+                <span class="col_fade">个人信息</span>
+            </div>
+            <div class="inner">
+                <div class="user-card">
+
+                </div>
+            </div>
+
+        </div>
+        <div class="panel">
+            <div class="inner">
+                <a href="/theme/new" id="id-create-theme">
+                    <span class="span-success">发布话题</span>
+                </a>
+            </div>
+        </div>
+        <div class="panel">
+            <div class="header">
+                <span class="col_fade">友情社区</span>
+            </div>
+            <div class="inner">
+                <ol class="friendship-community">
+                    <li>
+                        <a href="https://ruby-china.org/" target="_blank">
+                            <img src="//o4j806krb.qnssl.com/public/images/ruby-china-20150529.png">
+                        </a>
+                    </li>
+                    <div class="sep10"></div>
+                    <li>
+                        <a href="http://golangtc.com/" target="_blank">
+                            <img src="//o4j806krb.qnssl.com/public/images/golangtc-logo.png">
+                        </a>
+                    </li>
+                    <div class="sep10"></div>
+                    <li>
+                        <a href="http://phphub.org/" target="_blank">
+                            <img src="//o4j806krb.qnssl.com/public/images/phphub-logo.png">
+                        </a>
+                    </li>
+                    <div class="sep10"></div>
+                    <li>
+                        <a href="https://testerhome.com/" target="_blank">
+                            <img src="//dn-cnode.qbox.me/FjLUc7IJ2--DqS706etPQ1EGajxK">
+                        </a>
+                    </li>
+                </ol>
+            </div>
+        </div>
+        <div class="panel">
+            <div class="header">
+                <span class="col_fade">客户端二维码</span>
+            </div>
+            <div class="inner cnode-app-download">
+                <img src="/images/二维码.jpg" class="img-weixin">
+                <br>
+                <a href="https://github.com/soliury/noder-react-native" target="_blank">客户端源码地址</a>
+            </div>
+        </div>
+    </div>
+
+    <div class="content">
+        <div class="panel edit-user-info">
+            <div class="header">
+                <div class="">
+                    <span class="col_fade">个人信息</span>
+                </div>
+            </div>
+            <div class="inner">
+                <!--用户信息-->
+                <div class="user-info">
+                    <span class="name">更换用户头像</span>
+                </div>
+                <!--头像上传相关-->
+                <div class="user-avatar">
+                    <div class="">预览图片</div>
+                    <div class="container-all"></div>
+
+                    <!--预览，上传-->
+                    <div class="container-file">
+                        选择文件
+                        <input type="file" multiple="multiple" class="input-file" id="id-input-file">
+                    </div>
+                    <button type="button" class="button-upload-file">上传头像</button>
+                    <br>
+
+                </div>
+            </div>
+        </div>
+        <div class="panel update-password">
+            <div class="header">
+                <span class="col_fade">更改密码</span>
+            </div>
+            <div class="inner">
+                <label>原始密码</label>
+                <input type="text" class="old-password" placeholder="请输入当前密码">
+                <label>新密码</label>
+                <input type="text" class="new-password" placeholder="请输入新密码">
+                <label>再次密码</label>
+                <input type="text" class="confirm-password" placeholder="请再次确认新密码">
+                <button id="id-update-password">提交</button>
+            </div>
+        </div>
+        <div class="panel">
+            <div class="header">
+                <span class="col_fade">最近创建的话题</span>
+            </div>
+            <div class="inner">
+                <p>无话题</p>
+            </div>
+        </div>
+
+        <div class="panel">
+            <div class="header">
+                <span class="col_fade">最近参与的话题</span>
+            </div>
+            <div class="inner">
+                <p>无话题</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="page-footer">
+    <div id="footer-main">
+        <div class="links">
+            <a class="dark" href="/rss">RSS</a>
+            |
+            <a class="dark" href="https://github.com/cnodejs/nodeclub/">源码地址</a>
+        </div>
+        <div class="col-fade">
+            <p>CNode 社区为国内最专业的 Node.js 开源技术社区，致力于 Node.js 的技术研究。</p>
+        </div>
+    </div>
+</div>
+
+<script src="/source/jquery-3.2.1.js"></script>
+<script src="/source/bootstrap/js/bootstrap.js"></script>
+<script src="/source/hu.js"></script>
+<script src="/source/common.js"></script>
+<script src="/user/init.js"></script>
+<script src="/user/main.js"></script>
+
+</body>
+</html>

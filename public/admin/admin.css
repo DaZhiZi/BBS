@@ -1,0 +1,60 @@
+.div-tag {
+    border: 1px dashed gray;
+    width: 88%;
+    margin: 20px auto;
+    padding: 10px;
+}
+
+ul, li {
+    display: inline-block;
+    margin: 0px;
+    padding: 0px;
+}
+
+.list-tag {
+    display: block;
+    margin-bottom: 20px;
+}
+
+.li-tag {
+    position: relative;
+}
+
+.single-tag {
+    padding: 5px 20px 5px 10px;
+    border-radius: 5px;
+}
+
+.del-tag {
+    cursor: pointer;
+    color: red;
+    position: absolute;
+    top: 0px;
+    right: 2px;
+    width: 11px;
+    height: 11px;
+}
+
+#input-new-tag {
+    outline: none;
+    border: 1px solid;
+    margin-top: 20px;
+}
+
+.div-tips {
+    position: absolute;
+    border-radius: 5px;
+    border: 1px solid #31708f;
+}
+
+.button-topic-add {
+    text-align: center;
+    margin: 0 auto;
+    /* width: 30%; */
+    display: block;
+    margin-top: 55px;
+}
+
+h1 {
+    text-align: center;
+}

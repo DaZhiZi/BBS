@@ -1,0 +1,99 @@
+16:46:13 listening server at http://127.0.0.1:8081
+16:46:13 数据库连接成功
+18:54:43 listening server at http://127.0.0.1:8081
+18:54:44 数据库连接断开
+18:54:44 数据库连接失败：MongoError: failed to connect to server [localhost:27017] on first connect [MongoError: connect ECONNREFUSED 127.0.0.1:27017]
+19:13:58 listening server at http://127.0.0.1:8081
+19:13:58 数据库连接成功
+20:53:27 listening server at http://127.0.0.1:8081
+20:53:27 数据库连接成功
+20:57:46 listening server at http://127.0.0.1:8081
+20:57:46 数据库连接成功
+20:58:46 listening server at http://127.0.0.1:8081
+20:58:46 数据库连接成功
+20:59:57 listening server at http://127.0.0.1:8081
+20:59:58 数据库连接成功
+21:00:28 listening server at http://127.0.0.1:8081
+21:00:28 数据库连接成功
+21:01:37 listening server at http://127.0.0.1:8081
+21:01:37 数据库连接成功
+21:01:40 数据库连接成功
+21:05:03 listening server at http://127.0.0.1:8081
+21:05:03 数据库连接成功
+21:05:05 数据库连接成功
+21:06:25 listening server at http://127.0.0.1:8081
+21:06:25 数据库连接成功
+21:06:31 数据库连接成功
+21:08:05 数据库连接成功
+21:08:05 res,[object Object]
+21:08:25 数据库连接成功
+21:08:25 res,404
+21:10:22 数据库连接成功
+21:10:22 res,200
+21:11:03 数据库连接成功
+21:11:03 res,200
+21:15:49 数据库连接成功
+21:15:49 res,200
+10:41:56 listening server at http://127.0.0.1:8081
+10:41:56 数据库连接成功
+10:48:23 listening server at http://127.0.0.1:8081
+10:48:23 数据库连接成功
+10:51:45 obj user add,[object Object]
+10:56:49 listening server at http://127.0.0.1:8081
+10:56:49 数据库连接成功
+10:57:15 listening server at http://127.0.0.1:8081
+10:57:15 数据库连接成功
+10:58:21 listening server at http://127.0.0.1:8081
+10:58:21 数据库连接成功
+11:01:04 listening server at http://127.0.0.1:8081
+11:01:04 数据库连接成功
+11:05:13 listening server at http://127.0.0.1:8081
+11:05:13 数据库连接成功
+11:05:25 avatarFile,
+11:05:49 listening server at http://127.0.0.1:8081
+11:05:49 数据库连接成功
+11:05:49 avatarFile,,58b38b14-efdd-4484-8a71-788afcab232d
+11:06:37 listening server at http://127.0.0.1:8081
+11:06:37 数据库连接成功
+11:06:45 listening server at http://127.0.0.1:8081
+11:06:45 数据库连接成功
+11:06:53 avatarFile,,[object Object]
+11:06:53 avatarFile,,58b38b14-efdd-4484-8a71-788afcab232d
+11:08:53 avatarFile,,[object Object]
+11:08:53 avatarFile,,58b38b14-efdd-4484-8a71-788afcab232d
+11:10:31 listening server at http://127.0.0.1:8081
+11:10:31 数据库连接成功
+11:10:36 avatarFile,,[object Object]
+11:10:36 avatarFile,,58b38b14-efdd-4484-8a71-788afcab232d
+11:12:04 listening server at http://127.0.0.1:8081
+11:12:04 数据库连接成功
+11:12:04 avatarFile,,[object Object]
+11:12:04 avatarFile,,58b38b14-efdd-4484-8a71-788afcab232d
+11:12:23 listening server at http://127.0.0.1:8081
+11:12:23 数据库连接成功
+11:12:29 avatarFile,,[object Object]
+11:12:29 avatarFile,,58b38b14-efdd-4484-8a71-788afcab232d
+11:13:18 listening server at http://127.0.0.1:8081
+11:13:18 数据库连接成功
+11:13:18 avatarFile,,[object Object]
+11:13:18 avatarFile,,58b38b14-efdd-4484-8a71-788afcab232d
+11:13:20 avatarFile,,[object Object]
+11:13:20 avatarFile,,58b38b14-efdd-4484-8a71-788afcab232d
+11:13:59 listening server at http://127.0.0.1:8081
+11:13:59 数据库连接成功
+11:13:59 avatarFile,,[object Object]
+11:13:59 avatarFile,,58b38b14-efdd-4484-8a71-788afcab232d
+11:14:01 avatarFile,,[object Object]
+11:14:01 avatarFile,,58b38b14-efdd-4484-8a71-788afcab232d
+11:14:12 avatarFile,[object Object],[object Object]
+11:14:12 avatarFile,[object Object],58b38b14-efdd-4484-8a71-788afcab232d
+11:14:56 listening server at http://127.0.0.1:8081
+11:14:56 数据库连接成功
+11:14:57 avatarFile,,[object Object]
+11:14:57 avatarFile,,58b38b14-efdd-4484-8a71-788afcab232d
+11:15:05 avatarFile,[object Object],[object Object]
+11:15:05 avatarFile,[object Object],58b38b14-efdd-4484-8a71-788afcab232d
+11:34:03 listening server at http://127.0.0.1:8081
+11:34:03 数据库连接成功
+12:12:23 listening server at http://127.0.0.1:8081
+12:12:23 数据库连接成功

@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>新增博客</title>
+    <link rel="stylesheet" href="/source/bootstrap/css/bootstrap.css">
+    <link rel="stylesheet" href="/source/common.css">
+    <link rel="stylesheet" href="/admin/admin.css">
+</head>
+<body>
+<div class="nav-outer">
+    <div class="nav-inner">
+        <a class="brand" href="/">
+            <img src="/images/cnode.jpg">
+        </a>
+        <form id="search-form" class="navbar-search">
+            <input type="text" name="q" class="search-input" value="">
+        </form>
+
+        <ul class="pull-right nav-bar">
+            <li><a href="/">首页</a></li>
+            <li><a href="/admin">管理员</a></li>
+            <li><a href="/theme">主题</a></li>
+            <li><a href="/about" target="">关于</a></li>
+            <li><a href="/login">注册</a></li>
+            <li><a href="/login">登录</a></li>
+        </ul>
+    </div>
+</div>
+
+<div class="main-content">
+    <div class="slide">
+        <div class="panel">
+            <div class="header">
+                <span class="col_fade">个人信息</span>
+            </div>
+            <div class="inner">
+                <div class="user-card">
+
+                </div>
+            </div>
+
+        </div>
+        <div class="panel">
+            <div class="inner">
+                <a href="/theme/new" id="id-create-theme">
+                    <span class="span-success">发布话题</span>
+                </a>
+            </div>
+        </div>
+        <div class="panel">
+            <div class="inner">
+                <p>CNode：Node.js专业中文社区</p>
+                <div>
+                    您可以
+                    <a href="/login">登录</a>
+                    或
+                    <a href="/login">注册</a>
+                </div>
+            </div>
+        </div>
+        <div class="panel">
+            <div class="header">
+                <span class="col_fade">友情社区</span>
+            </div>
+            <div class="inner">
+                <ol class="friendship-community">
+                    <li>
+                        <a href="https://ruby-china.org/" target="_blank">
+                            <img src="//o4j806krb.qnssl.com/public/images/ruby-china-20150529.png">
+                        </a>
+                    </li>
+                    <div class="sep10"></div>
+                    <li>
+                        <a href="http://golangtc.com/" target="_blank">
+                            <img src="//o4j806krb.qnssl.com/public/images/golangtc-logo.png">
+                        </a>
+                    </li>
+                    <div class="sep10"></div>
+                    <li>
+                        <a href="http://phphub.org/" target="_blank">
+                            <img src="//o4j806krb.qnssl.com/public/images/phphub-logo.png">
+                        </a>
+                    </li>
+                    <div class="sep10"></div>
+                    <li>
+                        <a href="https://testerhome.com/" target="_blank">
+                            <img src="//dn-cnode.qbox.me/FjLUc7IJ2--DqS706etPQ1EGajxK">
+                        </a>
+                    </li>
+                </ol>
+            </div>
+        </div>
+        <div class="panel">
+            <div class="header">
+                <span class="col_fade">客户端二维码</span>
+            </div>
+            <div class="inner cnode-app-download">
+                <img src="/images/二维码.jpg" class="img-weixin">
+                <br>
+                <a href="https://github.com/soliury/noder-react-native" target="_blank">客户端源码地址</a>
+            </div>
+        </div>
+    </div>
+
+    <div class="content">
+        <div class="panel edit-user-info">
+            <div class="header">
+                <div class="">
+                    <span class="col_fade">编辑topic</span>
+                </div>
+            </div>
+            <div class="inner">
+                <div class="div-tag">
+                    <h1>论坛topic的增删</h1>
+                    <ul class="list-tag"></ul>
+                    <label for="id-cn-new" class="col-sm-2 control-label">中文名称</label>
+                    <input type="text" id="id-cn-new" class="form-control col-sm-10">
+                    <label for="id-en-new" class="col-sm-2 control-label">英文名称</label>
+                    <input type="text" id="id-en-new" class="col-sm-10 form-control">
+                    <button class="btn btn-default button-topic-add" type="button">添加Topic</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="page-footer">
+    <div id="footer-main">
+        <div class="links">
+            <a class="dark" href="/rss">RSS</a>
+            |
+            <a class="dark" href="https://github.com/cnodejs/nodeclub/">源码地址</a>
+        </div>
+        <div class="col-fade">
+            <p>CNode 社区为国内最专业的 Node.js 开源技术社区，致力于 Node.js 的技术研究。</p>
+        </div>
+
+
+    </div>
+</div>
+
+
+<script src="/source/jquery-3.2.1.js"></script>
+<script src="/source/bootstrap/js/bootstrap.js"></script>
+<script src="/source/hu.js"></script>
+<script src="/source/common.js"></script>
+<script src="/admin/init.js"></script>
+<script src="/admin/admin.js"></script>
+</body>
+</html>

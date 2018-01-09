@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>huNode</title>
+    <!--基础CSS文件-->
+    <link rel="stylesheet" href="/source/bootstrap/css/bootstrap.css">
+    <link rel="stylesheet" href="/source/common.css">
+    <link rel="stylesheet" href="/theme/detail/detail.css">
+
+    <!--markdown样式-->
+    <!--<link rel="stylesheet" href="/source/markdown/atom-md.css">-->
+    <link rel="stylesheet" href="/source/markdown/github-markdown.css">
+    <link rel="stylesheet" href="/source/markdown/prism.css">
+</head>
+<body>
+
+<div class="nav-outer">
+    <div class="nav-inner">
+        <a class="brand" href="/">
+            <img src="/images/cnode.jpg">
+        </a>
+        <form id="search-form" class="navbar-search">
+            <input type="text" name="q" class="search-input" value="">
+        </form>
+
+        <ul class="pull-right nav-bar">
+            <li><a href="/">首页</a></li>
+            <li><a href="/admin">管理员</a></li>
+            <li><a href="/theme">主题</a></li>
+            <li><a href="/about" target="">关于</a></li>
+            <li><a href="/login">注册</a></li>
+            <li><a href="/login">登录</a></li>
+        </ul>
+    </div>
+</div>
+
+<div class="main-content">
+    <div class="slide">
+        <div class="panel">
+            <div class="header">
+                <span class="col_fade">作者</span>
+            </div>
+            <div class="inner">
+                <div class="user-card">
+
+                </div>
+            </div>
+        </div>
+
+        <div class="panel">
+            <div class="header">
+                <span class="col_fade">作者其他话题</span>
+            </div>
+            <div class="inner">
+                <div class="other-theme">
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="content">
+        <div class="panel theme-main">
+        </div>
+
+        <div class="panel all-reply">
+            <div class="header none">
+                <span class="col_fade">回复</span>
+            </div>
+        </div>
+
+        <div class="panel">
+            <div class="header">
+                <span class="col_fade">添加回复</span>
+            </div>
+            <div class="inner">
+                <textarea class="form-control" type="text" placeholder="请输入回复内容" rows="6"
+                          id="id-reply-text"></textarea>
+                <div class="div-submit">
+                    <button class="btn btn-primary button-submit" id="id-add-reply">回复</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="page-footer">
+    <div id="footer-main">
+        <div class="links">
+            <a class="dark" href="/rss">RSS</a>
+            |
+            <a class="dark" href="https://github.com/cnodejs/nodeclub/">源码地址</a>
+        </div>
+        <div class="col-fade">
+            <p>CNode 社区为国内最专业的 Node.js 开源技术社区，致力于 Node.js 的技术研究。</p>
+        </div>
+
+
+    </div>
+</div>
+
+<!--基础JS文件-->
+<script src="/source/jquery-3.2.1.js"></script>
+<script src="/source/bootstrap/js/bootstrap.js"></script>
+
+<script src="/source/markdown/marked.js"></script>
+<script src="/source/markdown/prism.js"></script>
+<script src="/source/hu.js"></script>
+<script src="/source/common.js"></script>
+
+<script src="/theme/detail/init.js"></script>
+<script src="/theme/detail/main.js"></script>
+</body>
+</html>
