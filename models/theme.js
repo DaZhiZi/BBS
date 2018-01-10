@@ -45,14 +45,16 @@ class Theme {
         return obj
     }
     
-    static async all (form = {}) {
+    static async all (form = {}, pageNum=1) {
         
         let doc = {}
         let sortRule = {}
+        let pageLimits = 2
+        let pageSkip = pageNum - 1
         if (form.topic_id == 'all') {
-            doc = await themeMongo.find({_delete: false}).skip(0).limit(10)
+            doc = await themeMongo.find({_delete: false}).skip(pageSkip).limit(pageLimits)
         } else {
-            doc = await themeMongo.find({_delete: false, topic_id: form.topic_id,}).skip(0).limit(10)
+            doc = await themeMongo.find({_delete: false, topic_id: form.topic_id,}).skip(pageSkip).limit(pageLimits)
         }
         let obj = {}
         if (doc == null) {

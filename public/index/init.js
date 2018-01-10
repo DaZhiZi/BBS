@@ -5,7 +5,7 @@ let topicTemplate = function (obj) {
     return html
 }
 
-let apiGetTopic = function (callback) {
+let apiAllTopic = function (callback) {
     ajax({
         method  : 'GET',
         path    : '/topic/all',
@@ -15,7 +15,7 @@ let apiGetTopic = function (callback) {
     })
 }
 
-let cbGetTopic = function (r) {
+let cbAllTopic = function (r) {
     //log('r.response', r.response)
     let res = JSON.parse(r.response)
     if (res.success) {
@@ -160,9 +160,9 @@ let switchTopic = function (e) {
 }
 
 let init = function () {
-    //以cb开头的函数，表示是callback
+    //以cb开头的函数，表示是callback, 中间无get之类的，默认是all（或者get）
     //获取所有Topic
-    apiGetTopic(cbGetTopic)
+    apiAllTopic(cbAllTopic)
     //获取所有Theme
     apiGetTheme(cbGetTheme)
     //获取所有最早的，无人回复的话题

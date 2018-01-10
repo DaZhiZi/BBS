@@ -5,7 +5,7 @@ let topicTemplate = function (obj) {
     return html
 }
 
-var apiGetTopic = function (callback) {
+var apiAllTopic = function (callback) {
     ajax({
         method  : 'GET',
         path    : '/topic/all',
@@ -15,7 +15,7 @@ var apiGetTopic = function (callback) {
     })
 }
 
-let cbGetTopic = function (r) {
+let cbAllTopic = function (r) {
     //log('r.response', r.response)
     let res = JSON.parse(r.response)
     if (res.success) {
@@ -66,6 +66,6 @@ let cbUserInfo = function (r) {
 }
 
 let init = function () {
-    apiGetTopic(cbGetTopic)
+    apiAllTopic(cbAllTopic)
     apiUserInfo(cbUserInfo)
 }

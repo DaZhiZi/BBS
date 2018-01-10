@@ -97,3 +97,81 @@
 11:34:03 数据库连接成功
 12:12:23 listening server at http://127.0.0.1:8081
 12:12:23 数据库连接成功
+15:28:30 数据库连接成功
+15:28:30 res,200
+15:32:51 listening server at http://127.0.0.1:8081
+15:32:51 数据库连接成功
+15:46:47 listening server at http://127.0.0.1:8081
+15:46:47 数据库连接成功
+08:50:16 listening server at http://127.0.0.1:8081
+08:50:16 数据库连接成功
+08:52:12 **前面的topic,[object Object]
+08:52:12 添加后topic后的doc,{ __v: 0,
+  _id: 5a5563bcfafcbc23d01acf06,
+  update_at: 2018-01-10T00:52:12.112Z,
+  create_at: 2018-01-10T00:52:12.112Z,
+  _delete: false,
+  author: 'hu',
+  abstract: '摘要描述',
+  enName: 'share',
+  cnName: '分享' }
+08:52:25 **前面的topic,[object Object]
+08:52:25 添加后topic后的doc,{ __v: 0,
+  _id: 5a5563c9fafcbc23d01acf07,
+  update_at: 2018-01-10T00:52:25.383Z,
+  create_at: 2018-01-10T00:52:25.383Z,
+  _delete: false,
+  author: 'hu',
+  abstract: '摘要描述',
+  enName: 'answer',
+  cnName: '问答' }
+08:52:49 **前面的topic,[object Object]
+08:52:49 添加后topic后的doc,{ __v: 0,
+  _id: 5a5563e1fafcbc23d01acf08,
+  update_at: 2018-01-10T00:52:49.263Z,
+  create_at: 2018-01-10T00:52:49.263Z,
+  _delete: false,
+  author: 'hu',
+  abstract: '摘要描述',
+  enName: 'test',
+  cnName: '测试' }
+08:53:19 request.session,[object Object]
+08:53:19 request.body,[object Object]
+08:53:48 request.session,[object Object]
+08:53:48 request.body,[object Object]
+08:54:08 request.session,[object Object]
+08:54:08 request.body,[object Object]
+08:57:14 request.session,[object Object]
+08:57:14 request.body,[object Object]
+08:58:08 listening server at http://127.0.0.1:8081
+08:58:08 数据库连接成功
+08:59:49 listening server at http://127.0.0.1:8081
+08:59:49 数据库连接成功
+09:23:39 listening server at http://127.0.0.1:8081
+09:23:39 数据库连接成功
+09:24:25 listening server at http://127.0.0.1:8081
+09:24:25 数据库连接成功
+09:24:31 不带page request.path,/topic/5a5563c9fafcbc23d01acf07,[object Object]
+09:24:32 不带page request.path,/topic/5a5563c9fafcbc23d01acf07,[object Object]
+09:25:07 listening server at http://127.0.0.1:8081
+09:25:07 数据库连接成功
+09:28:28 listening server at http://127.0.0.1:8081
+09:28:28 数据库连接成功
+09:38:19 listening server at http://127.0.0.1:8081
+09:38:19 数据库连接成功
+09:39:31 listening server at http://127.0.0.1:8081
+09:39:31 数据库连接成功
+09:39:40 不带page request.path,/topic/all,[object Object]
+09:42:24 不带page request.path,/topic/5a5563bcfafcbc23d01acf06,[object Object]
+09:42:26 不带page request.path,/topic/5a5563c9fafcbc23d01acf07,[object Object]
+09:42:27 不带page request.path,/topic/5a5563e1fafcbc23d01acf08,[object Object]
+09:42:28 不带page request.path,/topic/5a5563c9fafcbc23d01acf07,[object Object]
+09:42:29 不带page request.path,/topic/5a5563bcfafcbc23d01acf06,[object Object]
+09:42:29 不带page request.path,/topic/all,[object Object]
+09:42:30 不带page request.path,/topic/5a5563bcfafcbc23d01acf06,[object Object]
+09:42:30 不带page request.path,/topic/5a5563c9fafcbc23d01acf07,[object Object]
+09:42:31 不带page request.path,/topic/all,[object Object]
+10:07:33 listening server at http://127.0.0.1:8081
+10:07:33 数据库连接成功
+10:07:59 listening server at http://127.0.0.1:8081
+10:07:59 数据库连接成功
