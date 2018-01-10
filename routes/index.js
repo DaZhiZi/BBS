@@ -39,4 +39,8 @@ router.get('/logout', (request, response) => {
     response.json(res)
 })
 
+router.get('/about', (request, response) => {
+    sendHtml(response, '/about.html')
+})
+
 module.exports = router
