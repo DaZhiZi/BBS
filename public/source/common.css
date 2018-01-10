@@ -118,8 +118,8 @@ img {
 
 .main-content {
     width: 90%;
-    max-width: 1400px;
-    min-width: 660px;
+    /*max-width: 1400px;*/
+    /*min-width: 660px;*/
     margin: 15px auto;
     min-height: 400px;
 }
@@ -208,7 +208,6 @@ img {
 #footer-main {
     width: 90%;
     max-width: 1400px;
-    min-width: 960px;
     margin: 0 auto;
     color: #e2e2e2;
     padding: 20px 0;

@@ -46,15 +46,16 @@ class Theme {
     }
     
     static async all (form = {}, pageNum=1) {
-        
-        let doc = {}
         let sortRule = {}
         let pageLimits = 2
-        let pageSkip = pageNum - 1
+        let pageSkip = (pageNum > 0) ? (pageNum - 1) : 1
+        let con = {_delete: false}
+        let doc = {}
         if (form.topic_id == 'all') {
-            doc = await themeMongo.find({_delete: false}).skip(pageSkip).limit(pageLimits)
+            doc = await themeMongo.find(con).skip(pageSkip).limit(pageLimits)
         } else {
-            doc = await themeMongo.find({_delete: false, topic_id: form.topic_id,}).skip(pageSkip).limit(pageLimits)
+            con.topic_id = form.topic_id
+            doc = await themeMongo.find(con).skip(pageSkip).limit(pageLimits)
         }
         let obj = {}
         if (doc == null) {
@@ -129,7 +130,7 @@ class Theme {
     
     async dealAll (form = []) {
         
-        //需要考虑，某个字段没有的情况。比如现在没有回复，哪最后的回复怎么版。
+        //需要考虑，某个字段没有的情况。比如现在没有回复，哪最后的回复怎么办。
         for (var i = 0; i < form.length; i++) {
             form[i] = await dealDate(form[i])
             let userAllInfo = await userModel.getInfo({user_id: form[i].user_id})

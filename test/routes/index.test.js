@@ -4,6 +4,17 @@ var app = require('../../app')
 var request = require('supertest')(app)
 const index = require('../../routes/index')
 var {log} = require('../../utils')
+/*
+
+测试用例目前分为两种
+1. 网页(should)
+    对网页的关键字进行包含判断--首页：无人回复话题
+2. GET、POST请求(logic judge --> mocha)
+    对返回的数据进行判别.
+    GET:    success--true OR false, data.length
+    POST:   success--true OR false, data.username(或其他字段的判断, Object contain)
+*/
+
 describe('test/controllers/site.test.js', function () {
     
     it('should / 200', function (done) {
