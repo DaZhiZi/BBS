@@ -218,3 +218,6 @@ ol, ul {
 .pagination > li > a, .pagination > li > span {
 	color: #0f0f0f;
 }
+.pagination {
+	margin-left: 20px;
+}

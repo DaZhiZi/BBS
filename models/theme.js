@@ -56,7 +56,7 @@ class Theme {
         let doc = await themeMongo.find(con).skip(pageSkip).limit(pageLimits)
         // 分页信息
         let themeNum = await themeMongo.count(con)
-        let pageTotal = Math.floor(themeNum / pageLimits)
+        let pageTotal = Math.ceil(themeNum / pageLimits)
         let obj = {}
         let data = {
             page:{
