@@ -76,17 +76,55 @@ let apiGetTheme = function (callback, topicId) {
     })
 }
 
+let genTheme = function (arr) {
+    for (let i = 0; i < arr.length; i++) {
+        let html = cellTemplate(arr[i])
+        $('.theme-all').append(html)
+    }
+}
+
+let pageTem = function (obj) {
+    let pageArr = pages(obj.pageNum, obj.pageTotal)
+    let temStr = `
+        <ul class="pagination">
+            <li><a href="#">&laquo;</a></li>
+            <li><a href="/blog/page/1">首页</a></li>
+            {% for num in pageArr %}
+            <li><a href="/blog/page/{{ num }}">{{ num }}</a></li>
+            {% endfor %}
+            <li><a href="/blog/page/{{totalPage }}">尾页</a></li>
+            <li><a href="#">&raquo;</a></li>
+        </ul>
+    `
+    let o = {
+        pageArr:pageArr,
+        totalPage:obj.pageTotal,
+    }
+    log('pageArr', pageArr)
+    let html = nunjucks.renderString(temStr, o)
+    
+    return html
+}
+
+let genPage = function (obj) {
+    $(".content-footer .pagination").remove()
+    let html = pageTem(obj)
+    $('.content-footer').append(html)
+}
+
 let cbGetTheme = function (r) {
     $('.theme-all').empty()
     let res = JSON.parse(r.response)
     if (res.success) {
+        // 现在分两步，一步渲染theme列表，
+        // 一步渲染分页
         let data = res.data
-        //log('theme data', data.length)
-        for (let i = 0; i < data.length; i++) {
-            let html = cellTemplate(data[i])
-            $('.theme-all').append(html)
-        }
         
+        let themeArr = data.theme
+        log('theme data', data)
+        genTheme(themeArr)
+        let page = data.page
+        genPage(page)
     }
 }
 
@@ -129,25 +167,11 @@ let logOut = function () {
     ajax({
         method  : 'GET',
         path    : `/logout`,
-        callback: function (r) {
-            log('注销', r.response)
+        callback: function () {
+            //log('注销', r.response)
             $('.panel-new-theme').hide()
         }
     })
-}
-
-let cbTopicClick = function (r) {
-    $('.theme-all').empty()
-    let res = JSON.parse(r.response)
-    if (res.success) {
-        let data = res.data
-        for (let i = 0; i < data.length; i++) {
-            //log('title', title);
-            let html = cellTemplate(data[i])
-            $('.theme-all').append(html)
-        }
-        
-    }
 }
 
 let switchTopic = function (e) {
@@ -155,7 +179,7 @@ let switchTopic = function (e) {
     $(this).siblings('.topic-tab').removeClass('topic-current')
     $(this).addClass('topic-current')
     let topicId = target.dataset.topicid
-    apiGetTheme(cbTopicClick, topicId)
+    apiGetTheme(cbGetTheme, topicId)
     //log('topicId', topicId)
 }
 

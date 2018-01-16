@@ -50,20 +50,28 @@ class Theme {
         let pageLimits = 2
         let pageSkip = (pageNum > 0) ? (pageNum - 1) : 1
         let con = {_delete: false}
-        let doc = {}
-        if (form.topic_id == 'all') {
-            doc = await themeMongo.find(con).skip(pageSkip).limit(pageLimits)
-        } else {
+        if (form.topic_id != 'all') {
             con.topic_id = form.topic_id
-            doc = await themeMongo.find(con).skip(pageSkip).limit(pageLimits)
         }
+        let doc = await themeMongo.find(con).skip(pageSkip).limit(pageLimits)
+        // 分页信息
+        let themeNum = await themeMongo.count(con)
+        let pageTotal = Math.floor(themeNum / pageLimits)
         let obj = {}
+        let data = {
+            page:{
+                pageNum:pageNum,
+                pageTotal:pageTotal,
+            }
+        }
         if (doc == null) {
-            obj = resMsg(null, '请求失败', false)
+            data.theme = null
+            obj = resMsg(data, '请求失败', false)
         } else {
             let that = new this()
             let newDoc = await that.dealAll(doc)
-            obj = resMsg(newDoc, '所有主题请求成功')
+            data.theme = newDoc
+            obj = resMsg(data, '所有主题请求成功')
         }
         return obj
     }

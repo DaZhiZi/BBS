@@ -303,18 +303,15 @@ var ajax = function (request) {
 // 由于typeof类型判断有种种弊端，可以借鉴jQuery.type()的方式
 //关于typeof的用法和弊端见下
 //http://bonsaiden.github.io/JavaScript-Garden/zh/#types.typeof
-var newTypeOf = function (obj) {
-    var class2type = {}
-    var allType = 'Boolean,Number,String,Function,Array,Date,RegExp,Object,Error'
-    
-    // forEach() 方法对数组的每个元素执行一次提供的函数。
-    allType.split(',').forEach(function (e, i) {
-        class2type['[object ' + e + ']'] = e.toLowerCase()
-    })
-    if (obj == null) {
-        return String(obj)
-    }
-    return typeof obj === 'object' || typeof obj === 'function' ? class2type[class2type.toString.call(obj)] || 'object' : typeof obj
+
+//类型判断，Array,Object
+var newTypeOf = function (type) {
+    var constructor = Object.prototype.toString.call(type)
+    //"[object Array]"  slice(8, -1)
+    //var newType = constructor.split('object ')[1].split(']')[0]
+    var newType = constructor.slice(8, -1)
+    var lowerCase = newType.toLowerCase()
+    return lowerCase
 }
 
 // 判断有多少个字符串里面含有某字符的数量，
@@ -721,14 +718,4 @@ var GuaAlert = function (title, message) {
         console.log('click ok')
         removeAll('.modal-remove')
     })
-}
-
-//类型判断，Array,Object
-var newTypeOf = function (type) {
-    var constructor = Object.prototype.toString.call(type)
-    //"[object Array]"  slice(8, -1)
-    //var newType = constructor.split('object ')[1].split(']')[0]
-    var newType = constructor.slice(8, -1)
-    var lowerCase = newType.toLowerCase()
-    return lowerCase
 }
