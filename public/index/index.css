@@ -221,3 +221,8 @@ ol, ul {
 .pagination {
 	margin-left: 20px;
 }
+.pagination .page-active {
+	background-color: #4CAF50;
+	color: white;
+	border-radius: 5px;
+}

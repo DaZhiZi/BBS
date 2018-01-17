@@ -85,7 +85,11 @@ let pageTem = function (obj) {
             <li><a href="#">&laquo;</a></li>
             <li><a data-num="1">首页</a></li>
             {% for num in pageArr %}
-            <li><a data-num="{{ num }}">{{ num }}</a></li>
+                {% if num == ${obj.pageNum} %}
+                    <li><a data-num="{{ num }}" class="page-active">{{ num }}</a></li>
+                {% else %}
+                    <li><a data-num="{{ num }}">{{ num }}</a></li>
+                {% endif %}
             {% endfor %}
             <li><a data-num="{{pageTotal}}"">尾页</a></li>
             <li><a href="#">&raquo;</a></li>
