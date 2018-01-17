@@ -61,12 +61,7 @@ let cellTemplate = function (obj) {
 }
 
 let apiGetTheme = function (callback, topicId) {
-    let path = ''
-    if (topicId == undefined) {
-        path = 'all'
-    } else {
-        path = topicId
-    }
+    let path = topicId || 'all'
     ajax({
         method  : 'GET',
         path    : `/theme/topic/${path}`,
@@ -88,19 +83,19 @@ let pageTem = function (obj) {
     let temStr = `
         <ul class="pagination">
             <li><a href="#">&laquo;</a></li>
-            <li><a href="/blog/page/1">首页</a></li>
+            <li><a data-num="1">首页</a></li>
             {% for num in pageArr %}
-            <li><a href="/blog/page/{{ num }}">{{ num }}</a></li>
+            <li><a data-num="{{ num }}">{{ num }}</a></li>
             {% endfor %}
-            <li><a href="/blog/page/{{totalPage }}">尾页</a></li>
+            <li><a data-num="{{pageTotal}}"">尾页</a></li>
             <li><a href="#">&raquo;</a></li>
         </ul>
     `
     let o = {
         pageArr:pageArr,
-        totalPage:obj.pageTotal,
+        pageTotal:obj.pageTotal,
     }
-    log('pageArr', pageArr)
+    //log('pageArr', pageArr)
     let html = nunjucks.renderString(temStr, o)
     
     return html
@@ -183,6 +178,23 @@ let switchTopic = function (e) {
     //log('topicId', topicId)
 }
 
+let apiGetPage = function (callback, pageNum) {
+    let topicId = $(".topic-current")[0].dataset.topicid
+    ajax({
+        method  : 'GET',
+        path    : `/theme/topic/${topicId}?page=${pageNum}`,
+        callback: function (r) {
+            callback(r)
+        }
+    })
+}
+
+let switchPage = function (e) {
+    let target = e.target
+    let pageNum = target.dataset.num
+    apiGetPage(cbGetTheme, pageNum)
+}
+
 let init = function () {
     //以cb开头的函数，表示是callback, 中间无get之类的，默认是all（或者get）
     //获取所有Topic
@@ -195,4 +207,13 @@ let init = function () {
     $(document).on('click', '#logout', logOut)
     //绑定，topic切换功能
     $(document).on('click', '.topic-list .topic-tab', switchTopic)
+    $(document).on('click', '.pagination li', switchPage)
+    /**
+     * 1.绑定事件
+     * 2.获取data-num
+     * 3.根据data-num进行ajax请求
+     * 4.请求成功后，移除当前theme list内容
+     * 5.替换theme list 和分页。
+     * 6.给分页添加相应的效果，active or not
+     */
 }
