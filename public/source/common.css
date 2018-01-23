@@ -292,6 +292,9 @@ img[src=''] {
     border-radius: 12px 0 0 12px;
 }
 
+a:hover, a:focus {
+	text-decoration: none;
+}
 @media (max-width: 400px) {
 	.navbar .brand {
 		float: none;
@@ -309,6 +312,7 @@ img[src=''] {
 		margin: 0 auto;
 	}
 }
+
 body {
 	/*overflow-x: hidden;*/
 }
