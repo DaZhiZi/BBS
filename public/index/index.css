@@ -113,16 +113,6 @@ img {
     color: #b4b4b4;
 }
 
-.type-top {
-    background: #80bd01;
-    padding: 2px 4px;
-    border-radius: 3px;
-    -webkit-border-radius: 3px;
-    -moz-border-radius: 3px;
-    color: #fff;
-    font-size: 12px;
-}
-
 .theme-title {
     max-width: 70%;
     text-overflow: ellipsis;

@@ -26,7 +26,7 @@ router.post('/add', async (request, response) => {
 
 router.get('/topic/:topic_id', async (request, response) => {
     //验证用户权限
-    log('不带page request.path', request.path, request.query)
+    //log('不带page request.path', request.path, request.query)
     let pageNum = request.query.page
     let topic_id = request.params.topic_id
     const msg = await Model.all({topic_id: topic_id}, pageNum)
@@ -46,6 +46,7 @@ router.get('/detail/data/:_id', async (request, response) => {
     const msg = await Model.detail(form)
     response.json(msg)
 })
+
 router.get('/noReply', async (request, response) => {
     const msg = await Model.noReply()
     response.json(msg)

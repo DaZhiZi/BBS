@@ -28,6 +28,7 @@ var env = nunjucks.configure('views', {
     noCache   : true,
 })
 
+
 //这个是缓存目录
 var upload = multer({dest: 'uploads/'})
 
@@ -45,6 +46,16 @@ const reply = require('./routes/reply')
 //    log('req.path req.params', req.path);
 //    next()
 //})
+app.use(function (req, res, next) {
+    var url = req.originalUrl
+    let urlArr = ['/login/', '/login', '/api/user/login', '/api/user/register']
+    log('req.session 请求验证', url, req.xhr, req.method)
+    if (urlArr.indexOf(url) == -1 && !req.session.username) {
+        log('tiaozhuan')
+        return res.redirect('/login')
+    }
+    next()
+})
 
 //注册路由
 app.use('/', index)

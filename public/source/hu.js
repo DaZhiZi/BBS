@@ -606,7 +606,7 @@ let tipsTemplate = function (target, type = 'success', msg = '提示信息') {
     let left = target.getBoundingClientRect().left
     
     let tips = `
-        <div class="tip-${type} div-tips" style="top: ${top}px; left:${left}px;position:absolute;" >
+        <div class="tip-${type} div-tips" style="top:${top}px;left:${left}px;position:absolute;" >
             <h3 class="popover-title">${type}</h3>
             <div class="popover-content">${msg}</div>
         </div>
@@ -719,3 +719,37 @@ var GuaAlert = function (title, message) {
         removeAll('.modal-remove')
     })
 }
+
+//增加字符串计数方法
+String.prototype.count = function (str) {
+    //以空格split
+    var strArr = this.split(' ')
+    var num = 0
+    for (var i = 0; i < strArr.length; i++) {
+        if (strArr[i] == str) {
+            num = num + 1
+        }
+    }
+    return num
+}
+
+var countWord = function (str) {
+    var strArr = str.split(' ')
+    // 数组去重
+    var arr = unique(strArr)
+    var countArr = []
+    for (var i = 0; i < arr.length; i++) {
+        var word = arr[i]
+        var num  = str.count(word)
+        var ele = {
+            word:word,
+            num:num,
+        }
+        countArr.push(ele)
+    }
+    return countArr
+}
+/**
+ * 1. 字符串 不区分大小写
+ * 2. 返回的数组按照特定nums从大到小排序
+ */

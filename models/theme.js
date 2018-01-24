@@ -40,7 +40,6 @@ class Theme {
         //log('form.userInfo', form.userInfo)
         //应该添加注册验证
         let doc = await themeMongo.create(form)
-        //log('doc', doc)
         let obj = resMsg(doc, '注册成功')
         return obj
     }
@@ -160,8 +159,4 @@ class Theme {
     }
 }
 
-let testModel = false
-if (testModel) {
-    Theme.noReply()
-}
 module.exports = Theme

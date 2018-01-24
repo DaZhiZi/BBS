@@ -48,6 +48,7 @@ let cbLogin = function (event) {
     var data = getRegisterData()
     //log('data', data)
     apiUserLogin(data, function (r) {
+        console.log('res', r.response)
         let res = JSON.parse(r.response)
         log('res', res)
         if (res.success) {

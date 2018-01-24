@@ -162,13 +162,23 @@ let cbGetNoRep = function (r) {
     }
 }
 
+
+let cbLogOut = function (r) {
+    log('注销, r.response', r.response)
+    $('.panel-new-theme').hide()
+}
+
 let logOut = function () {
     ajax({
         method  : 'GET',
         path    : `/logout`,
-        callback: function () {
-            //log('注销', r.response)
-            $('.panel-new-theme').hide()
+        callback: function (r) {
+            log('注销, r.response', r.response)
+            let res = JSON.parse(r.response)
+            if (res.success) {
+                $('.panel-new-theme').hide()
+                location.href = '/login'
+            }
         }
     })
 }
