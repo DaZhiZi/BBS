@@ -10,7 +10,6 @@ router.get('/', (request, response) => {
 })
 
 router.get('/login', (request, response) => {
-    log('login')
     sendHtml(response, '/login.html')
 })
 

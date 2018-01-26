@@ -218,7 +218,7 @@ var bindEvent = function (selector, eventName, callback) {
     }
 }
 
-var searchTitle = function (val, resultDom) {
+var searchEle = function (val, resultDom) {
     addClass('none', resultDom)
     resultDom.forEach(function (element) {
         var con = (element.innerText.toLowerCase().indexOf(val.toLowerCase()) != -1)
