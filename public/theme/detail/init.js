@@ -58,7 +58,7 @@ let transInfoData = function (obj) {
 let themeInfoTem = function (obj) {
     //log('themeInfoTem', obj)
     let html = `
-        <div class="header theme-header">
+        <div class="header theme-header" data-theme_id="${obj._id}">
             <span class="theme-full-title">
                 ${obj.title}
             </span>
@@ -67,6 +67,7 @@ let themeInfoTem = function (obj) {
                 <span>作者 <a href="/user/${obj.userInfo.username}">${obj.userInfo.username}</a></span>
                 <span>${obj.browseInfo.view_num} 次浏览</span>
                 <span> 来自 ${obj.topicInfo.cnName}</span>
+                <button class="button-theme-collect pull-right">收藏</button>
             </div>
         </div>
         <div class="inner">

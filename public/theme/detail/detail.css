@@ -16,7 +16,8 @@
 
 .theme-header .changes {
     font-size: 12px;
-    color: #838383
+    color: #838383;
+	position: relative;
 }
 
 .div-submit {
@@ -83,4 +84,24 @@
 
 .theme-header .changes span:before {
     content: " • ";
+}
+
+
+.button-theme-collect {
+	position: absolute;
+	right: 1px;
+	bottom: 1px;
+	border: none;
+	display: inline-block;
+	float: none;
+	padding: 3px 10px;
+	margin: 0;
+	font-size: 14px;
+	letter-spacing: 2px;
+	box-shadow: none;
+	line-height: 2em;
+	vertical-align: middle;
+	color: #fff;
+	border-radius: 3px;
+	background-color: #80bd01;
 }
