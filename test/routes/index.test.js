@@ -1,9 +1,9 @@
 var should = require('should')
-var config = require('../../config')
+var config = require('../../tools/config')
 var app = require('../../app')
 var request = require('supertest')(app)
 const index = require('../../routes/index')
-var {log} = require('../../utils')
+var {log} = require('../../tools/utils')
 /*
 
 测试用例目前分为两种

@@ -3,7 +3,7 @@ var router = express.Router()
 
 const userModel = require('../models/user')
 
-const {log, sendHtml, resMsg} = require('../utils.js')
+const {log, sendHtml, resMsg} = require('../tools/utils.js')
 
 router.get('/', (request, response) => {
     sendHtml(response, '/index.html')

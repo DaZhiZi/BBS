@@ -3,7 +3,7 @@ var router = express.Router()
 
 const Model = require('../models/theme')
 
-const {log, sendHtml} = require('../utils.js')
+const {log, sendHtml} = require('../tools/utils.js')
 
 router.get('/new', async (request, response) => {
     //验证用户权限

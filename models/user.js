@@ -3,8 +3,8 @@ const moment = require('moment')
 const uuid = require('uuid/v4')
 const mongoose = require('mongoose')
 
-const {encrypt} = require('../config')
-const {log, resMsg, dealDate, getKey} = require('../utils')
+const {encrypt} = require('../tools/config')
+const {log, resMsg, dealDate, getKey} = require('../tools/utils')
 
 var userSchema = new mongoose.Schema({
     username: {type: String, default: ''},

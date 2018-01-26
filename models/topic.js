@@ -1,5 +1,5 @@
 const mongoose = require('mongoose')
-const {log, resMsg, dealDate} = require('../utils')
+const {log, resMsg, dealDate} = require('../tools/utils')
 
 //相当于给这个类一个模型，或者说基本的架构。
 const topicSchema = new mongoose.Schema({

@@ -6,7 +6,7 @@ const multer = require('multer')
 var upload = multer({dest: 'uploads/'})
 
 const Model = require('../models/user')
-const {log, sendHtml} = require('../utils.js')
+const {log, sendHtml} = require('../tools/utils.js')
 /* GET users listing. */
 router.get('/', function (request, response) {
     let user = request.session

@@ -3,7 +3,7 @@ var router = express.Router()
 
 const Model = require('../models/reply')
 
-const {log, sendHtml} = require('../utils.js')
+const {log, sendHtml} = require('../tools/utils.js')
 
 router.post('/add', async (request, response) => {
     let form = request.body

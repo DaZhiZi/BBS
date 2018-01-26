@@ -1,7 +1,7 @@
 const mongoose = require('mongoose')
 const userModel = require('./user')
-const {fakeReply} = require('../config')
-const {log, resMsg, dealDate, getKey, toggleArr} = require('../utils')
+const {fakeReply} = require('../tools/config')
+const {log, resMsg, dealDate, getKey, toggleArr} = require('../tools/utils')
 
 const replySchema = new mongoose.Schema({
     theme_id: {type: String, default: '帖子ID'},

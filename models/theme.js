@@ -3,7 +3,7 @@ const userModel = require('../models/user')
 const topicModel = require('../models/topic')
 const replyModel = require('../models/reply')
 
-const {log, resMsg, dealDate, getKey} = require('../utils')
+const {log, resMsg, dealDate, getKey} = require('../tools/utils')
 
 const themeSchema = new mongoose.Schema({
     user_id : {type: String, default: '作者ID'},

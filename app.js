@@ -28,11 +28,14 @@ var env = nunjucks.configure('views', {
     noCache   : true,
 })
 
-
 //这个是缓存目录
 var upload = multer({dest: 'uploads/'})
 
-const {log, sendHtml} = require('./utils')
+const {log, sendHtml} = require('./tools/utils')
+const {loginAuth} = require('./tools/auth')
+
+// 登录信息验证
+app.use(loginAuth)
 
 //引入路由
 const index = require('./routes/index')
@@ -40,22 +43,6 @@ const topic = require('./routes/topic')
 const theme = require('./routes/theme')
 const user = require('./routes/user')
 const reply = require('./routes/reply')
-
-// 信息验证
-//app.use('*', function (req, res, next) {
-//    log('req.path req.params', req.path);
-//    next()
-//})
-app.use(function (req, res, next) {
-    var url = req.originalUrl
-    let urlArr = ['/login/', '/login', '/register']
-    log('req.session 请求验证', url, req.xhr, req.method)
-    if (urlArr.indexOf(url) == -1 && !req.session.username) {
-        log('tiaozhuan')
-        return res.redirect('/login')
-    }
-    next()
-})
 
 //注册路由
 app.use('/', index)
