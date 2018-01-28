@@ -6,7 +6,6 @@ let loginAuth = function (req, res, next) {
         //log('tiaozhuan')
         return res.redirect('/login')
     }
-    console.log('req.xmlhttprequest', req.headers['x-requested-with']);
     next()
 }
 

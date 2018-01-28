@@ -60,4 +60,12 @@ router.post('/remove', async (request, response) => {
     response.json(msg)
 })
 
+router.post('/collect', async (request, response) => {
+    log('request.body', request.body, request.session)
+    let theme_id = request.body.theme_id
+    let user_id = request.session.user_id
+    const msg = await Model.collect(theme_id, user_id)
+    response.json(msg)
+})
+
 module.exports = router

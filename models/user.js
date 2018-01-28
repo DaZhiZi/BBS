@@ -14,7 +14,9 @@ var userSchema = new mongoose.Schema({
     avatar   : {type: String, default: '/images/default.png'},
     signature: {type: String, default: '这家伙很懒，什么个性签名都没有留下。'},
     admin    : {type: Boolean, default: false},
-    
+
+    collect_list:{type: Array, default: []},
+
     _delete  : {type: Boolean, default: false},
     create_at: {type: Date, default: Date.now},
     update_at: {type: Date, default: Date.now},
@@ -117,14 +119,4 @@ class User {
     }
 }
 
-let testModel = false
-if (testModel) {
-    User.updatePassword({
-        username: 'hu',
-        password: 'hu',
-    })
-    //User.getInfo({
-    //    _id:'5a3327873ffe781a34b90602',
-    //})
-}
 module.exports = User

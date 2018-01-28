@@ -102,11 +102,13 @@ let apiThemeColl = function (id, callback) {
         }
     })
 }
-let cbThemeInfo = function (e) {
+let cbThemeColl = function (e) {
     let theme_id = $(this).parents('.theme-header')[0].dataset.theme_id
     apiThemeColl(theme_id, function (r) {
         let res = JSON.parse(r.response)
         if (res.success) {
+            let names = ['收藏', '取消收藏']
+            let classes = ['', '']
             //1.改变class
             //2.改变data-action
             //3.根据action作出相应的变化，无非就是上面两个加上相应的url
@@ -118,7 +120,7 @@ let __main = function () {
     init()
     $(document).on('click', '#id-add-reply', cbAddReply)
     $(document).on('click', '.icon-reply-up', cbReplyUp)
-    $(document).on('click', '.button-theme-collect', cbThemeInfo)
+    $(document).on('click', '.button-theme-collect', cbThemeColl)
 }
 
 __main()

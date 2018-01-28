@@ -3,7 +3,7 @@ const userModel = require('../models/user')
 const topicModel = require('../models/topic')
 const replyModel = require('../models/reply')
 
-const {log, resMsg, dealDate, getKey} = require('../tools/utils')
+const {log, resMsg, dealDate, getKey, toggleArr} = require('../tools/utils')
 
 const themeSchema = new mongoose.Schema({
     user_id : {type: String, default: '作者ID'},
@@ -16,6 +16,7 @@ const themeSchema = new mongoose.Schema({
         reply_num  : {type: Number, default: 0},
         view_num   : {type: Number, default: 0},
         collect_num: {type: Number, default: 0},
+        collect_pep: {type: Array, default: []},
     },
     
     //最后回复
@@ -43,7 +44,26 @@ class Theme {
         let obj = resMsg(doc, '注册成功')
         return obj
     }
-    
+
+    static async collect (theme_id, user_id) {
+        // theme collect lists
+        let doc = await themeMongo.findOne({_id:theme_id})
+        let collect_pep = doc.browseInfo.collect_pep
+        let newCollects = toggleArr(user_id, collect_pep)
+        let dealUp = await themeMongo.updateOne({_id:theme_id}, {'browseInfo.collect_pep': newCollects})
+        let len = newCollects.length
+
+        // user collect lists
+        let userDoc = await userModel.getInfo({user_id:user_id})
+        // log('userDoc', userDoc)
+        let collect_list = userDoc.data.collect_list
+        let newCollectList = toggleArr(theme_id, collect_list)
+        let dealUser = await userModel.updateInfo({user_id:user_id}, {'collect_list': newCollects})
+        // log('dealUser操作', newCollectList, dealUser)
+        let obj = resMsg(len, '成功')
+        return obj
+    }
+
     static async all (form = {}, pageNum=1) {
         let sortRule = {}
         let pageLimits = 2
