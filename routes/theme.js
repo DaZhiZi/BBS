@@ -41,9 +41,10 @@ router.get('/detail/:_id', async (request, response) => {
 
 //请求详情数据
 router.get('/detail/data/:_id', async (request, response) => {
-    //log('path :_id', request.params)
+    log('request.session', request.session.user_id)
+    let user_id = request.session.user_id
     let form = {_id: request.params._id}
-    const msg = await Model.detail(form)
+    const msg = await Model.detail(form, user_id)
     response.json(msg)
 })
 

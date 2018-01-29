@@ -120,7 +120,7 @@ let cbGetTheme = function (r) {
         let data = res.data
         
         let themeArr = data.theme
-        log('theme data', data)
+        //log('theme data', data)
         genTheme(themeArr)
         let page = data.page
         genPage(page)

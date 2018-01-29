@@ -51,16 +51,19 @@ class Theme {
         let collect_pep = doc.browseInfo.collect_pep
         let newCollects = toggleArr(user_id, collect_pep)
         let dealUp = await themeMongo.updateOne({_id:theme_id}, {'browseInfo.collect_pep': newCollects})
-        let len = newCollects.length
 
         // user collect lists
         let userDoc = await userModel.getInfo({user_id:user_id})
-        // log('userDoc', userDoc)
         let collect_list = userDoc.data.collect_list
         let newCollectList = toggleArr(theme_id, collect_list)
         let dealUser = await userModel.updateInfo({user_id:user_id}, {'collect_list': newCollects})
-        // log('dealUser操作', newCollectList, dealUser)
-        let obj = resMsg(len, '成功')
+        
+        let is_collect = (newCollects.indexOf(user_id) != -1)
+         log('is_collect操作', is_collect)
+        let data = {
+            is_collect:is_collect,
+        }
+        let obj = resMsg(data, '成功')
         return obj
     }
 
@@ -111,7 +114,7 @@ class Theme {
         return obj
     }
     
-    static async detail (form = {}) {
+    static async detail (form = {}, user_id) {
         //log('theme detail form', form)
         let doc = await themeMongo.findOne(form)
         //log(' detail doc', doc)
@@ -121,7 +124,7 @@ class Theme {
             obj = resMsg(null, '此话题不存在或已被删除。', false)
         } else {
             let that = new this()
-            let newDoc = await that.dealOne(doc)
+            let newDoc = await that.dealOne(doc, user_id)
             //数字增加的写法
             let suc = await themeMongo.updateOne(form, {$inc: {'browseInfo.view_num': 1}})
             //log('数字增加的写法', suc)
@@ -145,13 +148,19 @@ class Theme {
         return suc
     }
     
-    async dealOne (form = {}) {
+    async dealOne (form = {}, user_id) {
         let obj = await dealDate(form)
         let userAllInfo = await userModel.getInfo({user_id: obj.user_id})
         obj.userInfo = getKey(userAllInfo.data, 'username', 'user_id', 'avatar')
         
         let topicAllInfo = await topicModel.findOne({_id: obj.topic_id})
         obj.topicInfo = getKey(topicAllInfo, '_id', 'enName', 'cnName')
+        
+        //是否收藏
+        let collArr = obj.browseInfo.collect_pep
+        let is_collect = (collArr.indexOf(user_id) != -1)
+        log('chuli houde ', obj.browseInfo.collect_pep, is_collect)
+        obj.is_collect = is_collect
         return obj
     }
     

@@ -107,11 +107,14 @@ let cbThemeColl = function (e) {
     apiThemeColl(theme_id, function (r) {
         let res = JSON.parse(r.response)
         if (res.success) {
-            let names = ['收藏', '取消收藏']
-            let classes = ['', '']
-            //1.改变class
-            //2.改变data-action
-            //3.根据action作出相应的变化，无非就是上面两个加上相应的url
+            let collect = {
+                class:['', 'collect-success'],
+                text:['收藏', '取消收藏'],
+            }
+            let is_collect = res.data.is_collect ? 1 : 0
+            log('res.data', res.data)
+            toggleClass('collect-success', '.button-theme-collect')
+            $('.button-theme-collect').text(collect.text[is_collect])
         }
     })
 }

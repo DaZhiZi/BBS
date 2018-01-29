@@ -56,7 +56,13 @@ let transInfoData = function (obj) {
 }
 
 let themeInfoTem = function (obj) {
-    //log('themeInfoTem', obj)
+    //log('themeInfoTem', obj.is_collect)
+    //初始化时判断obj.is_collect--是否为收藏
+    let collect = {
+        class:['', 'collect-success'],
+        text:['收藏', '取消收藏'],
+    }
+    let is_collect = obj.is_collect ? 1 : 0
     let html = `
         <div class="header theme-header" data-theme_id="${obj._id}">
             <span class="theme-full-title">
@@ -67,7 +73,7 @@ let themeInfoTem = function (obj) {
                 <span>作者 <a href="/user/${obj.userInfo.username}">${obj.userInfo.username}</a></span>
                 <span>${obj.browseInfo.view_num} 次浏览</span>
                 <span> 来自 ${obj.topicInfo.cnName}</span>
-                <button class="button-theme-collect pull-right">收藏</button>
+                <button class="button-theme-collect pull-right ${collect.class[is_collect]}">${collect.text[is_collect]}</button>
             </div>
         </div>
         <div class="inner">
