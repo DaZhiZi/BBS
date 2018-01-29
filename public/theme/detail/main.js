@@ -57,6 +57,7 @@ let cbAddReply = function (event) {
     addReply(data, function (r) {
         let res = JSON.parse(r.response)
         if (res.success) {
+            $('.all-reply').show()
             let data = res.data
             let reply_num = $('.cell-reply').length
             let html = addReplyTem(data, reply_num)

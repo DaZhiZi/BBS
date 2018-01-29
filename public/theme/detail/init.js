@@ -149,14 +149,17 @@ let cbAllReply = function (r) {
     let res = JSON.parse(r.response)
     if (res.success) {
         let data = res.data
-        for (var i = 0; i < data.length; i++) {
-            let obj = data[i]
-            //log('data[i]', data[i])
-            obj.content = marked(obj.content)
-            let html = allReplyInfoTem(obj, i)
-            $('.all-reply').append(html)
+        if (data.length == 0) {
+            $('.all-reply').hide()
+        } else {
+            for (var i = 0; i < data.length; i++) {
+                let obj = data[i]
+                //log('data[i]', data[i])
+                obj.content = marked(obj.content)
+                let html = allReplyInfoTem(obj, i)
+                $('.all-reply').append(html)
+            }
         }
-        
     }
 }
 
