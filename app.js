@@ -43,13 +43,14 @@ const topic = require('./routes/topic')
 const theme = require('./routes/theme')
 const user = require('./routes/user')
 const reply = require('./routes/reply')
-
+const admin = require('./routes/admin')
 //注册路由
 app.use('/', index)
 app.use('/user', user)
 app.use('/topic', topic)
 app.use('/theme', theme)
 app.use('/reply', reply)
+app.use('/admin', admin)
 
 //运行服务
 const run = (port = 8081, host = '') => {

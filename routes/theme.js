@@ -41,7 +41,7 @@ router.get('/detail/:_id', async (request, response) => {
 
 //请求详情数据
 router.get('/detail/data/:_id', async (request, response) => {
-    log('request.session', request.session.user_id)
+    //log('request.session', request.session.user_id)
     let user_id = request.session.user_id
     let form = {_id: request.params._id}
     const msg = await Model.detail(form, user_id)
@@ -55,14 +55,14 @@ router.get('/noReply', async (request, response) => {
 
 router.post('/remove', async (request, response) => {
     //验证用户权限
-    log('delete response.body', request.body)
+    //log('delete response.body', request.body)
     let id = request.body._id
     const msg = await Model.remove(id)
     response.json(msg)
 })
 
 router.post('/collect', async (request, response) => {
-    log('request.body', request.body, request.session)
+    //log('request.body', request.body, request.session)
     let theme_id = request.body.theme_id
     let user_id = request.session.user_id
     const msg = await Model.collect(theme_id, user_id)

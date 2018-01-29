@@ -59,7 +59,7 @@ class Theme {
         let dealUser = await userModel.updateInfo({user_id:user_id}, {'collect_list': newCollects})
         
         let is_collect = (newCollects.indexOf(user_id) != -1)
-         log('is_collect操作', is_collect)
+        //log('is_collect操作', is_collect)
         let data = {
             is_collect:is_collect,
         }
