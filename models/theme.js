@@ -71,7 +71,11 @@ class Theme {
         let sortRule = {}
         let pageLimits = 2
         let pageSkip = (pageNum > 0) ? (pageNum - 1) : 1
-        let con = {_delete: false}
+        let con = {
+            _delete: false,
+            top:false,
+            lock:false,
+        }
         if (form.topic_id != 'all') {
             con.topic_id = form.topic_id
         }
@@ -142,9 +146,9 @@ class Theme {
         return obj
     }
     
-    static async plusreply_num (form = {}) {
+    static async plus_reply_num (form = {}) {
         let suc = await themeMongo.updateOne({_id: form.theme_id}, {$inc: {'browseInfo.reply_num': 1}})
-        //log('plusreply_num 数字增加的写法 ', suc, form)
+        //log('plus_reply_num 数字增加的写法 ', suc, form)
         return suc
     }
     
@@ -158,9 +162,7 @@ class Theme {
         
         //是否收藏
         let collArr = obj.browseInfo.collect_pep
-        let is_collect = (collArr.indexOf(user_id) != -1)
-        log('chuli houde ', obj.browseInfo.collect_pep, is_collect)
-        obj.is_collect = is_collect
+        obj.is_collect = (collArr.indexOf(user_id) != -1)
         return obj
     }
     

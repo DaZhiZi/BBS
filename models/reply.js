@@ -33,7 +33,7 @@ class Reply {
         
         let themeModel = require('./theme')
         
-        let suc = await themeModel.plusreply_num({theme_id: form.theme_id})
+        let suc = await themeModel.plus_reply_num({theme_id: form.theme_id})
         //log('添加用户信息后的suc', suc)
         let obj = resMsg(newDoc, '回复添加成功')
         return obj
