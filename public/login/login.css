@@ -5,10 +5,13 @@ body {
 }
 
 .div-container {
+	position: absolute;
+	left: 50%;
+	top: 50%;
+	transform: translate(-50%,-50%);
 	text-align: center;
 	background-color: #fff;
 	width: 360px;
-	margin: 150px auto 0px auto;
 	padding: 20px 30px 15px 30px;
 	border-radius: 7px
 }
@@ -22,6 +25,7 @@ body {
 	line-height: 30px;
 	border: 0px;
 	box-shadow: none;
+	padding-left: 10px;
 }
 .div-container button {
     height: 30px;
@@ -50,6 +54,6 @@ body {
 	border-left: 2px solid #44B6AE;
 	border-radius: 4px;
 }
-.form-control:focus {
-	box-shadow:none;
+.input-icon .fa {
+	color: #ccc;
 }
