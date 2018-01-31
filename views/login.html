@@ -4,16 +4,22 @@
     <meta charset="UTF-8">
     <title>注册</title>
     <link rel="stylesheet" href="/source/bootstrap/css/bootstrap.css">
+	<link rel="stylesheet" href="/source/font-awesome/css/font-awesome.css">
     <link rel="stylesheet" href="/source/common.css">
     <link rel="stylesheet" href="/login/login.css">
 
 </head>
 <body>
 <div class="div-container">
-    <h1>请登录或注册</h1>
-    <input type="text" placeholder="用户名" id="id-input-username">
-    <br>
-    <input type="text" placeholder="密码" id="id-input-password">
+    <h3 class="login-title">请登录或注册</h3>
+	<div class="input-icon">
+		<i class="fa fa-user"></i>
+		<input id="id-input-username" type="text" placeholder="用户名"/>
+	</div>
+	<div class="input-icon">
+		<i class="fa fa-lock"></i>
+		<input id="id-input-password" type="password" placeholder="密码"/>
+	</div>
     <br>
     <button id="id-button-login">登录</button>
     <button id="id-button-register">注册</button>

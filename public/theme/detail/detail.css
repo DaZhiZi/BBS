@@ -114,3 +114,6 @@
 .content .panel.theme-main {
 	margin-bottom: 20px ;
 }
+.markdown-body {
+	padding: 5px 10px;
+}

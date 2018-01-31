@@ -82,7 +82,6 @@ let pageTem = function (obj) {
     let pageArr = pages(obj.pageNum, obj.pageTotal)
     let temStr = `
         <ul class="pagination">
-            <li><a href="#">&laquo;</a></li>
             <li><a data-num="1">首页</a></li>
             {% for num in pageArr %}
                 {% if num == ${obj.pageNum} %}
@@ -92,7 +91,6 @@ let pageTem = function (obj) {
                 {% endif %}
             {% endfor %}
             <li><a data-num="{{pageTotal}}"">尾页</a></li>
-            <li><a href="#">&raquo;</a></li>
         </ul>
     `
     let o = {
@@ -130,8 +128,10 @@ let cbGetTheme = function (r) {
 let noRepTheme = function (obj) {
     let html = `
         <li>
-            <div><a class="dark topic_title" href="/theme/detail/${obj._id}"
-            title="${obj.title}">${obj.title}</a>
+            <div>
+                <a class="dark topic_title" href="/theme/detail/${obj._id}" title="${obj.title}">
+                    ${obj.title}
+                </a>
             </div>
         </li>
     `
