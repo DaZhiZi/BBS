@@ -175,7 +175,11 @@ img {
     border-radius: 3px;
     font-size: 12px;
 }
-
+.topic-type.top,
+.topic-type.good {
+	color: #fff;
+	background-color: #80bd01;
+}
 .panel .inner, .panel .inner li {
     line-height: 2em;
 }

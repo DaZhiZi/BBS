@@ -68,8 +68,16 @@ class Theme {
     }
 
     static async all (form = {}, pageNum=1) {
-        let sortRule = {}
-        let pageLimits = 2
+        let top_theme = []
+        if (pageNum == 1) {
+            top_theme = await themeMongo.find({
+                _delete: false,
+                top:true,
+            })
+        }
+        log('pageNum', pageNum)
+    
+        let pageLimits = 2 - top_theme.length
         let pageSkip = (pageNum > 0) ? (pageNum - 1) : 1
         let con = {
             _delete: false,
@@ -80,8 +88,11 @@ class Theme {
             con.topic_id = form.topic_id
         }
         let doc = await themeMongo.find(con).skip(pageSkip).limit(pageLimits)
+        // 查询出来的是一个array，
+        // 所以只需要先得到置顶帖的array，然后两者concat即可。
+        //log('all theme doc', doc.length, )
         // 分页信息
-        let themeNum = await themeMongo.count(con)
+        let themeNum = await themeMongo.count({_delete: false})
         let pageTotal = Math.ceil(themeNum / pageLimits)
         let obj = {}
         let data = {
@@ -95,7 +106,8 @@ class Theme {
             obj = resMsg(data, '请求失败', false)
         } else {
             let that = new this()
-            let newDoc = await that.dealAll(doc)
+            let allTheme = top_theme.concat(doc)
+            let newDoc = await that.dealAll(allTheme)
             data.theme = newDoc
             obj = resMsg(data, '所有主题请求成功')
         }
@@ -166,27 +178,45 @@ class Theme {
         return obj
     }
     
-    async dealAll (form = []) {
-        
+    async dealAll (themeList = []) {
+        let arr = []
         //需要考虑，某个字段没有的情况。比如现在没有回复，哪最后的回复怎么办。
-        for (var i = 0; i < form.length; i++) {
-            form[i] = await dealDate(form[i])
-            let userAllInfo = await userModel.getInfo({user_id: form[i].user_id})
-            form[i].userInfo = getKey(userAllInfo.data, 'username', 'user_id', 'avatar')
+        for (var i = 0; i < themeList.length; i++) {
+            let single = themeList[i]
+            single = await dealDate(single)
+            let userAllInfo = await userModel.getInfo({user_id: single.user_id})
+            single.userInfo = getKey(userAllInfo.data, 'username', 'user_id', 'avatar')
             
-            let topicAllInfo = await topicModel.findOne({_id: form[i].topic_id})
-            form[i].topicInfo = getKey(topicAllInfo, '_id', 'enName', 'cnName')
+            // todo: 写个单独的函数处理topic问题
+            let topicAllInfo = await topicModel.findOne({_id: single.topic_id})
+            single.topicInfo = getKey(topicAllInfo, '_id', 'enName', 'cnName')
+            let topTopic = {
+                enName:'top',
+                cnName:'置顶',
+            }
+            if (single.top == true) {
+                single.topicInfo = topTopic
+            }
+            let goodTopic = {
+                enName:'good',
+                cnName:'精华',
+            }
+            if (single.good == true) {
+                single.topicInfo = goodTopic
+            }
             
-            let theme_id = form[i]._id
+            let theme_id = single._id
             let replyDoc = await replyModel.last({theme_id: theme_id})
-            form[i].lastReplyInfo = replyDoc
+            single.lastReplyInfo = replyDoc
             
             //回复的数量
             let docAll = await replyModel.all({theme_id: theme_id})
-            form[i].browseInfo.reply_num = docAll.data.length
-            //log('所有的回复docAll', docAll.data.length)
+            single.browseInfo.reply_num = docAll.data.length
+            
+            //log('single', single.userInfo, i)
+            arr.push(single)
         }
-        return form
+        return arr
     }
 }
 
