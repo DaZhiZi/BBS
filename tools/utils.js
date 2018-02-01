@@ -86,8 +86,9 @@ obj.sendHtml = function (response, path) {
         encoding: 'utf-8'
     }
     realPath = './views' + path
+    console.log('realPath', realPath)
     fs.readFile(realPath, options, function (err, data) {
-        response.set('Content-Type', 'text/html');
+        //response.set('Content-Type', 'text/html');
         response.send(data)
     })
 }

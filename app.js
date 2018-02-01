@@ -44,6 +44,7 @@ const theme = require('./routes/theme')
 const user = require('./routes/user')
 const reply = require('./routes/reply')
 const admin = require('./routes/admin')
+
 //注册路由
 app.use('/', index)
 app.use('/user', user)

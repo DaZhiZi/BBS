@@ -13,10 +13,6 @@ router.get('/login', (request, response) => {
     sendHtml(response, '/login.html')
 })
 
-router.get('/admin', (request, response) => {
-    sendHtml(response, '/admin.html')
-})
-
 router.post('/login', async (request, response) => {
     const form = request.body
     const msg = await userModel.login(form)
