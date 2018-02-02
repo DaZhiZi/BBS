@@ -29,7 +29,7 @@ router.get('/topic/:topic_id', async (request, response) => {
     //log('不带page request.path', request.path, request.query)
     let pageNum = request.query.page
     let topic_id = request.params.topic_id
-    log('router pageNum', pageNum)
+    //log('router pageNum', pageNum)
     const msg = await Model.all({topic_id: topic_id}, pageNum)
     response.json(msg)
 })

@@ -68,17 +68,6 @@ class Theme {
     }
 
     static async all (form = {}, pageNum=1) {
-        let top_theme = []
-        if (pageNum == 1) {
-            top_theme = await themeMongo.find({
-                _delete: false,
-                top:true,
-            })
-        }
-        log('pageNum', pageNum)
-    
-        let pageLimits = 2 - top_theme.length
-        let pageSkip = (pageNum > 0) ? (pageNum - 1) : 1
         let con = {
             _delete: false,
             top:false,
@@ -87,31 +76,43 @@ class Theme {
         if (form.topic_id != 'all') {
             con.topic_id = form.topic_id
         }
-        let doc = await themeMongo.find(con).skip(pageSkip).limit(pageLimits)
-        // 查询出来的是一个array，
-        // 所以只需要先得到置顶帖的array，然后两者concat即可。
-        //log('all theme doc', doc.length, )
-        // 分页信息
-        let themeNum = await themeMongo.count({_delete: false})
-        let pageTotal = Math.ceil(themeNum / pageLimits)
-        let obj = {}
+        let that = new this()
+        // 分页和top帖信息
+        let info = await that.page_top(form, pageNum, con)
+        let {data, top_theme} = info
+    
+        let top_num = top_theme.length
+        let pageSkip = (pageNum - 1) * 2 - top_num
+        let skips = pageSkip > 0 ? pageSkip : 0
+        let limits = (pageNum == 1) ? (2 - top_num) : 2
+        log('limits, skips', limits, skips)
+        let doc = await themeMongo.find(con).skip(skips).limit(limits)
+        let allTheme = (pageNum == 1) ? top_theme.concat(doc) : doc
+        let newDoc = await that.dealAll(allTheme)
+        data.theme = newDoc
+        let obj = resMsg(data, '所有主题请求成功')
+        return obj
+    }
+    
+    async page_top (form = {}, pageNum = 1, con) {
+        let top_theme = await themeMongo.find({
+            _delete: false,
+            top    : true,
+        })
+        
+        let themeNum = await themeMongo.count(con)
+        let allTheme = themeNum + top_theme.length
+        let pageTotal = Math.ceil(allTheme / 2)
         let data = {
-            page:{
-                pageNum:pageNum,
-                pageTotal:pageTotal,
+            page: {
+                pageNum  : pageNum,
+                pageTotal: pageTotal,
             }
         }
-        if (doc == null) {
-            data.theme = null
-            obj = resMsg(data, '请求失败', false)
-        } else {
-            let that = new this()
-            let allTheme = top_theme.concat(doc)
-            let newDoc = await that.dealAll(allTheme)
-            data.theme = newDoc
-            obj = resMsg(data, '所有主题请求成功')
+        return {
+            data     : data,
+            top_theme: top_theme,
         }
-        return obj
     }
     
     static async noReply () {
@@ -183,6 +184,9 @@ class Theme {
         //需要考虑，某个字段没有的情况。比如现在没有回复，哪最后的回复怎么办。
         for (var i = 0; i < themeList.length; i++) {
             let single = themeList[i]
+            if (single == null) {
+                continue
+            }
             single = await dealDate(single)
             let userAllInfo = await userModel.getInfo({user_id: single.user_id})
             single.userInfo = getKey(userAllInfo.data, 'username', 'user_id', 'avatar')
