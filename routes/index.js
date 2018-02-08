@@ -15,8 +15,9 @@ router.get('/login', (request, response) => {
 
 router.post('/login', async (request, response) => {
     const form = request.body
+    //log('request.session form before', form)
     const msg = await userModel.login(form)
-    //log('request.session', msg.data)
+    //log('request.session form after', form)
     request.session = msg.data
     response.json(msg)
 })
