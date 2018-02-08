@@ -17,6 +17,7 @@ const {log} = require('../../tools/utils')
 
 describe('test/controllers/site.test.js', function () {
     //所有单元测试执行前的钩子
+    // 对于POST请求添加的数据，应该在test执行完之后，删除掉。
     const loginInfo = {
         username: 'test',
         password: 'test',
@@ -70,7 +71,7 @@ describe('test/controllers/site.test.js', function () {
     })
     
     //错误的topic ID，
-    it('theme add HTML / 200 POST', function (done) {
+    it('theme add wrong topic_id / 200 POST', function (done) {
         authenticatedUser
             .post('/theme/add')
             .send({
@@ -88,4 +89,39 @@ describe('test/controllers/site.test.js', function () {
             })
     })
     
+    it('theme /topic/:topic_id / 200 GET', function (done) {
+        authenticatedUser
+            .get('/theme/topic/5a5563bcfafcbc23d01acf06')
+            .expect(200)
+            .end(function (err, res) {
+                if (err) done(err)
+                let resBody = JSON.parse(res.text)
+                //log('resBody', resBody)
+                resBody.success.should.be.ok()
+                //拥有某个属性，且值等于第二个参数
+                resBody.data.theme.should.be.instanceof(Array)
+                resBody.data.should.have.property('page')
+                ////拥有某个属性
+                //resBody.data.should.have.property('_id')
+                done()
+            })
+    })
+    //todo 错误的topic_id应该加以处理程序
+    it('theme /topic/:topic_id wrong topic_id', function (done) {
+        authenticatedUser
+            .get('/theme/topic/5a5563bcfafcbc23d01acf0600')
+            .expect(200)
+            .end(function (err, res) {
+                if (err) done(err)
+                let resBody = JSON.parse(res.text)
+                log('resBody', resBody.data.theme)
+                resBody.success.should.be.ok()
+                //拥有某个属性，且值等于第二个参数
+                resBody.data.theme.should.be.instanceof(Array)
+                resBody.data.should.have.property('page')
+                ////拥有某个属性
+                //resBody.data.should.have.property('_id')
+                done()
+            })
+    })
 })
