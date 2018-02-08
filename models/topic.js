@@ -55,6 +55,21 @@ class Topic {
         return newDoc
     }
     
+    // 验证topic是否存在
+    static async test (form = {}) {
+        //log('topic test form', form)
+        let doc
+        try {
+            doc = await topicMongo.findOne(form)
+        } catch (err) {
+            return false
+        }
+        if (doc == null) {
+            return false
+        }
+        return true
+    }
+    
     dealAll (doc = []) {
         for (var i = 0; i < doc.length; i++) {
             doc[i] = dealDate(doc[i])

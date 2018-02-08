@@ -11,8 +11,8 @@ router.get('/new', async (request, response) => {
 })
 
 router.post('/add', async (request, response) => {
-    log('request.session', request.session)
-    log('request.body', request.body)
+    //log('request.session', request.session)
+    //log('request.body', request.body)
     let form = request.body
     let userInfo = request.session
     let msg = ''

@@ -38,12 +38,20 @@ var themeMongo = mongoose.model('theme', themeSchema)
 class Theme {
     static async add (form = {}, userInfo) {
         form.user_id = userInfo.user_id
+        let valid = await topicModel.test({_id: form.topic_id})
+        log('valid', valid)
+        if (valid == true) {
+            let doc = await themeMongo.create(form)
+            let obj = resMsg(doc, 'theme添加成功')
+            return obj
+        } else {
+            let obj = resMsg(null, 'theme添加失败', false)
+            return obj
+        }
         // log('form.userInfo', form.userInfo)
         // 应该添加topic_id验证
         // 或者说应该在全局验证一些POST请求
-        let doc = await themeMongo.create(form)
-        let obj = resMsg(doc, '注册成功')
-        return obj
+
     }
 
     static async collect (theme_id, user_id) {
@@ -86,7 +94,7 @@ class Theme {
         let pageSkip = (pageNum - 1) * 2 - top_num
         let skips = pageSkip > 0 ? pageSkip : 0
         let limits = (pageNum == 1) ? (2 - top_num) : 2
-        log('limits, skips', limits, skips)
+        //log('limits, skips', limits, skips)
         let doc = await themeMongo.find(con).skip(skips).limit(limits)
         let allTheme = (pageNum == 1) ? top_theme.concat(doc) : doc
         let newDoc = await that.dealAll(allTheme)

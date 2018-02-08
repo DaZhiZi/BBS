@@ -83,12 +83,7 @@ describe('test/controllers/site.test.js', function () {
                 if (err) done(err)
                 let resBody = JSON.parse(res.text)
                 //log('resBody', resBody)
-                resBody.success.should.be.ok()
-                //拥有某个属性，且值等于第二个参数
-                resBody.data.should.have.property('title', '单元测试')
-                resBody.data.should.have.property('user_id', 'c475c1f5-41af-4ae7-9d6b-195fefa0ec68')
-                //拥有某个属性
-                resBody.data.should.have.property('_id')
+                resBody.success.should.not.be.ok()
                 done()
             })
     })
