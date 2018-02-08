@@ -1,7 +1,7 @@
 var should = require('should')
 var config = require('../../tools/config')
 var app = require('../../app')
-var request = require('supertest')(app)
+var request = require('supertest')
 const index = require('../../routes/index')
 var {log} = require('../../tools/utils')
 /*
@@ -16,13 +16,26 @@ var {log} = require('../../tools/utils')
 */
 
 describe('test/controllers/site.test.js', function () {
+    const loginInfo = {
+        username: 'test',
+        password: 'test',
+    }
+    const authenticatedUser = request.agent(app)
+    before(function (done) {
+        authenticatedUser
+            .post('/login')
+            .send(loginInfo)
+            .end(function (err, res) {
+                res.status.should.equal(200)
+                done(err)
+            })
+    })
     
     it('should / 200', function (done) {
-        request.get('/').end(function (err, res) {
-            log('res', res.status)
+        authenticatedUser.get('/').end(function (err, res) {
+            log('res status test', res.status)
             res.status.should.equal(200)
-            res.text.should.containEql('无人回复的话题')
-            res.text.should.containEql('友情社区')
+            res.text.should.containEql('bbs-首页')
             done(err)
         })
     })

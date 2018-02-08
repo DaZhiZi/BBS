@@ -38,8 +38,9 @@ var themeMongo = mongoose.model('theme', themeSchema)
 class Theme {
     static async add (form = {}, userInfo) {
         form.user_id = userInfo.user_id
-        //log('form.userInfo', form.userInfo)
-        //应该添加注册验证
+        // log('form.userInfo', form.userInfo)
+        // 应该添加topic_id验证
+        // 或者说应该在全局验证一些POST请求
         let doc = await themeMongo.create(form)
         let obj = resMsg(doc, '注册成功')
         return obj
