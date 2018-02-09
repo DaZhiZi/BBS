@@ -206,7 +206,7 @@ let apiGetPage = function (callback, pageNum) {
 let switchPage = function (e) {
     let target = e.target
     let pageNum = target.dataset.num
-    log('pageNum', pageNum)
+    //log('pageNum', pageNum)
     apiGetPage(cbGetTheme, pageNum)
 }
 

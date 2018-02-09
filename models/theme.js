@@ -39,7 +39,7 @@ class Theme {
     static async add (form = {}, userInfo) {
         form.user_id = userInfo.user_id
         let valid = await topicModel.test({_id: form.topic_id})
-        log('valid', valid)
+        //log('valid', valid)
         if (valid == true) {
             let doc = await themeMongo.create(form)
             let obj = resMsg(doc, 'theme添加成功')
@@ -84,6 +84,12 @@ class Theme {
         }
         if (form.topic_id != 'all') {
             con.topic_id = form.topic_id
+            let valid = await topicModel.test({_id:form.topic_id})
+            //log('valid model theme', valid)
+            if (valid == false) {
+                let obj = resMsg(null, '不存在该topic', false)
+                return obj
+            }
         }
         let that = new this()
         // 分页和top帖信息

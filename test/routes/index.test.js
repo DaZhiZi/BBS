@@ -33,7 +33,7 @@ describe('test/controllers/site.test.js', function () {
     
     it('should / 200', function (done) {
         authenticatedUser.get('/').end(function (err, res) {
-            log('res status test', res.status)
+            //log('res status test', res.status)
             res.status.should.equal(200)
             res.text.should.containEql('bbs-首页')
             done(err)

@@ -38,7 +38,7 @@ describe('test/controllers/site.test.js', function () {
         authenticatedUser
             .get('/theme/new/')
             .end(function (err, res) {
-            log('res', res.status)
+            //log('theme new res', res.status)
             res.status.should.equal(200)
             res.text.should.containEql('新增帖子')
             res.text.should.containEql('提交新帖子')
@@ -106,7 +106,7 @@ describe('test/controllers/site.test.js', function () {
                 done()
             })
     })
-    //todo 错误的topic_id应该加以处理程序
+    // 错误的topic_id应该加以处理程序
     it('theme /topic/:topic_id wrong topic_id', function (done) {
         authenticatedUser
             .get('/theme/topic/5a5563bcfafcbc23d01acf0600')
@@ -114,11 +114,9 @@ describe('test/controllers/site.test.js', function () {
             .end(function (err, res) {
                 if (err) done(err)
                 let resBody = JSON.parse(res.text)
-                log('resBody', resBody.data.theme)
-                resBody.success.should.be.ok()
+                resBody.success.should.be.false()
                 //拥有某个属性，且值等于第二个参数
-                resBody.data.theme.should.be.instanceof(Array)
-                resBody.data.should.have.property('page')
+                should(resBody.data).be.exactly(null)
                 ////拥有某个属性
                 //resBody.data.should.have.property('_id')
                 done()
