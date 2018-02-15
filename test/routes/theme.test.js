@@ -39,7 +39,7 @@ describe('theme router test', function () {
     after(function(done) {
         // 在本区块的所有测试用例之后执行
         authenticatedUser
-            .post('/user/real_remove')
+            .post('/theme/real_remove')
             .send(remove_test_data)
             .end(function (err, res) {
                 let resBody = JSON.parse(res.text)
