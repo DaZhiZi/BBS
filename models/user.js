@@ -105,17 +105,18 @@ class User {
         //2.更新密码
         let newPass = encrypt(form.newP)
         let doc = await userMongo.update(user, {password: newPass})
-        //log('更新之后的密码', doc)
+        // log('更新之后的密码', doc)
         //3.更新session
         let con = (doc != null)
-        let obj = {}
         if (con) {
             request.session.password = newPass
-            obj = resMsg(null, '密码更新成功')
+            let data = {
+                newPass:newPass,
+            }
+            return resMsg(data, '密码更新成功')
         } else {
-            obj = resMsg(null, '密码更新失败', false)
+            return resMsg(null, '密码更新失败', false)
         }
-        return obj
     }
 
     static async real_remove (form = {}) {

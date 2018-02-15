@@ -44,7 +44,7 @@ router.post('/avatar', upload.single('avatar'), async function (request, respons
 router.post('/password', async function (request, response) {
     let user = request.session
     let form = request.body
-    log('user form', user, form)
+    // log('user/password form', user, form)
     let info = await Model.updatePassword(user, form, request)
     //log('user 返回值', info)
     response.send(info)

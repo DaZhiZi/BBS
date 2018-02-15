@@ -82,7 +82,7 @@ describe('theme router test', function () {
                 // resBody.data.should.have.property('user_id', 'c475c1f5-41af-4ae7-9d6b-195fefa0ec68')
                 //拥有某个属性
                 resBody.data.should.have.property('_id')
-                done()
+                done(err)
             })
     })
     
@@ -101,7 +101,7 @@ describe('theme router test', function () {
                 let resBody = JSON.parse(res.text)
                 //log('resBody', resBody)
                 resBody.success.should.be.false()
-                done()
+                done(err)
             })
     })
     
@@ -119,7 +119,7 @@ describe('theme router test', function () {
                 resBody.data.should.have.property('page')
                 ////拥有某个属性
                 //resBody.data.should.have.property('_id')
-                done()
+                done(err)
             })
     })
     // 错误的topic_id应该加以处理程序
@@ -135,7 +135,7 @@ describe('theme router test', function () {
                 should(resBody.data).be.exactly(null)
                 ////拥有某个属性
                 //resBody.data.should.have.property('_id')
-                done()
+                done(err)
             })
     })
 
