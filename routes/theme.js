@@ -44,7 +44,9 @@ router.get('/detail/:_id', async (request, response) => {
 router.get('/detail/data/:_id', async (request, response) => {
     //log('request.session', request.session.user_id)
     let user_id = request.session.user_id
-    let form = {_id: request.params._id}
+    let form = {
+        _id: request.params._id
+    }
     const msg = await Model.detail(form, user_id)
     response.json(msg)
 })
@@ -57,8 +59,8 @@ router.get('/noReply', async (request, response) => {
 router.post('/remove', async (request, response) => {
     //验证用户权限
     //log('delete response.body', request.body)
-    let id = request.body._id
-    const msg = await Model.remove(id)
+    let _id = request.body._id
+    const msg = await Model.remove({_id:_id})
     response.json(msg)
 })
 
@@ -67,6 +69,13 @@ router.post('/collect', async (request, response) => {
     let theme_id = request.body.theme_id
     let user_id = request.session.user_id
     const msg = await Model.collect(theme_id, user_id)
+    response.json(msg)
+})
+// 专门用于删除测试数据
+router.post('/real_remove', async (request, response) => {
+    //log('request.body', request.body, request.session)
+    let form = request.body
+    const msg = await Model.real_remove(form)
     response.json(msg)
 })
 

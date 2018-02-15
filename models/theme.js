@@ -55,6 +55,10 @@ class Theme {
     }
 
     static async collect (theme_id, user_id) {
+        let valid = await this.test({_id:theme_id})
+        if (valid == false) {
+            return resMsg(null, 'theme_id错误', false)
+        }
         // theme collect lists
         let doc = await themeMongo.findOne({_id:theme_id})
         let collect_pep = doc.browseInfo.collect_pep
@@ -147,10 +151,14 @@ class Theme {
     }
     
     static async detail (form = {}, user_id) {
+        let valid = await this.test(form)
+        if (valid == false) {
+            return resMsg(null, 'Theme参数错误', false)
+        }
         //log('theme detail form', form)
         let doc = await themeMongo.findOne(form)
-        //log(' detail doc', doc)
-        
+        // log(' detail doc', doc)
+
         let obj = {}
         if (doc == null) {
             obj = resMsg(null, '此话题不存在或已被删除。', false)
@@ -236,6 +244,38 @@ class Theme {
             arr.push(single)
         }
         return arr
+    }
+
+    static async test (form = {}) {
+        //log('topic test form', form)
+        let doc
+        try {
+            doc = await themeMongo.findOne(form)
+        } catch (err) {
+            return false
+        }
+        return doc !== null
+    }
+    static async remove (form = {}) {
+        //log('topic test form', form)
+        let doc
+        try {
+            doc = await themeMongo.update(form, {_delete:true})
+        } catch (err) {
+            return false
+        }
+        return doc !== null
+    }
+
+    static async real_remove (form = {}) {
+        //log('topic test form', form)
+        let doc
+        try {
+            doc = await themeMongo.remove(form)
+        } catch (err) {
+            return false
+        }
+        return doc !== null
     }
 }
 
