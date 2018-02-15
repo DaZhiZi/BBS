@@ -16,7 +16,7 @@ const {log} = require('../../tools/utils')
 3. 对POST请求，事后删除添加的数据。
 */
 
-describe('theme router', function () {
+describe('theme router test', function () {
     //所有单元测试执行前的钩子
     // 对于POST请求添加的数据，应该在test执行完之后，删除掉。
     const loginInfo = {
@@ -37,20 +37,21 @@ describe('theme router', function () {
         'title'   : '单元测试',
         'content' : '单元测试新增主题测试',
     }
-    after(function() {
+    after(function(done) {
         // 在本区块的所有测试用例之后执行
         authenticatedUser
-            .post('/theme/real_remove')
+            .post('/user/real_remove')
             .send(remove_test_data)
             .end(function (err, res) {
+                let resBody = JSON.parse(res.text)
                 res.status.should.equal(200)
+                resBody.should.be.ok()
                 done(err)
             })
     });
 
-
     //HTML 请求
-    it('theme new HTML / 200', function (done) {
+    it('GET /new HTML', function (done) {
         authenticatedUser
             .get('/theme/new/')
             .end(function (err, res) {
@@ -63,7 +64,7 @@ describe('theme router', function () {
     })
     //POST请求，预先执行登录程序
     // 正确的用户名和密码
-    it('theme add HTML / 200 POST', function (done) {
+    it('POST /add AJAX', function (done) {
         authenticatedUser
             .post('/theme/add')
             .send({
@@ -87,7 +88,7 @@ describe('theme router', function () {
     })
     
     //错误的topic ID，
-    it('theme add wrong topic_id / 200 POST', function (done) {
+    it('POST /add AJAX dirty', function (done) {
         authenticatedUser
             .post('/theme/add')
             .send({
@@ -105,7 +106,7 @@ describe('theme router', function () {
             })
     })
     
-    it('theme /topic/:topic_id / 200 GET', function (done) {
+    it('GET /topic/:topic_id AJAX', function (done) {
         authenticatedUser
             .get('/theme/topic/5a3ca28bb2ddd607a81be0a5')
             .expect(200)
@@ -123,7 +124,7 @@ describe('theme router', function () {
             })
     })
     // 错误的topic_id应该加以处理程序
-    it('theme /topic/:topic_id wrong topic_id', function (done) {
+    it('GET /topic/:topic_id AJAX dirty', function (done) {
         authenticatedUser
             .get('/theme/topic/5a5563bcfafcbc23d01acf0600')
             .expect(200)
@@ -139,7 +140,7 @@ describe('theme router', function () {
             })
     })
 
-    it('theme detail HTML / 200 GET', function (done) {
+    it('GET /detail/:theme_id AJAX', function (done) {
         authenticatedUser
             .get('/theme/detail/5a434a4ceb1bb9078cd12065')
             .end(function (err, res) {
@@ -150,7 +151,7 @@ describe('theme router', function () {
             })
     })
 
-    it('theme detail data AJAX / 200 GET', function (done) {
+    it('GET /detail/data/:theme_id AJAX', function (done) {
         authenticatedUser
             .get('/theme/detail/data/5a434a4ceb1bb9078cd12065')
             .expect(200)
@@ -166,9 +167,9 @@ describe('theme router', function () {
             })
     })
     // 对错误 _id 要有统一的处理方式
-    it('wrong theme detail data AJAX / 200 GET', function (done) {
+    it('GET /detail/data/:theme_id AJAX dirty', function (done) {
         authenticatedUser
-            .get('/theme/detail/data/5a434a4ceb1bb9078cd120650')
+            .get('/theme/detail/data/5a434a4ceb1bb9078cd120')
             .expect(200)
             .end(function (err, res) {
                 if (err) done(err)
@@ -179,7 +180,7 @@ describe('theme router', function () {
             })
     })
 
-    it('theme noReply data AJAX / 200 GET', function (done) {
+    it('GET /noReply AJAX', function (done) {
         authenticatedUser
             .get('/theme/noReply')
             .expect(200)
@@ -193,7 +194,7 @@ describe('theme router', function () {
             })
     })
 
-    it('theme collect data AJAX post', function (done) {
+    it('POST /collect AJAX', function (done) {
         authenticatedUser
             .post('/theme/collect')
             .send({
@@ -209,7 +210,7 @@ describe('theme router', function () {
             })
     })
 
-    it('collect AJAX post wrong theme_id', function (done) {
+    it('POST /collect AJAX dirty', function (done) {
         authenticatedUser
             .post('/theme/collect')
             .send({

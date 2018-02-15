@@ -15,7 +15,7 @@ var {log} = require('../../tools/utils')
     POST:   success--true OR false, data.username(或其他字段的判断, Object contain)
 */
 
-describe('test/controllers/site.test.js', function () {
+describe('index router test', function () {
     const loginInfo = {
         username: 'test',
         password: 'test',
@@ -30,14 +30,105 @@ describe('test/controllers/site.test.js', function () {
                 done(err)
             })
     })
-    
-    it('should / 200', function (done) {
-        authenticatedUser.get('/').end(function (err, res) {
+
+    const remove_test_data = {
+        username: 'test001',
+    }
+    after(function(done) {
+        // 在本区块的所有测试用例之后执行
+        authenticatedUser
+            .post('/user/real_remove')
+            .send(remove_test_data)
+            .end(function (err, res) {
+                let resBody = JSON.parse(res.text)
+                res.status.should.equal(200)
+                resBody.should.be.ok()
+                done(err)
+            })
+    });
+
+    it('GET / HTML', function (done) {
+        authenticatedUser
+            .get('/')
+            .end(function (err, res) {
             //log('res status test', res.status)
             res.status.should.equal(200)
             res.text.should.containEql('bbs-首页')
             done(err)
         })
     })
-    
+
+    it('GET /login/ HTML', function (done) {
+        request(app)
+            .get('/login/')
+            .end(function (err, res) {
+            //log('res status test', res.status)
+            res.status.should.equal(200)
+            res.text.should.containEql('注册 登录')
+            done(err)
+        })
+    })
+
+    it('POST /login AJAX', function (done) {
+        request(app)
+            .post('/login')
+            .send(loginInfo)
+            .expect(200)
+            .end(function (err, res) {
+                if (err) done(err)
+                let resBody = JSON.parse(res.text)
+                resBody.success.should.be.ok()
+                resBody.data.should.have.property('username', 'test')
+                resBody.data.should.have.property('password')
+                resBody.data.should.have.property('user_id')
+                done(err)
+            })
+    })
+
+    it('POST /login AJAX dirty', function (done) {
+        request(app)
+            .post('/login')
+            .send({
+                username: 'test',
+                password: 'test0',
+            })
+            .expect(200)
+            .end(function (err, res) {
+                if (err) done(err)
+                let resBody = JSON.parse(res.text)
+                resBody.success.should.not.be.ok()
+                should(resBody.data).be.exactly(null)
+                done(err)
+            })
+    })
+
+    it('POST /register AJAX', function (done) {
+        request(app)
+            .post('/register')
+            .send({
+                username: 'test001',
+                password: 'test001',
+            })
+            .expect(200)
+            .end(function (err, res) {
+                if (err) done(err)
+                let resBody = JSON.parse(res.text)
+                resBody.success.should.be.ok()
+                resBody.data.should.have.property('username', 'test001')
+                done(err)
+            })
+    })
+
+    it('GET /logout AJAX', function (done) {
+        authenticatedUser
+            .get('/logout')
+            .expect(200)
+            .end(function (err, res) {
+                if (err) done(err)
+                let resBody = JSON.parse(res.text)
+                resBody.success.should.be.ok()
+                should(resBody.data).be.exactly(null)
+                done(err)
+            })
+    })
 })

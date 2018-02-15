@@ -51,4 +51,11 @@ router.post('/password', async function (request, response) {
     response.send(info)
 })
 
+router.post('/real_remove', async (request, response) => {
+    //log('request.body', request.body, request.session)
+    let form = request.body
+    const msg = await Model.real_remove(form)
+    response.json(msg)
+})
+
 module.exports = router

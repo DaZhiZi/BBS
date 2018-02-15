@@ -34,7 +34,7 @@ class User {
         
         let data = getKey(doc, 'username', 'password')
         let obj = resMsg(data, '注册成功')
-        log('obj user add', obj)
+        // log('obj user add', obj)
         return obj
     }
     
@@ -43,7 +43,7 @@ class User {
         let doc = await userMongo.findOne(form)
         let obj = {}
         if (doc == null) {
-            obj = resMsg(null, '登录失败，用户名或密码错误')
+            obj = resMsg(null, '登录失败，用户名或密码错误', false)
         } else {
             let data = getKey(doc, 'username', 'password', 'admin', 'user_id')
             obj = resMsg(data, '登录成功')
@@ -116,6 +116,17 @@ class User {
             obj = resMsg(null, '密码更新失败', false)
         }
         return obj
+    }
+
+    static async real_remove (form = {}) {
+        //log('topic test form', form)
+        let doc
+        try {
+            doc = await userMongo.remove(form)
+        } catch (err) {
+            return false
+        }
+        return doc !== null
     }
 }
 

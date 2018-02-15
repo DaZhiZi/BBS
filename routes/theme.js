@@ -35,17 +35,17 @@ router.get('/topic/:topic_id', async (request, response) => {
 })
 
 //请求详情页面
-router.get('/detail/:_id', async (request, response) => {
+router.get('/detail/:theme_id', async (request, response) => {
     //验证用户权限
     sendHtml(response, '/theme/detail.html')
 })
 
 //请求详情数据
-router.get('/detail/data/:_id', async (request, response) => {
+router.get('/detail/data/:theme_id', async (request, response) => {
     //log('request.session', request.session.user_id)
     let user_id = request.session.user_id
     let form = {
-        _id: request.params._id
+        _id: request.params.theme_id
     }
     const msg = await Model.detail(form, user_id)
     response.json(msg)
