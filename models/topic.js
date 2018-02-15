@@ -17,9 +17,9 @@ var topicMongo = mongoose.model('topic', topicSchema)
 class Topic {
     static async add (form = {}) {
         //应该添加注册验证
-        log('**前面的topic', form)
+        // log('**前面的topic', form)
         let doc = await topicMongo.create(form)
-        log('添加后topic后的doc', doc)
+        // log('添加后topic后的doc', doc)
         let obj = resMsg(doc, '注册成功')
         return obj
     }
@@ -27,15 +27,24 @@ class Topic {
     static async remove (id = '') {
         //应该添加注册验证
         //log('doc id', id)
+        let doc
         let form = {_id: id}
-        let doc = await topicMongo.update(form, {_delete: true})
-        //log('doc', doc)
-        let obj = resMsg(id, '注册成功')
+        try {
+            doc = await topicMongo.update(form, {_delete: true})
+        } catch(err) {
+            return resMsg(null, 'topic移除错误', false)
+        }
+        // log('topic remove doc', id, doc)
+        let data = {
+            topic_id:id,
+        }
+        let obj = resMsg(data, 'topic移除成功')
         return obj
     }
     
     static async all () {
         let doc = await topicMongo.find({_delete: false})
+        // log('topic all', doc)
         let con = (doc != null)
         let obj = {}
         if (con) {
@@ -64,10 +73,7 @@ class Topic {
         } catch (err) {
             return false
         }
-        if (doc == null) {
-            return false
-        }
-        return true
+        return doc != null
     }
     
     dealAll (doc = []) {
@@ -75,6 +81,16 @@ class Topic {
             doc[i] = dealDate(doc[i])
         }
         return doc
+    }
+    static async real_remove (form = {}) {
+        //log('topic test form', form)
+        let doc
+        try {
+            doc = await topicMongo.remove(form)
+        } catch (err) {
+            return false
+        }
+        return doc !== null
     }
 }
 

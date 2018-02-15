@@ -40,5 +40,11 @@ router.post('/remove', async (request, response) => {
     const msg = await Model.remove(id)
     response.json(msg)
 })
-
+// 专门用于删除测试数据
+router.post('/real_remove', async (request, response) => {
+    //log('request.body', request.body, request.session)
+    let form = request.body
+    const msg = await Model.real_remove(form)
+    response.json(msg)
+})
 module.exports = router

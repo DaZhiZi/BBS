@@ -9,7 +9,6 @@ const Model = require('../models/user')
 const {log, sendHtml} = require('../tools/utils.js')
 /* GET users listing. */
 router.get('/', function (request, response) {
-    let user = request.session
     sendHtml(response, '/user.html')
 })
 

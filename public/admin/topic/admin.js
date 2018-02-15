@@ -44,8 +44,8 @@ $(document).on('click', '.del-tag', function () {
     let id = $(this).parent('.li-tag').find('.single-tag')[0].dataset.id
     apiDelTopic({_id: id}, function (r) {
         let res = JSON.parse(r.response)
-        let id = res.data
-        log('res id ', id, res)
+        let id = res.data.topic_id
+        // log('res id ', id, res)
         $(`.single-tag[data-id=${id}]`).parent().remove()
     })
 })

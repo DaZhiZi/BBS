@@ -116,6 +116,16 @@ class Reply {
         //log('处理后的reply dealOne', obj)
         return obj
     }
+    static async real_remove (form = {}) {
+        //log('topic test form', form)
+        let doc
+        try {
+            doc = await replyMongo.remove(form)
+        } catch (err) {
+            return false
+        }
+        return doc !== null
+    }
 }
 
 module.exports = Reply
