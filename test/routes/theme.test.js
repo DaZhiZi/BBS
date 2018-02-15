@@ -2,7 +2,6 @@ const should = require('should')
 const config = require('../../tools/config')
 const app = require('../../app')
 const request = require('supertest')
-const index = require('../../routes/index')
 const {log} = require('../../tools/utils')
 /*
 
@@ -101,7 +100,7 @@ describe('theme router test', function () {
                 if (err) done(err)
                 let resBody = JSON.parse(res.text)
                 //log('resBody', resBody)
-                resBody.success.should.not.be.ok()
+                resBody.success.should.be.false()
                 done()
             })
     })
@@ -174,7 +173,7 @@ describe('theme router test', function () {
             .end(function (err, res) {
                 if (err) done(err)
                 let resBody = JSON.parse(res.text)
-                resBody.success.should.not.be.ok()
+                resBody.success.should.be.false()
                 should(resBody.data).be.exactly(null)
                 done(err)
             })
@@ -220,7 +219,7 @@ describe('theme router test', function () {
             .end(function (err, res) {
                 if (err) done(err)
                 let resBody = JSON.parse(res.text)
-                resBody.success.should.not.be.ok()
+                resBody.success.should.be.false()
                 should(resBody.data).be.exactly(null)
                 done(err)
             })

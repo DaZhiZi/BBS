@@ -99,7 +99,7 @@ let cbThemeInfo = function (r) {
 }
 
 let getAllReply = function (callback) {
-    let theme_id = location.pathname.split('theme/detail/')[1]
+    let theme_id = $('.theme-main .theme-header')[0].dataset.theme_id
     ajax({
         method  : 'GET',
         path    : `/reply/all/${theme_id}`,

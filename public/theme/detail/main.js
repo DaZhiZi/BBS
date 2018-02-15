@@ -12,7 +12,7 @@ let addReply = function (data, callback) {
 let newReplyData = function () {
     let data = {
         content : $('#id-reply-text').val(),
-        theme_id: location.href.split('theme/detail/')[1].split('#')[0],
+        theme_id: $('.theme-main .theme-header')[0].dataset.theme_id,
     }
     return data
 }
@@ -82,7 +82,10 @@ let apiReplyUp = function (data, callback) {
 let cbReplyUp = function (event) {
     let that = $(this)
     let replyId = that.parents('.cell-reply').attr('id')
-    apiReplyUp({replyId: replyId,}, function (r) {
+    let data = {
+        replyId: replyId,
+    }
+    apiReplyUp(data, function (r) {
         let res = JSON.parse(r.response)
         if (res.success) {
             that.siblings('.up-count').text(res.data)

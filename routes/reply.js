@@ -14,7 +14,7 @@ router.post('/add', async (request, response) => {
     response.json(msg)
 })
 
-router.post('/:_id/up', async (request, response) => {
+router.post('/:reply_id/up', async (request, response) => {
     let form = {_id: request.body.replyId}
     let userInfo = request.session
     //log('id/up request.session', request.session)
@@ -26,7 +26,9 @@ router.post('/:_id/up', async (request, response) => {
 
 router.get('/all/:theme_id', async (request, response) => {
     //验证用户权限
-    let form = {theme_id: request.params.theme_id}
+    let form = {
+        theme_id: request.params.theme_id,
+    }
     const msg = await Model.all(form)
     response.json(msg)
 })

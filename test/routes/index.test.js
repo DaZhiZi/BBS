@@ -2,7 +2,6 @@ var should = require('should')
 var config = require('../../tools/config')
 var app = require('../../app')
 var request = require('supertest')
-const index = require('../../routes/index')
 var {log} = require('../../tools/utils')
 /*
 
@@ -96,7 +95,7 @@ describe('index router test', function () {
             .end(function (err, res) {
                 if (err) done(err)
                 let resBody = JSON.parse(res.text)
-                resBody.success.should.not.be.ok()
+                resBody.success.should.be.false()
                 should(resBody.data).be.exactly(null)
                 done(err)
             })

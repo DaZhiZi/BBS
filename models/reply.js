@@ -34,6 +34,9 @@ class Reply {
         let themeModel = require('./theme')
         
         let suc = await themeModel.plus_reply_num({theme_id: form.theme_id})
+        if (suc == false) {
+            return resMsg(null, 'theme_id错误', false)
+        }
         //log('添加用户信息后的suc', suc)
         let obj = resMsg(newDoc, '回复添加成功')
         return obj
@@ -51,23 +54,16 @@ class Reply {
     
     static async all (form = {}) {
         form._delete = false
-        //log('form all', form)
         let doc = await replyMongo.find(form)
         //log('all doc', doc)
-        let con = (doc != null)
-        let obj = {}
         let data = []
-        if (con) {
-            let that = new this()
-            for (var i = 0; i < doc.length; i++) {
-                let singleDoc = doc[i]
-                let newDoc = await that.dealOne(singleDoc)
-                data.push(newDoc)
-            }
-            obj = resMsg(data, '登录成功')
-        } else {
-            obj = resMsg(null, '登录失败，用户名或密码错误', false)
+        let that = new this()
+        for (var i = 0; i < doc.length; i++) {
+            let singleDoc = doc[i]
+            let newDoc = await that.dealOne(singleDoc)
+            data.push(newDoc)
         }
+        let obj = resMsg(data, '获取所有回复成功')
         return obj
     }
     
@@ -96,11 +92,15 @@ class Reply {
     
     static async up (form = {}, userInfo) {
         form._delete = false
-        //log('最后一个 form', form)
-        let doc = await replyMongo.findOne(form)
+        let doc
+        try {
+            doc = await replyMongo.findOne(form)
+        } catch(err) {
+            return resMsg(null, 'reply_id错误', false)
+        }
         let ups = doc.ups
         let newUps = toggleArr(userInfo.user_id, ups)
-        let dealUp = await replyMongo.updateOne(form, {ups: newUps})
+        await replyMongo.updateOne(form, {ups: newUps})
         let len = newUps.length
         
         //log('dealUp操作', len, newUps, dealUp)

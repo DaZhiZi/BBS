@@ -183,6 +183,10 @@ class Theme {
     }
     
     static async plus_reply_num (form = {}) {
+        let valid = await this.test({_id: form.theme_id})
+        if (valid == false) {
+            return false
+        }
         let suc = await themeMongo.updateOne({_id: form.theme_id}, {$inc: {'browseInfo.reply_num': 1}})
         //log('plus_reply_num 数字增加的写法 ', suc, form)
         return suc
