@@ -1,8 +1,9 @@
-const should = require('should')
-const config = require('../../tools/config')
 const app = require('../../app')
 const request = require('supertest')
+const expect = require('chai').expect
+const config = require('../../tools/config')
 const {log} = require('../../tools/utils')
+
 /*
 
 测试用例目前分为两种
@@ -28,7 +29,7 @@ describe('theme router test', function () {
             .post('/login')
             .send(loginInfo)
             .end(function (err, res) {
-                res.status.should.equal(200)
+                expect(res.status).to.equal(200);
                 done(err)
             })
     })
@@ -43,8 +44,8 @@ describe('theme router test', function () {
             .send(remove_test_data)
             .end(function (err, res) {
                 let resBody = JSON.parse(res.text)
-                res.status.should.equal(200)
-                resBody.should.be.ok()
+                expect(res.status).to.equal(200);
+                expect(resBody).to.be.true
                 done(err)
             })
     });
@@ -54,15 +55,14 @@ describe('theme router test', function () {
         authenticatedUser
             .get('/theme/new/')
             .end(function (err, res) {
-            // log('theme new res', res.text)
-            res.status.should.equal(200)
-            res.text.should.containEql('新增帖子')
-            res.text.should.containEql('提交新帖子')
+            // log('theme new res', res.text
+            expect(res.status).to.equal(200);
+            expect(res.text).to.include('新增帖子');
+            expect(res.text).to.include('提交新帖子');
             done(err)
         })
     })
-    //POST请求，预先执行登录程序
-    // 正确的用户名和密码
+
     it('POST /add AJAX', function (done) {
         authenticatedUser
             .post('/theme/add')
@@ -75,13 +75,9 @@ describe('theme router test', function () {
             .end(function (err, res) {
                 if (err) done(err)
                 let resBody = JSON.parse(res.text)
-                // log('resBody', resBody)
-                resBody.success.should.be.ok()
-                //拥有某个属性，且值等于第二个参数
-                resBody.data.should.have.property('title', '单元测试')
-                // resBody.data.should.have.property('user_id', 'c475c1f5-41af-4ae7-9d6b-195fefa0ec68')
-                //拥有某个属性
-                resBody.data.should.have.property('_id')
+                expect(resBody.success).to.be.true
+                expect(resBody.data).to.have.property('title', '单元测试');
+                expect(resBody.data).to.have.property('_id');
                 done(err)
             })
     })
@@ -99,8 +95,9 @@ describe('theme router test', function () {
             .end(function (err, res) {
                 if (err) done(err)
                 let resBody = JSON.parse(res.text)
+                expect(resBody.success).to.be.false
                 //log('resBody', resBody)
-                resBody.success.should.be.false()
+                // resBody.success.should.be.false()
                 done(err)
             })
     })
@@ -112,17 +109,13 @@ describe('theme router test', function () {
             .end(function (err, res) {
                 if (err) done(err)
                 let resBody = JSON.parse(res.text)
-                //log('resBody', resBody)
-                resBody.success.should.be.ok()
-                //拥有某个属性，且值等于第二个参数
-                resBody.data.theme.should.be.instanceof(Array)
-                resBody.data.should.have.property('page')
-                ////拥有某个属性
-                //resBody.data.should.have.property('_id')
+                expect(resBody.success).to.be.true
+                expect(resBody.data.theme).to.be.instanceof(Array)
+                expect(resBody.data).to.have.property('page');
                 done(err)
             })
     })
-    // 错误的topic_id应该加以处理程序
+
     it('GET /topic/:topic_id AJAX dirty', function (done) {
         authenticatedUser
             .get('/theme/topic/5a5563bcfafcbc23d01acf0600')
@@ -130,11 +123,8 @@ describe('theme router test', function () {
             .end(function (err, res) {
                 if (err) done(err)
                 let resBody = JSON.parse(res.text)
-                resBody.success.should.be.false()
-                //拥有某个属性，且值等于第二个参数
-                should(resBody.data).be.exactly(null)
-                ////拥有某个属性
-                //resBody.data.should.have.property('_id')
+                expect(resBody.success).to.be.false
+                expect(resBody.data).to.be.null
                 done(err)
             })
     })
@@ -143,9 +133,8 @@ describe('theme router test', function () {
         authenticatedUser
             .get('/theme/detail/5a434a4ceb1bb9078cd12065')
             .end(function (err, res) {
-                // log('theme new res', res.text)
-                res.status.should.equal(200)
-                res.text.should.containEql('theme详情页')
+                expect(res.status).to.equal(200);
+                expect(res.text).to.include('theme详情页');
                 done(err)
             })
     })
@@ -157,15 +146,13 @@ describe('theme router test', function () {
             .end(function (err, res) {
                 if (err) done(err)
                 let resBody = JSON.parse(res.text)
-                resBody.success.should.be.ok()
-                //拥有某个属性，且值等于第二个参数
-                resBody.data.should.have.property('content')
-                //拥有某个属性
-                resBody.data.should.have.property('_id')
+                expect(resBody.success).to.be.true
+                expect(resBody.data).to.have.property('content');
+                expect(resBody.data).to.have.property('_id');
                 done(err)
             })
     })
-    // 对错误 _id 要有统一的处理方式
+
     it('GET /detail/data/:theme_id AJAX dirty', function (done) {
         authenticatedUser
             .get('/theme/detail/data/5a434a4ceb1bb9078cd120')
@@ -173,8 +160,8 @@ describe('theme router test', function () {
             .end(function (err, res) {
                 if (err) done(err)
                 let resBody = JSON.parse(res.text)
-                resBody.success.should.be.false()
-                should(resBody.data).be.exactly(null)
+                expect(resBody.success).to.be.false
+                expect(resBody.data).to.be.null
                 done(err)
             })
     })
@@ -186,9 +173,8 @@ describe('theme router test', function () {
             .end(function (err, res) {
                 if (err) done(err)
                 let resBody = JSON.parse(res.text)
-                resBody.success.should.be.ok()
-                // 数据结构为array
-                resBody.data.should.be.instanceof(Array)
+                expect(resBody.success).to.be.true
+                expect(resBody.data).to.be.instanceof(Array)
                 done(err)
             })
     })
@@ -203,8 +189,8 @@ describe('theme router test', function () {
             .end(function (err, res) {
                 if (err) done(err)
                 let resBody = JSON.parse(res.text)
-                resBody.success.should.be.ok()
-                resBody.data.should.have.property('is_collect')
+                expect(resBody.success).to.be.true
+                expect(resBody.data).to.have.property('is_collect')
                 done(err)
             })
     })
@@ -219,8 +205,8 @@ describe('theme router test', function () {
             .end(function (err, res) {
                 if (err) done(err)
                 let resBody = JSON.parse(res.text)
-                resBody.success.should.be.false()
-                should(resBody.data).be.exactly(null)
+                expect(resBody.success).to.be.false
+                expect(resBody.data).to.be.null
                 done(err)
             })
     })

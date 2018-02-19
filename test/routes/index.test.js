@@ -1,18 +1,8 @@
-var should = require('should')
-var config = require('../../tools/config')
-var app = require('../../app')
-var request = require('supertest')
-var {log} = require('../../tools/utils')
-/*
-
-测试用例目前分为两种
-1. 网页(should)
-    对网页的关键字进行包含判断--首页：无人回复话题
-2. GET、POST请求(logic judge --> mocha)
-    对返回的数据进行判别.
-    GET:    success--true OR false, data.length
-    POST:   success--true OR false, data.username(或其他字段的判断, Object contain)
-*/
+const app = require('../../app')
+const request = require('supertest')
+const expect = require('chai').expect
+const config = require('../../tools/config')
+const {log} = require('../../tools/utils')
 
 describe('index router test', function () {
     const loginInfo = {
@@ -25,7 +15,7 @@ describe('index router test', function () {
             .post('/login')
             .send(loginInfo)
             .end(function (err, res) {
-                res.status.should.equal(200)
+                expect(res.status).to.equal(200);
                 done(err)
             })
     })
@@ -40,8 +30,8 @@ describe('index router test', function () {
             .send(remove_test_data)
             .end(function (err, res) {
                 let resBody = JSON.parse(res.text)
-                res.status.should.equal(200)
-                resBody.should.be.ok()
+                expect(res.status).to.equal(200);
+                expect(resBody).to.be.true
                 done(err)
             })
     });
@@ -50,9 +40,8 @@ describe('index router test', function () {
         authenticatedUser
             .get('/')
             .end(function (err, res) {
-            //log('res status test', res.status)
-            res.status.should.equal(200)
-            res.text.should.containEql('bbs-首页')
+            expect(res.status).to.equal(200);
+            expect(res.text).to.include('bbs-首页');
             done(err)
         })
     })
@@ -61,9 +50,8 @@ describe('index router test', function () {
         request(app)
             .get('/login/')
             .end(function (err, res) {
-            //log('res status test', res.status)
-            res.status.should.equal(200)
-            res.text.should.containEql('注册 登录')
+            expect(res.status).to.equal(200);
+            expect(res.text).to.include('注册 登录')
             done(err)
         })
     })
@@ -75,11 +63,11 @@ describe('index router test', function () {
             .expect(200)
             .end(function (err, res) {
                 if (err) done(err)
-                let resBody = JSON.parse(res.text)
-                resBody.success.should.be.ok()
-                resBody.data.should.have.property('username', 'test')
-                resBody.data.should.have.property('password')
-                resBody.data.should.have.property('user_id')
+                let resBody = JSON.parse(res.text);
+                expect(resBody.success).to.be.true
+                expect(resBody.data).to.have.property('username', 'test');
+                expect(resBody.data).to.have.property('password');
+                expect(resBody.data).to.have.property('user_id');
                 done(err)
             })
     })
@@ -95,8 +83,8 @@ describe('index router test', function () {
             .end(function (err, res) {
                 if (err) done(err)
                 let resBody = JSON.parse(res.text)
-                resBody.success.should.be.false()
-                should(resBody.data).be.exactly(null)
+                expect(resBody.success).to.be.false;
+                expect(resBody.data).to.be.null;
                 done(err)
             })
     })
@@ -112,8 +100,8 @@ describe('index router test', function () {
             .end(function (err, res) {
                 if (err) done(err)
                 let resBody = JSON.parse(res.text)
-                resBody.success.should.be.ok()
-                resBody.data.should.have.property('username', 'test001')
+                expect(resBody.success).to.be.true
+                expect(resBody.data).to.have.property('username', 'test001');
                 done(err)
             })
     })
@@ -125,8 +113,8 @@ describe('index router test', function () {
             .end(function (err, res) {
                 if (err) done(err)
                 let resBody = JSON.parse(res.text)
-                resBody.success.should.be.ok()
-                should(resBody.data).be.exactly(null)
+                expect(resBody.success).to.be.true;
+                expect(resBody.data).to.be.null;
                 done(err)
             })
     })

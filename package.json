@@ -22,12 +22,12 @@
 		"uuid": "^3.1.0"
 	},
 	"devDependencies": {
+		"autocannon": "^1.0.1",
 		"chai": "^4.1.2",
 		"istanbul": "^0.4.5",
 		"mocha": "^4.1.0",
 		"mochawesome": "^3.0.1",
 		"nodemon": "^1.13.0",
-		"should": "^13.2.0",
 		"supertest": "^3.0.0"
 	}
 }
