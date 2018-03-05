@@ -27,7 +27,7 @@ let userInfoTem = function (obj) {
 }
 
 let cbUserInfo = function (r) {
-    log('cbUserInfo')
+    // log('cbUserInfo')
     let res = JSON.parse(r.response)
     if (res.success) {
         let data = res.data
@@ -96,16 +96,13 @@ let cbThemeInfo = function (r) {
         $('.theme-main').append(info)
         hljs.initHighlightingOnLoad()
         $('head title').text(res.data.title)
-        log('渲染完毕title')
+        // log('渲染完毕title')
     }
 }
 
 let getAllReply = function (callback) {
-    log('theme_id')
-
     let theme_id = location.pathname.split('theme/detail/')[1]
     log('theme_id', theme_id)
-
     ajax({
         method  : 'GET',
         path    : `/reply/all/${theme_id}`,
@@ -169,9 +166,9 @@ let cbAllReply = function (r) {
     }
 }
 
-let init = function () {
+let init = async function () {
     apiUserInfo(cbUserInfo)
-    apiThemeInfo(cbThemeInfo)
-    getAllReply(cbAllReply)
+    await apiThemeInfo(cbThemeInfo)
+    await getAllReply(cbAllReply)
 }
 

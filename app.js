@@ -1,3 +1,4 @@
+
 const express = require('express')
 
 const bodyParser = require('body-parser')
@@ -35,7 +36,7 @@ const {log, sendHtml} = require('./tools/utils')
 const {loginAuth} = require('./tools/auth')
 
 // 登录信息验证
-// app.use(loginAuth)
+app.use(loginAuth)
 
 //引入路由
 const index = require('./routes/index')
