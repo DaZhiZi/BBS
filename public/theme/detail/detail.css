@@ -116,4 +116,11 @@
 }
 .markdown-body {
 	padding: 5px 10px;
+    font-size: 14px;
+}
+pre {
+    font-size: 13.5px;
+    padding: 0px;
+    margin: 0px;
+    border: 0px;
 }

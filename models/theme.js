@@ -95,15 +95,15 @@ class Theme {
                 return obj
             }
         }
+        let theme_per_page = 3
         let that = new this()
         // 分页和top帖信息
-        let info = await that.page_top(form, pageNum, con)
+        let info = await that.page_top(form, pageNum, con, theme_per_page)
         let {data, top_theme} = info
-    
         let top_num = top_theme.length
-        let pageSkip = (pageNum - 1) * 2 - top_num
+        let pageSkip = (pageNum - 1) * theme_per_page - top_num
         let skips = pageSkip > 0 ? pageSkip : 0
-        let limits = (pageNum == 1) ? (2 - top_num) : 2
+        let limits = (pageNum == 1) ? (theme_per_page - top_num) : theme_per_page
         //log('limits, skips', limits, skips)
         let doc = await themeMongo.find(con).skip(skips).limit(limits)
         let allTheme = (pageNum == 1) ? top_theme.concat(doc) : doc
@@ -113,7 +113,7 @@ class Theme {
         return obj
     }
     
-    async page_top (form = {}, pageNum = 1, con) {
+    async page_top (form = {}, pageNum = 1, con, theme_per_page) {
         let top_theme = await themeMongo.find({
             _delete: false,
             top    : true,
@@ -121,7 +121,7 @@ class Theme {
         
         let themeNum = await themeMongo.count(con)
         let allTheme = themeNum + top_theme.length
-        let pageTotal = Math.ceil(allTheme / 2)
+        let pageTotal = Math.ceil(allTheme / theme_per_page)
         let data = {
             page: {
                 pageNum  : pageNum,

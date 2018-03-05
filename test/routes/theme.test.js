@@ -72,7 +72,7 @@ describe('theme router test', function () {
                 'content' : '单元测试新增主题测试',
             })
             .expect(200)
-            .end(function (err, res) {
+            .end(function ( err, res) {
                 if (err) done(err)
                 let resBody = JSON.parse(res.text)
                 expect(resBody.success).to.be.true

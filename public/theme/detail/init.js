@@ -27,7 +27,7 @@ let userInfoTem = function (obj) {
 }
 
 let cbUserInfo = function (r) {
-    //log('r.response', r.response)
+    log('cbUserInfo')
     let res = JSON.parse(r.response)
     if (res.success) {
         let data = res.data
@@ -94,12 +94,18 @@ let cbThemeInfo = function (r) {
         let info = themeInfoTem(data)
         
         $('.theme-main').append(info)
+        hljs.initHighlightingOnLoad()
         $('head title').text(res.data.title)
+        log('渲染完毕title')
     }
 }
 
 let getAllReply = function (callback) {
-    let theme_id = $('.theme-main .theme-header')[0].dataset.theme_id
+    log('theme_id')
+
+    let theme_id = location.pathname.split('theme/detail/')[1]
+    log('theme_id', theme_id)
+
     ajax({
         method  : 'GET',
         path    : `/reply/all/${theme_id}`,
