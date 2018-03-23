@@ -18,8 +18,8 @@ router.post('/login', async (request, response) => {
     //log('request.session form before', form)
     const msg = await userModel.login(form)
     //log('request.session form after', form)
-    request.session = msg.data
-    response.json(msg)
+    request.session.user = msg.data
+    response.send(msg)
 })
 
 router.post('/register', async (request, response) => {

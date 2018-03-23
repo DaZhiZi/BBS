@@ -53,6 +53,7 @@ class User {
     
     static async getInfo (form = {}) {
         let doc = await userMongo.findOne(form)
+        // log('doc getInfo',form, doc )
         let con = (doc == null)
         let obj = {}
         if (con) {

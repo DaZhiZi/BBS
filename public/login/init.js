@@ -21,7 +21,6 @@ var getRegisterData = function (event) {
 }
 let cbRegister = function (event) {
     var data = getRegisterData()
-    log('data', data)
     apiUserRegister(data, function (r) {
         let res = JSON.parse(r.response)
         //log('res', res)
@@ -55,7 +54,7 @@ let cbLogin = function (event) {
             if (res.data.admin) {
                 location.href = '/admin'
             } else {
-                location.href = '/user'
+                location.href = '/'
             }
         } else {
             log('res错误', res)
@@ -66,4 +65,9 @@ let init = function () {
     bindEvent('#id-button-register', 'click', cbRegister)
     bindEvent('#id-button-login', 'click', cbLogin)
 }
-init()
+
+var __main = function () {
+    init()
+}
+
+__main()

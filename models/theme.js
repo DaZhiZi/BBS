@@ -89,7 +89,7 @@ class Theme {
         if (form.topic_id != 'all') {
             con.topic_id = form.topic_id
             let valid = await topicModel.test({_id:form.topic_id})
-            //log('valid model theme', valid)
+            log('valid model theme', valid)
             if (valid == false) {
                 let obj = resMsg(null, '不存在该topic', false)
                 return obj
@@ -104,11 +104,12 @@ class Theme {
         let pageSkip = (pageNum - 1) * theme_per_page - top_num
         let skips = pageSkip > 0 ? pageSkip : 0
         let limits = (pageNum == 1) ? (theme_per_page - top_num) : theme_per_page
-        //log('limits, skips', limits, skips)
+        log('limits, skips', limits, skips)
         let doc = await themeMongo.find(con).skip(skips).limit(limits)
         let allTheme = (pageNum == 1) ? top_theme.concat(doc) : doc
         let newDoc = await that.dealAll(allTheme)
         data.theme = newDoc
+        // log('data, all', data)
         let obj = resMsg(data, '所有主题请求成功')
         return obj
     }
@@ -216,6 +217,7 @@ class Theme {
             }
             single = await dealDate(single)
             let userAllInfo = await userModel.getInfo({user_id: single.user_id})
+            // log('userAllInfo dealAll', single.user_id)
             single.userInfo = getKey(userAllInfo.data, 'username', 'user_id', 'avatar')
             
             // todo: 写个单独的函数处理topic问题

@@ -2,16 +2,34 @@
 const express = require('express')
 
 const bodyParser = require('body-parser')
-const session = require('cookie-session')
+// const session = require('cookie-session')
 
 const nunjucks = require('nunjucks')
 const multer = require('multer')
-
+const cors = require('cors')
 const app = express()
+
+app.use(cors())
 
 //配置信息
 app.use(bodyParser.json({limit: '5mb'}))
 app.use(express.static('./public'))
+
+var session = require('express-session');
+
+// session持久化
+// var redis = require('redis')
+// var RedisStore = require('connect-redis')(session);
+// var redisClient = redis.createClient(6379, '127.0.0.1');
+// var options = {
+//     client:redisClient,
+// }
+// app.use(session({
+//     store: new RedisStore(options),
+//     secret: 'yongzhi',
+//     resave: false,
+//     saveUninitialized: true,
+// }));
 
 //注意maxAge的单位是毫秒
 app.use(session({
@@ -69,4 +87,5 @@ if (require.main === module) {
     const host = '127.0.0.1'
     run(port, host)
 }
+
 module.exports = app

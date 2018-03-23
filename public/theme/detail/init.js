@@ -102,7 +102,7 @@ let cbThemeInfo = function (r) {
 
 let getAllReply = function (callback) {
     let theme_id = location.pathname.split('theme/detail/')[1]
-    log('theme_id', theme_id)
+    // log('theme_id', theme_id)
     ajax({
         method  : 'GET',
         path    : `/reply/all/${theme_id}`,

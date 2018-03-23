@@ -44,10 +44,8 @@ class Reply {
     
     static async remove (id = '') {
         //应该添加注册验证
-        log('doc id', id)
         let form = {_id: id}
         let doc = await replyMongo.update(form, {_delete: true})
-        log('doc', doc)
         let obj = resMsg(id, '注册成功')
         return obj
     }
@@ -71,22 +69,17 @@ class Reply {
     //跟游客的体制一样，当没有回复时，用一个占位符来表示
     static async last (form = {}) {
         form._delete = false
-        //log('最后一个 form', form)
         let doc = await replyMongo.find(form).sort({update_at: -1}).limit(1)
         let info = {}
-        //log('doc.length', doc.length)
         if (doc.length == 0) {
             info = fakeReply
         } else {
             let infoAll = await dealDate(doc[0])
             info = getKey(infoAll, 'user_id', 'update_at', '_id')
             let userAllInfo = await userModel.getInfo({user_id: info.user_id})
+            // log('userAllInfo info.user_id', infoAll);
             info.userInfo = getKey(userAllInfo.data, 'username', 'user_id', 'avatar')
-            //log('最后一个 reply info', info);
-            
         }
-        //log('最后一个 reply', info)
-        
         return info
     }
     
@@ -112,12 +105,9 @@ class Reply {
         let obj = await dealDate(form)
         let userAllInfo = await userModel.getInfo({user_id: obj.user_id})
         obj.userInfo = getKey(userAllInfo.data, 'username', 'user_id', 'avatar')
-        
-        //log('处理后的reply dealOne', obj)
         return obj
     }
     static async real_remove (form = {}) {
-        //log('topic test form', form)
         let doc
         try {
             doc = await replyMongo.remove(form)

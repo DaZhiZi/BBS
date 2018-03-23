@@ -35,7 +35,6 @@ router.get('/all/:theme_id', async (request, response) => {
 
 router.post('/remove', async (request, response) => {
     //验证用户权限
-    log('delete response.body', request.body)
     let id = request.body._id
     const msg = await Model.remove(id)
     response.json(msg)

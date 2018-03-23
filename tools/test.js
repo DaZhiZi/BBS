@@ -9,8 +9,6 @@ class Rectangle {
         //通过 new this() 来调用类的实例方法,
         let a = new this()
         let newNum = a.calcArea(5)
-        console.log('面积 area', newNum)
-        console.log('static jisuan', this.jisuan())
         //return this.calcArea()
     }
     
@@ -49,3 +47,16 @@ let testReadFile = function () {
         })
     })
 }
+// redis的使用
+var redis = require("redis"),
+    redisClient = redis.createClient();
+
+//写入JavaScript(JSON)对象
+redisClient.hmset('sessionid', { username: 'kris', password: 'password' }, function(err) {
+    console.log('err redis', err)
+})
+
+//读取JavaScript(JSON)对象
+redisClient.hgetall('sessionid', function(err, object) {
+    console.log('object redis', object)
+})

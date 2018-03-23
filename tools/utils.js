@@ -23,6 +23,7 @@ obj.getKey = function (o, ...args) {
     let newObj = {}
     for (var i = 0; i < args.length; i++) {
         var key = args[i]
+
         if (obj[key]) {
             newObj[key] = obj[key]
         }
@@ -54,10 +55,10 @@ obj.log = (...args) => {
     console.log.apply(console, arg)
     
     // log 出来的结果写入到文件中
-    const content = t + ' ' + args + '\n'
-    fs.writeFileSync('log.txt', content, {
-        flag: 'a',
-    })
+    // const content = t + ' ' + args + '\n'
+    // fs.writeFileSync('log.txt', content, {
+    //     flag: 'a',
+    // })
 }
 
 obj.toArray = function (data) {
@@ -86,7 +87,6 @@ obj.sendHtml = function (response, path) {
         encoding: 'utf-8'
     }
     realPath = './views' + path
-    //console.log('realPath', realPath)
     fs.readFile(realPath, options, function (err, data) {
         //response.set('Content-Type', 'text/html');
         response.send(data)

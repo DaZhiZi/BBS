@@ -33,7 +33,6 @@ router.post('/avatar', upload.single('avatar'), async function (request, respons
     //通过user——id获得用户名，将文件信息传给model，返回
     let user_id = request.session.user_id
     let avatarFile = request.file
-    log('avatarFile', request.file, request)
     let msg = await Model.uploadAvatar(user_id, avatarFile)
     //log('req.file', request.file)  // 上传的文件信息
     //log('返回的信息', msg)
