@@ -60,3 +60,13 @@ redisClient.hmset('sessionid', { username: 'kris', password: 'password' }, funct
 redisClient.hgetall('sessionid', function(err, object) {
     console.log('object redis', object)
 })
+
+// 配置 nunjucks 模板, 第一个参数是模板文件的路径
+// nunjucks.configure 返回的是一个 nunjucks.Environment 实例对象
+var env = nunjucks.configure('views', {
+    //如果在环境变量中设置了 autoescape，所有的输出都会自动转义，
+    // 但可以使用 safe 过滤器，Nunjucks 就不会转义了。
+    autoescape: true,
+    express   : app,
+    noCache   : true,
+})

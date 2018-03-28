@@ -102,4 +102,20 @@ obj.resMsg = function (data = null, msg = '', success = true) {
     return obj
 }
 
+obj.exTime = function (req, res, next) {
+    // 记录start time:
+    var exec_start_at = Date.now();
+    // 保存原始处理函数:
+    var _send = res.send;
+    // 绑定我们自己的处理函数:
+    res.send = function () {
+        // 发送Header:
+        var time = String(Date.now() - exec_start_at) + 'ms'
+        res.set('http-Execution-Time', time);
+        // 调用原始处理函数:
+        return _send.apply(res, arguments);
+    };
+    next();
+}
+
 module.exports = obj

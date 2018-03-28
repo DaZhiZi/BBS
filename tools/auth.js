@@ -7,6 +7,31 @@ let loginAuth = function (req, res, next) {
     next()
 }
 
+var expressSession = require('express-session');
+const cookieSession = require('cookie-session')
+
+// session持久化
+var redis = require('redis')
+var RedisStore = require('connect-redis')(expressSession);
+var redisClient = redis.createClient(6379, '127.0.0.1');
+var options = {
+    client:redisClient,
+}
+var sessionRedis = expressSession({
+    store: new RedisStore(options),
+    secret: 'yongzhi',
+    resave:false,
+    saveUninitialized:true,
+})
+
+// app.use();
+var sessionNormal = cookieSession({
+    secret: 'yongzhi',
+    maxAge: 1000 * 60 * 60 * 360,
+})
+
 module.exports = {
-    loginAuth:loginAuth
+    loginAuth:loginAuth,
+    sessionRedis:sessionRedis,
+    sessionNormal:sessionNormal,
 }

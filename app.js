@@ -2,59 +2,21 @@
 const express = require('express')
 
 const bodyParser = require('body-parser')
-// const session = require('cookie-session')
-
 const nunjucks = require('nunjucks')
 const multer = require('multer')
 const cors = require('cors')
 const app = express()
 
-app.use(cors())
+const {log, sendHtml, exTime} = require('./tools/utils')
+const {loginAuth, sessionNormal, sessionRedis} = require('./tools/auth')
 
 //配置信息
+// app.use(loginAuth)
+app.use(exTime);
+app.use(sessionNormal)
+app.use(cors())
 app.use(bodyParser.json({limit: '5mb'}))
 app.use(express.static('./public'))
-
-var session = require('express-session');
-
-// session持久化
-// var redis = require('redis')
-// var RedisStore = require('connect-redis')(session);
-// var redisClient = redis.createClient(6379, '127.0.0.1');
-// var options = {
-//     client:redisClient,
-// }
-// app.use(session({
-//     store: new RedisStore(options),
-//     secret: 'yongzhi',
-//     resave: false,
-//     saveUninitialized: true,
-// }));
-
-//注意maxAge的单位是毫秒
-app.use(session({
-    secret: 'yongzhi',
-    maxAge: 1000 * 60 * 60 * 360,
-}))
-
-// 配置 nunjucks 模板, 第一个参数是模板文件的路径
-// nunjucks.configure 返回的是一个 nunjucks.Environment 实例对象
-var env = nunjucks.configure('views', {
-    //如果在环境变量中设置了 autoescape，所有的输出都会自动转义，
-    // 但可以使用 safe 过滤器，Nunjucks 就不会转义了。
-    autoescape: true,
-    express   : app,
-    noCache   : true,
-})
-
-//这个是缓存目录
-var upload = multer({dest: 'uploads/'})
-
-const {log, sendHtml} = require('./tools/utils')
-const {loginAuth} = require('./tools/auth')
-
-// 登录信息验证
-app.use(loginAuth)
 
 //引入路由
 const index = require('./routes/index')
