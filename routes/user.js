@@ -13,10 +13,10 @@ router.get('/', function (request, response) {
 })
 
 router.get('/info', async function (request, response) {
-    let form = request.session
-    //log('user session', form)
+    let form = request.session.user
+    log('user session', form)
     let info = await Model.getInfo(form)
-    //log('user session', info)
+    log('user session', info)
     response.send(info)
 })
 

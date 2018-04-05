@@ -47,7 +47,7 @@ let userInfoTem = function (obj) {
 }
 
 let cbUserInfo = function (r) {
-    //log('r.response', r.response)
+    // log('r.response', r.response)
     let res = JSON.parse(r.response)
     if (res.success) {
         let data = res.data
