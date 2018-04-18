@@ -1,22 +1,24 @@
 
 const express = require('express')
-
-const bodyParser = require('body-parser')
-const nunjucks = require('nunjucks')
-const multer = require('multer')
-const cors = require('cors')
 const app = express()
 
+const bodyParser = require('body-parser')
+const cors = require('cors')
+const helmet = require('helmet');
+
 const {log, sendHtml, exTime} = require('./tools/utils')
-const {loginAuth, sessionNormal, sessionRedis} = require('./tools/auth')
+const {loginAuth, sessionNormal, sessionRedis, sessionExpress, sessionMongo} = require('./tools/auth')
 
 //配置信息
-// app.use(loginAuth)
+app.use(helmet());
+app.use(express.static('./public'))
+// 登录拦截需要重构
+app.use(sessionMongo)
+// 由于session的生成是由中间件产生的，所以session认证需要先调用session中间件
+app.use(loginAuth)
 app.use(exTime);
-app.use(sessionNormal)
 app.use(cors())
 app.use(bodyParser.json({limit: '5mb'}))
-app.use(express.static('./public'))
 
 //引入路由
 const index = require('./routes/index')

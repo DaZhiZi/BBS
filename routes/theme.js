@@ -14,7 +14,8 @@ router.post('/add', async (request, response) => {
     //log('request.session', request.session)
     //log('request.body', request.body)
     let form = request.body
-    let userInfo = request.session
+    let userinfo = request.session.userinfo
+    // console.log('userInfo', userInfo);
     let msg = ''
     if (userInfo.username) {
         msg = await Model.add(form, userInfo)

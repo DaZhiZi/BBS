@@ -17,8 +17,8 @@ router.post('/login', async (request, response) => {
     const form = request.body
     //log('request.session form before', form)
     const msg = await userModel.login(form)
-    //log('request.session form after', form)
-    request.session.user = msg.data
+    request.session.userinfo = msg.data
+    // log('login post request.session form after', request.session)
     response.send(msg)
 })
 
@@ -30,7 +30,7 @@ router.post('/register', async (request, response) => {
 })
 
 router.get('/logout', (request, response) => {
-    request.session = null
+    request.session.userinfo = null
     let res = resMsg(null, '注销成功')
     response.json(res)
 })
