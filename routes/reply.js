@@ -7,20 +7,15 @@ const {log, sendHtml} = require('../tools/utils.js')
 
 router.post('/add', async (request, response) => {
     let form = request.body
-    let userInfo = request.session
-    //log('reply add request.session', request.session)
-    //log('reply add request.body', request.body)
+    let userInfo = request.session.userinfo
     const msg = await Model.add(form, userInfo)
     response.json(msg)
 })
 
 router.post('/:reply_id/up', async (request, response) => {
     let form = {_id: request.body.replyId}
-    let userInfo = request.session
-    //log('id/up request.session', request.session)
-    //log('id/up request.body', request.body)
+    let userInfo = request.session.userinfo
     const msg = await Model.up(form, userInfo)
-    //log('msg reply add ', msg)
     response.json(msg)
 })
 

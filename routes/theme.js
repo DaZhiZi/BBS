@@ -11,13 +11,10 @@ router.get('/new', async (request, response) => {
 })
 
 router.post('/add', async (request, response) => {
-    //log('request.session', request.session)
-    //log('request.body', request.body)
     let form = request.body
     let userinfo = request.session.userinfo
-    // console.log('userInfo', userInfo);
     let msg = ''
-    if (userInfo.username) {
+    if (userinfo.username) {
         msg = await Model.add(form, userInfo)
     } else {
         msg = '请先登录'
@@ -42,8 +39,7 @@ router.get('/detail/:theme_id', async (request, response) => {
 
 //请求详情数据
 router.get('/detail/data/:theme_id', async (request, response) => {
-    //log('request.session', request.session.user_id)
-    let user_id = request.session.user_id
+    let user_id = request.session.userinfo.user_id
     let form = {
         _id: request.params.theme_id
     }
@@ -65,15 +61,13 @@ router.post('/remove', async (request, response) => {
 })
 
 router.post('/collect', async (request, response) => {
-    //log('request.body', request.body, request.session)
     let theme_id = request.body.theme_id
-    let user_id = request.session.user_id
+    let user_id = request.session.userinfo.user_id
     const msg = await Model.collect(theme_id, user_id)
     response.json(msg)
 })
 // 专门用于删除测试数据
 router.post('/real_remove', async (request, response) => {
-    //log('request.body', request.body, request.session)
     let form = request.body
     const msg = await Model.real_remove(form)
     response.json(msg)

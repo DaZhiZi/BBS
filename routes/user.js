@@ -13,14 +13,14 @@ router.get('/', function (request, response) {
 })
 
 router.get('/info', async function (request, response) {
-    let form = request.session.user
+    let form = request.session.userinfo
     // log('user form', form,)
     let info = await Model.getInfo(form)
     response.send(info)
 })
 
 router.post('/info', async function (request, response) {
-    let user = request.session
+    let user = request.session.userinfo
     let form = request.body
     //log('user form', user, form)
     let info = await Model.updateInfo(user, form)
@@ -30,7 +30,7 @@ router.post('/info', async function (request, response) {
 
 router.post('/avatar', upload.single('avatar'), async function (request, response) {
     //通过user——id获得用户名，将文件信息传给model，返回
-    let user_id = request.session.user_id
+    let user_id = request.session.userinfo.user_id
     let avatarFile = request.file
     let msg = await Model.uploadAvatar(user_id, avatarFile)
     //log('req.file', request.file)  // 上传的文件信息
@@ -40,7 +40,7 @@ router.post('/avatar', upload.single('avatar'), async function (request, respons
 })
 
 router.post('/password', async function (request, response) {
-    let user = request.session
+    let user = request.session.userinfo
     let form = request.body
     // log('user/password form', user, form)
     let info = await Model.updatePassword(user, form, request)
@@ -49,7 +49,6 @@ router.post('/password', async function (request, response) {
 })
 
 router.post('/real_remove', async (request, response) => {
-    //log('request.body', request.body, request.session)
     let form = request.body
     const msg = await Model.real_remove(form)
     response.json(msg)

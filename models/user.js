@@ -110,7 +110,7 @@ class User {
         //3.更新session
         let con = (doc != null)
         if (con) {
-            request.session.password = newPass
+            request.session.userinfo.password = newPass
             let data = {
                 newPass:newPass,
             }

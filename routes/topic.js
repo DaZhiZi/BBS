@@ -7,7 +7,7 @@ const {log} = require('../tools/utils.js')
 
 router.post('/add', async (request, response) => {
     let form = {
-        author: request.session.username,
+        author: request.session.userinfo.username,
         enName: request.body.enName,
         cnName: request.body.cnName,
     }
@@ -32,7 +32,6 @@ router.post('/remove', async (request, response) => {
 
 // 专门用于删除测试数据
 router.post('/real_remove', async (request, response) => {
-    //log('request.body', request.body, request.session)
     let form = request.body
     const msg = await Model.real_remove(form)
     response.json(msg)
