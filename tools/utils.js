@@ -49,11 +49,13 @@ obj.datePlugin = function (schema) {
 }
 
 obj.log = (...args) => {
+    if (args[0] == 'on') {
+        console.trace('堆栈跟踪')
+    }
     const t = moment(Date.now()).format('HH:mm:ss')
     const arg = [t].concat(args)
     // 打印出来的结果带上时间
     console.log.apply(console, arg)
-    
     // log 出来的结果写入到文件中
     // const content = t + ' ' + args + '\n'
     // fs.writeFileSync('log.txt', content, {

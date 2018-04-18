@@ -6,13 +6,12 @@ const bodyParser = require('body-parser')
 const cors = require('cors')
 const helmet = require('helmet');
 
-const {log, sendHtml, exTime} = require('./tools/utils')
-const {loginAuth, sessionNormal, sessionRedis, sessionExpress, sessionMongo} = require('./tools/auth')
+const {log, exTime} = require('./tools/utils')
+const {loginAuth, sessionMongo} = require('./tools/auth')
 
 //配置信息
 app.use(helmet());
 app.use(express.static('./public'))
-// 登录拦截需要重构
 app.use(sessionMongo)
 // 由于session的生成是由中间件产生的，所以session认证需要先调用session中间件
 app.use(loginAuth)
