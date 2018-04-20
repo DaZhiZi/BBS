@@ -1,7 +1,7 @@
 let loginAuth = function (req, res, next) {
     var url = req.originalUrl
     let urlArr = ['/login/', '/login', '/register']
-    console.log('req.session.userinfo', req.session);
+    // console.log('req.session.userinfo', req.session);
     if (urlArr.indexOf(url) == -1 && !req.session.userinfo) {
         return res.redirect('/login')
     }

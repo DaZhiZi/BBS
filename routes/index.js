@@ -23,7 +23,6 @@ router.post('/login', async (request, response) => {
 router.post('/register', async (request, response) => {
     const form = request.body
     let msg = await userModel.add(form)
-    //log('msg', msg)
     response.json(msg)
 })
 

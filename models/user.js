@@ -26,15 +26,16 @@ var userMongo = mongoose.model('user', userSchema)
 
 class User {
     static async add (form = {}) {
-        //应该添加注册验证
+        let validRes = await this.validRegister(form)
+        if (validRes.status == false) {
+            return  resMsg(null, validRes.msg, false)
+        }
         form.password = encrypt(form.password)
         form.user_id = uuid()
-        
         let doc = await userMongo.create(form)
-        
         let data = getKey(doc, 'username', 'password')
+
         let obj = resMsg(data, '注册成功')
-        // log('obj user add', obj)
         return obj
     }
     
@@ -118,6 +119,30 @@ class User {
         } else {
             return resMsg(null, '密码更新失败', false)
         }
+    }
+
+    static async validRegister (form = {}) {
+        //应该添加注册验证
+        // 1.用户名不重复
+        // 2.用户和密码的限制（长度，是否包含汉字，奇异字母等）
+        let msg = ''
+        let status = true
+        let limit_len = (form.username.length > 3 && form.password.length > 3)
+        if (limit_len == false) {
+            msg = '用户名或密码不符合规定'
+            status = false
+        }
+        let isRepeatedData = {username:form.username}
+        let isRepeated = await this.getInfo(isRepeatedData)
+        if (isRepeated.success == true) {
+            msg = '用户名已被注册'
+            status = false
+        }
+        let obj = {
+            msg:msg,
+            status:status,
+        }
+        return obj
     }
 
     static async real_remove (form = {}) {
