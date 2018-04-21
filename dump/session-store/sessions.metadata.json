@@ -1,0 +1,1 @@
+{"options":{},"indexes":[{"v":2,"key":{"_id":1},"name":"_id_","ns":"session-store.sessions"},{"v":2,"key":{"expires":1},"name":"expires_1","ns":"session-store.sessions","expireAfterSeconds":0}],"uuid":"165f38c429174af4b50cb67148791bc9"}

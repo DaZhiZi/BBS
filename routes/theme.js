@@ -15,7 +15,7 @@ router.post('/add', async (request, response) => {
     let userinfo = request.session.userinfo
     let msg = ''
     if (userinfo.username) {
-        msg = await Model.add(form, userInfo)
+        msg = await Model.add(form, userinfo)
     } else {
         msg = '请先登录'
     }

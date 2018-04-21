@@ -16,7 +16,7 @@ let apiAllTopic = function (callback) {
 }
 
 let cbAllTopic = function (r) {
-    //log('r.response', r.response)
+    log('cbAllTopic')
     let res = JSON.parse(r.response)
     if (res.success) {
         let data = res.data
@@ -61,10 +61,16 @@ let cellTemplate = function (obj) {
 }
 
 let apiGetTheme = function (callback, topicId) {
-    let path = topicId || 'all'
+    let topic_id = topicId || 'all'
+    let selector = `.topic-tab[data-topicid=${topic_id}]`
+    let target = $(selector)
+
+    log('selector topicId target', $('.topic-tab[data-topicid=5ad6a000cb030327e820395f]'), topic_id, target)
+    target.addClass('.topic-current')
+    target.siblings().removeClass('.topic-current')
     ajax({
         method  : 'GET',
-        path    : `/theme/topic/${path}`,
+        path    : `/theme/topic/${topic_id}`,
         callback: function (r) {
             callback(r)
         }
@@ -104,15 +110,21 @@ let pageTem = function (obj) {
 }
 
 let genPage = function (obj) {
+    // log('genPage obj', obj)
     $(".content-footer .pagination").remove()
+    if (obj.pageTotal < 2) {
+        return ''
+    }
     let html = pageTem(obj)
     $('.content-footer').append(html)
 }
 
 let cbGetTheme = function (r) {
+    log('cbGetTheme')
     $('.theme-all').empty()
     let res = JSON.parse(r.response)
     if (res.success) {
+        log('cbGetTheme res', res)
         // 现在分两步，一步渲染theme列表，
         // 一步渲染分页
         let data = res.data
@@ -210,12 +222,14 @@ let switchPage = function (e) {
     apiGetPage(cbGetTheme, pageNum)
 }
 
-let init = function () {
+let init = async function () {
     //以cb开头的函数，表示是callback, 中间无get之类的，默认是all（或者get）
     //获取所有Topic
-    apiAllTopic(cbAllTopic)
+    await apiAllTopic(cbAllTopic)
+
     //获取所有Theme
-    apiGetTheme(cbGetTheme)
+    let topic_id = location.search.split('topic=')[1]
+    await apiGetTheme(cbGetTheme, topic_id)
     //获取所有最早的，无人回复的话题
     apiGetNoRep(cbGetNoRep)
     //绑定，登出功能

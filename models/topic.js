@@ -88,20 +88,22 @@ class Topic {
     static async findOne (form = {}) {
         let doc = await topicMongo.findOne(form)
         let newDoc = dealDate(doc)
-        //log('doc', newDoc)
+        // log('doc', newDoc)
         return newDoc
     }
     
     // 验证topic是否存在
     static async test (form = {}) {
-        //log('topic test form', form)
+        if (form['_id'] == 'all') {
+            return true
+        }
         let doc
         try {
             doc = await topicMongo.findOne(form)
         } catch (err) {
             return false
         }
-        return doc != null
+        return true
     }
     
     dealAll (doc = []) {

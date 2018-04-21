@@ -6,6 +6,7 @@ const userModel = require('../models/user')
 const {log, sendHtml, resMsg} = require('../tools/utils.js')
 
 router.get('/', (request, response) => {
+    log('request.query', request.query)
     sendHtml(response, '/index.html')
 })
 

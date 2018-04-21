@@ -59,7 +59,7 @@ class Theme {
         let doc = await themeMongo.findOne({_id:theme_id})
         let collect_pep = doc.browseInfo.collect_pep
         let newCollects = toggleArr(user_id, collect_pep)
-        let dealUp = await themeMongo.updateOne({_id:theme_id}, {'browseInfo.collect_pep': newCollects})
+        await themeMongo.updateOne({_id:theme_id}, {'browseInfo.collect_pep': newCollects})
 
         // user collect lists
         let userDoc = await userModel.getInfo({user_id:user_id})
@@ -78,49 +78,44 @@ class Theme {
     }
 
     static async all (form = {}, pageNum=1) {
+        // topic_id验证
+        let valid_topic_id = await topicModel.test({_id:form.topic_id})
+        if (valid_topic_id == false) {
+            return resMsg(null, '不存在该topic', false)
+        }
+
         // 默认条件
         let con = {
             _delete: false,
             top:false,
             lock:false,
         }
-
-        // topic_id验证
-        if (form.topic_id != 'all') {
-            con.topic_id = form.topic_id
-            let valid = await topicModel.test({_id:form.topic_id})
-            // log('valid model theme', valid)
-            if (valid == false) {
-                let obj = resMsg(null, '不存在该topic', false)
-                return obj
-            }
+        if (form['topic_id'] != 'all') {
+            con['topic_id'] =form.topic_id
         }
-
-        let theme_per_page = 3
-        let that = new this()
+        let theme_per_page = 4
         // 分页和top帖信息
-        let info = await that.page_top(form, pageNum, con, theme_per_page)
+        let info = await this.topTheme(form, pageNum, con, theme_per_page)
         let {data, top_theme} = info
         let top_num = top_theme.length
         let pageSkip = (pageNum - 1) * theme_per_page - top_num
         let skips = pageSkip > 0 ? pageSkip : 0
         let limits = (pageNum == 1) ? (theme_per_page - top_num) : theme_per_page
-        // log('limits, skips', limits, skips)
-        let doc = await themeMongo.find(con).skip(skips).limit(limits)
+        // find 第二个参数 projection：控制返回的字段；0：不返回、1：只返回。
+        let doc = await themeMongo.find(con, {content:0}).skip(skips).limit(limits)
         let allTheme = (pageNum == 1) ? top_theme.concat(doc) : doc
-        let newDoc = await that.dealAll(allTheme)
+        let newDoc = await this.dealAll(allTheme)
         data.theme = newDoc
-        // log('data, all', data)
         let obj = resMsg(data, '所有主题请求成功')
         return obj
     }
-    
-    async page_top (form = {}, pageNum = 1, con, theme_per_page) {
+
+    static async topTheme (form = {}, pageNum = 1, con, theme_per_page) {
         let top_theme = await themeMongo.find({
             _delete: false,
             top    : true,
-        })
-        
+        }, {content:0})
+        // log('top_theme', top_theme)
         let themeNum = await themeMongo.count(con)
         let allTheme = themeNum + top_theme.length
         let pageTotal = Math.ceil(allTheme / theme_per_page)
@@ -165,8 +160,7 @@ class Theme {
         if (doc == null) {
             obj = resMsg(null, '此话题不存在或已被删除。', false)
         } else {
-            let that = new this()
-            let newDoc = await that.dealOne(doc, user_id)
+            let newDoc = await this.dealOne(doc, user_id)
             //数字增加的写法
             let suc = await themeMongo.updateOne(form, {$inc: {'browseInfo.view_num': 1}})
             obj = resMsg(newDoc, 'Theme查询成功')
@@ -192,8 +186,8 @@ class Theme {
         //log('plus_reply_num 数字增加的写法 ', suc, form)
         return suc
     }
-    
-    async dealOne (form = {}, user_id) {
+
+    static  async dealOne (form = {}, user_id) {
         let obj = await dealDate(form)
         let userAllInfo = await userModel.getInfo({user_id: obj.user_id})
         obj.userInfo = getKey(userAllInfo.data, 'username', 'user_id', 'avatar')
@@ -206,8 +200,8 @@ class Theme {
         obj.is_collect = (collArr.indexOf(user_id) != -1)
         return obj
     }
-    
-    async dealAll (themeList = []) {
+
+    static async  dealAll (themeList = []) {
         let arr = []
         //需要考虑，某个字段没有的情况。比如现在没有回复，哪最后的回复怎么办。
         for (var i = 0; i < themeList.length; i++) {
