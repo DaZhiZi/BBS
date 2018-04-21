@@ -17,9 +17,13 @@ $(document).on('click', '.button-topic-add', function (event) {
         enName: enName,
     }
     let conNum = $('.list-tag li').length < 10
-    if (conNum) {
+    if (conNum == true) {
         apiAddTopic(data, function (r) {
             let res = JSON.parse(r.response)
+            if (res.success == false) {
+                log('Topic添加失败, 原因是:',  res.message )
+                return
+            }
             let htmlTag = tagTemplate(res.data)
             $('.list-tag').append(htmlTag)
             $('#input-new-tag').val('')

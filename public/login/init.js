@@ -19,17 +19,32 @@ var getRegisterData = function (event) {
     }
     return data
 }
-let cbRegister = function (event) {
-    var data = getRegisterData()
-    apiUserRegister(data, function (r) {
-        let res = JSON.parse(r.response)
-        //log('res', res)
-        if (res.success) {
-            log('注册成功001', res)
-        } else {
-            log('注册失败', res.code)
+let validRegister = function (obj) {
+    var v = Object.values(obj)
+    var res = true
+    v.forEach(function (value) {
+        if (value.length < 2) {
+            res = false
         }
     })
+    return res
+}
+let cbRegister = function (event) {
+    var data = getRegisterData()
+    var res = validRegister(data)
+    if (res == true) {
+        apiUserRegister(data, function (r) {
+            let res = JSON.parse(r.response)
+            if (res.success == true) {
+                log('注册成功', res)
+            } else {
+                log('注册失败', res.message)
+            }
+        })
+    } else {
+        log('前端认证：用户名或密码不符合规定')
+    }
+
 }
 
 var apiUserLogin = function (data, callback) {
@@ -66,7 +81,7 @@ let init = function () {
     bindEvent('#id-button-login', 'click', cbLogin)
 }
 
-var __main = function () {
+const __main = function () {
     init()
 }
 

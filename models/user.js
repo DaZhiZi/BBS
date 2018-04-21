@@ -1,5 +1,4 @@
 const fs = require('fs')
-const moment = require('moment')
 const uuid = require('uuid/v4')
 const mongoose = require('mongoose')
 
@@ -26,9 +25,9 @@ var userMongo = mongoose.model('user', userSchema)
 
 class User {
     static async add (form = {}) {
-        let validRes = await this.validRegister(form)
-        if (validRes.status == false) {
-            return  resMsg(null, validRes.msg, false)
+        let res = await this.validAdd(form)
+        if (res.status == false) {
+            return  resMsg(null, res.msg, false)
         }
         form.password = encrypt(form.password)
         form.user_id = uuid()
@@ -121,7 +120,7 @@ class User {
         }
     }
 
-    static async validRegister (form = {}) {
+    static async validAdd (form = {}) {
         //应该添加注册验证
         // 1.用户名不重复
         // 2.用户和密码的限制（长度，是否包含汉字，奇异字母等）

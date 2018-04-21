@@ -48,10 +48,6 @@ class Theme {
             let obj = resMsg(null, 'theme添加失败', false)
             return obj
         }
-        // log('form.userInfo', form.userInfo)
-        // 应该添加topic_id验证
-        // 或者说应该在全局验证一些POST请求
-
     }
 
     static async collect (theme_id, user_id) {
@@ -69,8 +65,8 @@ class Theme {
         let userDoc = await userModel.getInfo({user_id:user_id})
         // log('userDoc', userDoc)
         let collect_list = userDoc.data.collect_list
-        let newCollectList = toggleArr(theme_id, collect_list)
-        let dealUser = await userModel.updateInfo({user_id:user_id}, {'collect_list': newCollects})
+        toggleArr(theme_id, collect_list)
+        await userModel.updateInfo({user_id:user_id}, {'collect_list': newCollects})
         
         let is_collect = (newCollects.indexOf(user_id) != -1)
         //log('is_collect操作', is_collect)
@@ -82,11 +78,14 @@ class Theme {
     }
 
     static async all (form = {}, pageNum=1) {
+        // 默认条件
         let con = {
             _delete: false,
             top:false,
             lock:false,
         }
+
+        // topic_id验证
         if (form.topic_id != 'all') {
             con.topic_id = form.topic_id
             let valid = await topicModel.test({_id:form.topic_id})
@@ -96,6 +95,7 @@ class Theme {
                 return obj
             }
         }
+
         let theme_per_page = 3
         let that = new this()
         // 分页和top帖信息
@@ -169,7 +169,6 @@ class Theme {
             let newDoc = await that.dealOne(doc, user_id)
             //数字增加的写法
             let suc = await themeMongo.updateOne(form, {$inc: {'browseInfo.view_num': 1}})
-            //log('数字增加的写法', suc)
             obj = resMsg(newDoc, 'Theme查询成功')
         }
         //log('themeMongo.findOne', obj)
@@ -179,7 +178,7 @@ class Theme {
     static async view (id = '') {
         //应该添加注册验证
         let form = {_id: id}
-        let doc = await themeMongo.update(form, {_delete: true})
+        await themeMongo.update(form, {_delete: true})
         let obj = resMsg(id, '注册成功')
         return obj
     }
@@ -275,7 +274,6 @@ class Theme {
     }
 
     static async real_remove (form = {}) {
-        //log('topic test form', form)
         let doc
         try {
             doc = await themeMongo.remove(form)

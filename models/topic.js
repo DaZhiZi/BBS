@@ -1,5 +1,5 @@
 const mongoose = require('mongoose')
-const {log, resMsg, dealDate} = require('../tools/utils')
+const {log, resMsg, dealDate, getKey} = require('../tools/utils')
 
 //相当于给这个类一个模型，或者说基本的架构。
 const topicSchema = new mongoose.Schema({
@@ -16,14 +16,42 @@ var topicMongo = mongoose.model('topic', topicSchema)
 
 class Topic {
     static async add (form = {}) {
-        //应该添加注册验证
-        // log('**前面的topic', form)
+        //应该添加验证
+        let res = await this.validAdd(form)
+        if (res.status == false) {
+            return resMsg(null, res.msg, false)
+        }
         let doc = await topicMongo.create(form)
-        // log('添加后topic后的doc', doc)
-        let obj = resMsg(doc, '注册成功')
+        let obj = resMsg(doc, 'Topic添加成功')
         return obj
     }
-    
+    static async validAdd (form = {}) {
+        // 1.topic不重复
+        // 2.name的限制（长度，是否包含汉字，奇异字母等）
+        let msg = ''
+        let status = true
+
+        let vs = ['enName', 'cnName']
+        vs.forEach(async (k) => {
+            let v = form[k]
+            if (v.length < 3 || v.length > 10) {
+                msg = '名称不符合规定'
+                status = false
+            }
+
+            let isRepeated = await this.test({k:v})
+            if (isRepeated == null) {
+                msg = '已有该名称'
+                status = false
+            }
+        })
+
+        let obj = {
+            msg:msg,
+            status:status,
+        }
+        return obj
+    }
     static async remove (id = '') {
         //应该添加注册验证
         //log('doc id', id)
