@@ -16,7 +16,6 @@ let apiAllTopic = function (callback) {
 }
 
 let cbAllTopic = function (r) {
-    log('cbAllTopic')
     let res = JSON.parse(r.response)
     if (res.success) {
         let data = res.data
@@ -25,7 +24,10 @@ let cbAllTopic = function (r) {
             let htmlTag = topicTemplate(title)
             $('.topic-list').append(htmlTag)
         }
-        
+
+        //获取所有Theme
+        let topic_id = location.search.split('topic=')[1]
+        apiGetTheme(cbGetTheme, topic_id)
     }
 }
 
@@ -64,8 +66,8 @@ let apiGetTheme = function (callback, topicId) {
     let topic_id = topicId || 'all'
     let selector = `.topic-tab[data-topicid=${topic_id}]`
     let target = $(selector)
-    target.addClass('.topic-current')
-    target.siblings().removeClass('.topic-current')
+    target.addClass('topic-current')
+    target.siblings().removeClass('topic-current')
     history.pushState(null, 'title', `/?topic=${topic_id}`)
     ajax({
         method  : 'GET',
@@ -119,11 +121,9 @@ let genPage = function (obj) {
 }
 
 let cbGetTheme = function (r) {
-    log('cbGetTheme')
     $('.theme-all').empty()
     let res = JSON.parse(r.response)
     if (res.success) {
-        log('cbGetTheme res', res)
         // 现在分两步，一步渲染theme列表，
         // 一步渲染分页
         let data = res.data
@@ -224,14 +224,8 @@ let switchPage = function (e) {
 let init = async function () {
     //以cb开头的函数，表示是callback, 中间无get之类的，默认是all（或者get）
     //获取所有Topic
-   /* await apiAllTopic(cbAllTopic)
+    await apiAllTopic(cbAllTopic)
 
-    //获取所有Theme
-    let topic_id = location.search.split('topic=')[1]
-    await apiGetTheme(cbGetTheme, topic_id)*/
-    let topic_id = location.search.split('topic=')[1]
-
-    $.when(apiAllTopic(cbAllTopic), apiGetTheme(cbGetTheme, topic_id))
     //获取所有最早的，无人回复的话题
     apiGetNoRep(cbGetNoRep)
     //绑定，登出功能
