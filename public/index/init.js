@@ -5,13 +5,11 @@ let topicTemplate = function (obj) {
     return html
 }
 
-let apiAllTopic = function (callback) {
-    ajax({
+let apiAllTopic = async function (callback) {
+    await Ajax({
         method  : 'GET',
         path    : '/topic/all',
-        callback: function (r) {
-            callback(r)
-        }
+        callback: callback,
     })
 }
 
@@ -25,9 +23,6 @@ let cbAllTopic = function (r) {
             $('.topic-list').append(htmlTag)
         }
 
-        //获取所有Theme
-        let topic_id = location.search.split('topic=')[1]
-        apiGetTheme(cbGetTheme, topic_id)
     }
 }
 
@@ -62,14 +57,15 @@ let cellTemplate = function (obj) {
     return html
 }
 
-let apiGetTheme = function (callback, topicId) {
+let apiGetTheme = async function (callback, topicId) {
     let topic_id = topicId || 'all'
     let selector = `.topic-tab[data-topicid=${topic_id}]`
     let target = $(selector)
     target.addClass('topic-current')
     target.siblings().removeClass('topic-current')
-    history.pushState(null, 'title', `/?topic=${topic_id}`)
-    ajax({
+    history.replaceState(null, 'title', `/?topic=${topic_id}`)
+    console.log('apiGetTheme topic_id',  topic_id);
+    await Ajax({
         method  : 'GET',
         path    : `/theme/topic/${topic_id}`,
         callback: function (r) {
@@ -121,6 +117,7 @@ let genPage = function (obj) {
 }
 
 let cbGetTheme = function (r) {
+    console.count('cbGetTheme')
     $('.theme-all').empty()
     let res = JSON.parse(r.response)
     if (res.success) {
@@ -220,11 +217,56 @@ let switchPage = function (e) {
     //log('pageNum', pageNum)
     apiGetPage(cbGetTheme, pageNum)
 }
-
+const Ajax = function(request) {
+    let req = {
+        path: request.path,
+        // 传对象 自动转JSON
+        data: JSON.stringify(request.data) || null,
+        method: request.method || 'GET',
+        header: request.header || {},
+        contentType: request.contentType || 'application/json',
+        callback: request.callback || function(res) {
+            console.log('读取成功！')
+        }
+    }
+    let r = new XMLHttpRequest()
+    let promise = new Promise(function(resolve, reject) {
+        r.open(req.method, req.path, true)
+        r.setRequestHeader('Content-Type', req.contentType)
+        // setHeader
+        Object.keys(req.header).forEach(key => {
+            r.setRequestHeader(key, req.header[key])
+        })
+        r.onreadystatechange = function() {
+            if (r.readyState === 4) {
+                // 回调函数
+                req.callback(r)
+                // Promise 成功
+                resolve(r)
+            }
+        }
+        r.onerror = function (err) {
+            reject(err)
+        }
+        if (req.method === 'GET') {
+            r.send()
+        } else {
+            // POST
+            r.send(req.data)
+        }
+    })
+    return promise
+}
 let init = async function () {
     //以cb开头的函数，表示是callback, 中间无get之类的，默认是all（或者get）
     //获取所有Topic
+    // await apiAllTopic(cbAllTopic)
+    //获取所有Theme
+    let topic_id = location.search.split('topic=')[1]
+    // log('topic_id', topic_id)
+
     await apiAllTopic(cbAllTopic)
+    await apiGetTheme(cbGetTheme, topic_id)
 
     //获取所有最早的，无人回复的话题
     apiGetNoRep(cbGetNoRep)
@@ -233,12 +275,4 @@ let init = async function () {
     //绑定，topic切换功能
     $(document).on('click', '.topic-list .topic-tab', switchTopic)
     $(document).on('click', '.pagination li', switchPage)
-    /**
-     * 1.绑定事件
-     * 2.获取data-num
-     * 3.根据data-num进行ajax请求
-     * 4.请求成功后，移除当前theme list内容
-     * 5.替换theme list 和分页。
-     * 6.给分页添加相应的效果，active or not
-     */
 }

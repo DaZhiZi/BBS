@@ -587,15 +587,19 @@ var genNumArr = function (start, end) {
     return arr
 }
 
-var pages = function (cur, total, dividedNum = 5) {
+var pages = function (cur, total, totalNum = 5) {
     cur = parseInt(cur)
     total = parseInt(total)
-    let leftNUm = Math.ceil(dividedNum / 2)
-    let rightNum = dividedNum - leftNUm
+    let leftNUm = Math.ceil(totalNum / 2)
+    let rightNum = totalNum - leftNUm
     let nums = genNumArr(1, total)
     
     let start = (cur - leftNUm > 0) ? (cur - leftNUm) : 0
+
     let end = (cur + rightNum) < total ? (cur + rightNum) : total
+    if (start == 0 && end < total && total < totalNum) {
+        end = total
+    }
     let t = nums.slice(start, end)
     return t
 }
@@ -604,9 +608,9 @@ var pages = function (cur, total, dividedNum = 5) {
 let tipsTemplate = function (target, type = 'success', msg = '提示信息') {
     let top = target.getBoundingClientRect().top - 80
     let left = target.getBoundingClientRect().left
-    
+
     let tips = `
-        <div class="tip-${type} div-tips" style="top:${top}px;left:${left}px;position:absolute;" >
+        <div class="tip-${type} div-tips" style="top:${top}px;left:${left}px;position:fixed;" >
             <h3 class="popover-title">${type}</h3>
             <div class="popover-content">${msg}</div>
         </div>
