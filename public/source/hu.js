@@ -264,6 +264,23 @@ var ajax = function (request) {
     // 发送请求
     r.send(data)
 }
+
+const parseQuery = (path) => {
+    // location.search =
+    let url = path || location.search
+    var arr = url.split('?')[1].split('&')
+    // ["tab=all", "page=5"]
+    let query = {}
+    for (var i = 0; i < arr.length; i++) {
+        // str.concat()
+        let q = arr[i]
+        var queryKey = q.split('=')[0]
+        var queryValue = q.split('=')[1]
+        query[queryKey] = queryValue
+    }
+    return query
+}
+
 // var fail = function (code) {
 //     var textarea = dqs('.test-ie-response-text');
 //     textarea.value = 'Error code: ' + code;

@@ -57,14 +57,13 @@ let cellTemplate = function (obj) {
     return html
 }
 
-let apiGetTheme = async function (callback, topicId) {
+let apiGetTheme = async function (callback, topicId, page) {
     let topic_id = topicId || 'all'
     let selector = `.topic-tab[data-topicid=${topic_id}]`
     let target = $(selector)
     target.addClass('topic-current')
     target.siblings().removeClass('topic-current')
     history.replaceState(null, 'title', `/?topic=${topic_id}`)
-    console.log('apiGetTheme topic_id',  topic_id);
     await Ajax({
         method  : 'GET',
         path    : `/theme/topic/${topic_id}`,
@@ -117,7 +116,7 @@ let genPage = function (obj) {
 }
 
 let cbGetTheme = function (r) {
-    console.count('cbGetTheme')
+    // console.count('cbGetTheme')
     $('.theme-all').empty()
     let res = JSON.parse(r.response)
     if (res.success) {
@@ -260,13 +259,11 @@ const Ajax = function(request) {
 let init = async function () {
     //以cb开头的函数，表示是callback, 中间无get之类的，默认是all（或者get）
     //获取所有Topic
-    // await apiAllTopic(cbAllTopic)
-    //获取所有Theme
-    let topic_id = location.search.split('topic=')[1]
-    // log('topic_id', topic_id)
-
+    let queryAll = parseQuery()
+    let topic_id = queryAll['topic']
+    let page = queryAll['page']
     await apiAllTopic(cbAllTopic)
-    await apiGetTheme(cbGetTheme, topic_id)
+    await apiGetTheme(cbGetTheme, topic_id, page)
 
     //获取所有最早的，无人回复的话题
     apiGetNoRep(cbGetNoRep)
