@@ -230,7 +230,7 @@ var searchEle = function (val, resultDom) {
 
 // AJAX事件，request是object
 // 如何设置，当callback没有设定，默认的函数设置
-
+/*
 var ajax = function (request) {
     var baseUrl = request.base || location.origin
     var method = request.method || 'GET'
@@ -264,7 +264,123 @@ var ajax = function (request) {
     // 发送请求
     r.send(data)
 }
+*/
 
+// AJAX事件，request是object
+// ajax函数，涵盖了ajaxSync
+var ajax = function (request) {
+    // 默认值
+    var req = {
+        url: request.path,
+        // 传对象 自动转JSON
+        data: JSON.stringify(request.data) || null,
+        method: request.method || 'GET',
+        header: request.header || {},
+        contentType: request.contentType || 'application/json',
+        sync: request.sync || true,
+        callback: request.callback || function (res) {
+            console.log('读取成功！')
+        }
+    }
+
+    var r = new XMLHttpRequest()
+    // 设置请求方法和请求地址，
+    r.open(req.method, req.url, req.sync)
+    r.setRequestHeader('Content-Type', req.contentType)
+    // setHeader
+    Object.keys(req.header).forEach(key => {
+        r.setRequestHeader(key, req.header[key])
+    })
+    // 注册响应函数
+    r.onreadystatechange = function () {
+        if (r.readyState === 4) {
+            if (req.sync == false) {
+                // 留着看是否需要JSOn.parse(r.response)
+                resData = r
+            } else {
+                req.callback(r)
+            }
+        }
+    }
+    // 发送请求
+    if (req.method == "GET") {
+        r.send()
+    } else {
+        r.send(data)
+    }
+
+    if (req.sync == false) {
+        return resData
+    }
+}
+const ajaxPromise = function(request) {
+    let req = {
+        path: request.path,
+        // 传对象 自动转JSON
+        data: JSON.stringify(request.data) || null,
+        method: request.method || 'GET',
+        header: request.header || {},
+        contentType: request.contentType || 'application/json',
+        callback: request.callback || function(res) {
+            console.log('读取成功！')
+        }
+    }
+    let r = new XMLHttpRequest()
+    let promise = new Promise(function(resolve, reject) {
+        r.open(req.method, req.path, true)
+        r.setRequestHeader('Content-Type', req.contentType)
+        // setHeader
+        Object.keys(req.header).forEach(key => {
+            r.setRequestHeader(key, req.header[key])
+        })
+        r.onreadystatechange = function() {
+            if (r.readyState === 4) {
+                // 回调函数
+                req.callback(r)
+                // Promise 成功
+                resolve(r)
+            }
+        }
+        r.onerror = function (err) {
+            reject(err)
+        }
+        if (req.method === 'GET') {
+            r.send()
+        } else {
+            // POST
+            r.send(req.data)
+        }
+    })
+    return promise
+}
+var ajaxSync = function(request) {
+    var data = null
+    var r = new XMLHttpRequest()
+    // open 的第三个参数表示是否以异步的方式发送请求
+    // 如果是 false, 就是用同步
+    r.open(request.method, request.path, false)
+    if (request.contentType != undefined) {
+        r.setRequestHeader('Content-Type', request.contentType)
+    }
+    r.onreadystatechange = function() {
+        if (r.readyState == 4) {
+            // request.callback(r.response)
+            data = r
+        }
+    }
+    if (request.method == 'GET') {
+        r.send()
+    } else {
+        r.send(request.data)
+    }
+    return data
+}
+var runSync = function(callback) {
+    // setTimeout 函数一定会把第一个参数放在后台去执行
+    setTimeout(function() {
+        callback()
+    }, 0)
+}
 const parseQuery = (path) => {
     // location.search =
     let url = path || location.search

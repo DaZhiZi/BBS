@@ -5,12 +5,12 @@ let topicTemplate = function (obj) {
     return html
 }
 
-let apiAllTopic = async function (callback) {
-    await Ajax({
+let apiAllTopic = function (callback) {
+    var data = ajaxSync({
         method  : 'GET',
         path    : '/topic/all',
-        callback: callback,
     })
+    return data
 }
 
 let cbAllTopic = function (r) {
@@ -57,14 +57,14 @@ let cellTemplate = function (obj) {
     return html
 }
 
-let apiGetTheme = async function (callback, topicId, page) {
+let apiGetTheme = function (topicId, page) {
     let topic_id = topicId || 'all'
     let selector = `.topic-tab[data-topicid=${topic_id}]`
     let target = $(selector)
     target.addClass('topic-current')
     target.siblings().removeClass('topic-current')
     history.replaceState(null, 'title', `/?topic=${topic_id}`)
-    await Ajax({
+    return ajaxSync({
         method  : 'GET',
         path    : `/theme/topic/${topic_id}`,
         callback: function (r) {
@@ -195,7 +195,8 @@ let switchTopic = function (e) {
     $(this).siblings('.topic-tab').removeClass('topic-current')
     $(this).addClass('topic-current')
     let topicId = target.dataset.topicid
-    apiGetTheme(cbGetTheme, topicId)
+    var data = apiGetTheme(topicId)
+    cbGetTheme(data)
     //log('topicId', topicId)
 }
 
@@ -216,55 +217,23 @@ let switchPage = function (e) {
     //log('pageNum', pageNum)
     apiGetPage(cbGetTheme, pageNum)
 }
-const Ajax = function(request) {
-    let req = {
-        path: request.path,
-        // 传对象 自动转JSON
-        data: JSON.stringify(request.data) || null,
-        method: request.method || 'GET',
-        header: request.header || {},
-        contentType: request.contentType || 'application/json',
-        callback: request.callback || function(res) {
-            console.log('读取成功！')
-        }
-    }
-    let r = new XMLHttpRequest()
-    let promise = new Promise(function(resolve, reject) {
-        r.open(req.method, req.path, true)
-        r.setRequestHeader('Content-Type', req.contentType)
-        // setHeader
-        Object.keys(req.header).forEach(key => {
-            r.setRequestHeader(key, req.header[key])
-        })
-        r.onreadystatechange = function() {
-            if (r.readyState === 4) {
-                // 回调函数
-                req.callback(r)
-                // Promise 成功
-                resolve(r)
-            }
-        }
-        r.onerror = function (err) {
-            reject(err)
-        }
-        if (req.method === 'GET') {
-            r.send()
-        } else {
-            // POST
-            r.send(req.data)
-        }
-    })
-    return promise
-}
+
 let init = async function () {
     //以cb开头的函数，表示是callback, 中间无get之类的，默认是all（或者get）
     //获取所有Topic
     let queryAll = parseQuery()
     let topic_id = queryAll['topic']
     let page = queryAll['page']
+    runSync(function () {
+        var topicData = apiAllTopic()
+        cbAllTopic(topicData)
+        var themeData = apiGetTheme(topic_id, page)
+        cbGetTheme(themeData)
+    })
+    /*
     await apiAllTopic(cbAllTopic)
     await apiGetTheme(cbGetTheme, topic_id, page)
-
+    */
     //获取所有最早的，无人回复的话题
     apiGetNoRep(cbGetNoRep)
     //绑定，登出功能
