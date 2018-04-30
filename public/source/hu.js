@@ -277,12 +277,12 @@ var ajax = function (request) {
         method: request.method || 'GET',
         header: request.header || {},
         contentType: request.contentType || 'application/json',
-        sync: request.sync || true,
+        sync: (request.sync !== false),
         callback: request.callback || function (res) {
             console.log('读取成功！')
         }
     }
-
+    var resData = null
     var r = new XMLHttpRequest()
     // 设置请求方法和请求地址，
     r.open(req.method, req.url, req.sync)
@@ -382,8 +382,11 @@ var runSync = function(callback) {
     }, 0)
 }
 const parseQuery = (path) => {
-    // location.search =
     let url = path || location.search
+
+    if (url == "") {
+        return {}
+    }
     var arr = url.split('?')[1].split('&')
     // ["tab=all", "page=5"]
     let query = {}

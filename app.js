@@ -14,7 +14,7 @@ app.use(helmet());
 app.use(express.static('./public'))
 app.use(sessionMongo)
     // 由于session的生成是由中间件产生的，所以session认证需要先调用session中间件
-app.use(loginAuth)
+// app.use(loginAuth)
 app.use(exTime);
 app.use(cors())
 app.use(bodyParser.json({ limit: '5mb' }))

@@ -24,7 +24,6 @@ router.post('/add', async (request, response) => {
 
 router.get('/topic/:topic_id/', async (request, response) => {
     //验证用户权限
-    log('不带page request.path', request.path, request.query)
     let pageNum = request.query.page
     let topic_id = request.params.topic_id
     const msg = await Model.all({topic_id: topic_id}, pageNum)

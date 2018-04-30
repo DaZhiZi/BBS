@@ -57,8 +57,9 @@ let cellTemplate = function (obj) {
     return html
 }
 
-let apiGetTheme = function (topicId, page) {
+let apiGetTheme = function (topicId, pageNum) {
     let topic_id = topicId || 'all'
+    let page = pageNum || 1
     let selector = `.topic-tab[data-topicid=${topic_id}]`
     let target = $(selector)
     target.addClass('topic-current')
