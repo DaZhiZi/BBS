@@ -77,13 +77,7 @@ class Theme {
         return obj
     }
 
-    static async all (form = {}, pageNum=1) {
-        // topic_id验证
-        let valid_topic_id = await topicModel.test({_id:form.topic_id})
-        if (valid_topic_id == false) {
-            return resMsg(null, '不存在该topic', false)
-        }
-
+    static  queryAllCon (form) {
         // 默认条件
         let con = {
             _delete: false,
@@ -93,7 +87,11 @@ class Theme {
         if (form['topic_id'] != 'all') {
             con['topic_id'] =form.topic_id
         }
-        let theme_per_page = 4
+        return con
+    }
+
+    static async pagingAllInfo (form, pageNum, con, theme_per_page) {
+
         // 分页和top帖信息
         let info = await this.topTheme(form, pageNum, con, theme_per_page)
         let {data, top_theme} = info
@@ -101,6 +99,29 @@ class Theme {
         let pageSkip = (pageNum - 1) * theme_per_page - top_num
         let skips = pageSkip > 0 ? pageSkip : 0
         let limits = (pageNum == 1) ? (theme_per_page - top_num) : theme_per_page
+        let pageInfo = {
+            skips:skips,
+            limits:limits,
+            top_theme:top_theme,
+            data:data,
+        }
+        console.log('pageInfo', pageInfo);
+        return pageInfo
+    }
+
+    static async all (form = {}, pageNum=1) {
+        // topic_id验证
+        let valid_topic_id = await topicModel.test({_id:form.topic_id})
+        if (valid_topic_id == false) {
+            return resMsg(null, '不存在该topic', false)
+        }
+
+        let con = this.queryAllCon(form)
+
+        let theme_per_page = 4
+
+        let {skips, limits, top_theme, data} = await this.pagingAllInfo(form, pageNum, con, theme_per_page)
+        console.log('top_theme', top_theme);
         // find 第二个参数 projection：控制返回的字段；0：不返回、1：只返回。
         let doc = await themeMongo.find(con, {content:0}).skip(skips).limit(limits)
         let allTheme = (pageNum == 1) ? top_theme.concat(doc) : doc

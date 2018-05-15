@@ -118,8 +118,6 @@ img {
 
 .main-content {
     width: 90%;
-    /*max-width: 1400px;*/
-    /*min-width: 660px;*/
     margin: 15px auto;
     min-height: 400px;
 }
@@ -128,8 +126,6 @@ img {
     min-height: 560px;
     padding: 0;
     margin-right: 305px;
-    /*border: 1px solid darkgray;*/
-    /*background-color: white;*/
 }
 
 .main-content .slide {
