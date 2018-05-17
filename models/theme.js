@@ -99,13 +99,18 @@ class Theme {
         let pageSkip = (pageNum - 1) * theme_per_page - top_num
         let skips = pageSkip > 0 ? pageSkip : 0
         let limits = (pageNum == 1) ? (theme_per_page - top_num) : theme_per_page
+
+        let themeNum = await themeMongo.count(con);
+        let totalNum = themeNum + top_num
+        data.page.totalNum = totalNum
+
         let pageInfo = {
             skips:skips,
             limits:limits,
             top_theme:top_theme,
             data:data,
         }
-        console.log('pageInfo', pageInfo);
+        // console.log('pageInfo', pageInfo);
         return pageInfo
     }
 
@@ -121,7 +126,9 @@ class Theme {
         let theme_per_page = 4
 
         let {skips, limits, top_theme, data} = await this.pagingAllInfo(form, pageNum, con, theme_per_page)
-        console.log('top_theme', top_theme);
+
+
+        // console.log('top_theme', top_theme);
         // find 第二个参数 projection：控制返回的字段；0：不返回、1：只返回。
         let doc = await themeMongo.find(con, {content:0}).skip(skips).limit(limits)
         let allTheme = (pageNum == 1) ? top_theme.concat(doc) : doc

@@ -38,7 +38,10 @@ router.get('/detail/:theme_id', async (request, response) => {
 
 //请求详情数据
 router.get('/detail/data/:theme_id', async (request, response) => {
-    let user_id = request.session.userinfo.user_id
+    // 考虑未登录时
+
+    let user_id = request.session.userinfo ? request.session.userinfo.user_id : undefined
+
     let form = {
         _id: request.params.theme_id
     }
