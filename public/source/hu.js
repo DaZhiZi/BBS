@@ -306,7 +306,7 @@ var ajax = function (request) {
     if (req.method == "GET") {
         r.send()
     } else {
-        r.send(data)
+        r.send(req.data)
     }
 
     if (req.sync == false) {

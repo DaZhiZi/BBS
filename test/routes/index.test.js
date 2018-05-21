@@ -4,6 +4,8 @@ const expect = require('chai').expect
 const config = require('../../tools/config')
 const {log} = require('../../tools/utils')
 
+const config_test = require('../config/config.test')
+
 describe('index router test', function () {
     const loginInfo = {
         username: 'test',

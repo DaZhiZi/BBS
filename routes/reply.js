@@ -7,6 +7,7 @@ const {log, sendHtml} = require('../tools/utils.js')
 
 router.post('/add', async (request, response) => {
     let form = request.body
+    log('form', form);
     let userInfo = request.session.userinfo
     const msg = await Model.add(form, userInfo)
     response.json(msg)

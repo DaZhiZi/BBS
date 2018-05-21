@@ -4,6 +4,8 @@ const expect = require('chai').expect
 const config = require('../../tools/config')
 const {log} = require('../../tools/utils')
 
+const config_test = require('../config/config.test')
+
 describe('reply router test', function () {
     const loginInfo = {
         username: 'test',
@@ -21,7 +23,7 @@ describe('reply router test', function () {
     })
     const remove_test_data = {
         content : '测试数据，reply内容',
-        theme_id: '5a434a4ceb1bb9078cd12065',
+        theme_id: config_test.theme_id,
     }
     after(function(done) {
         authenticatedUser
