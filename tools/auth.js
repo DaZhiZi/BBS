@@ -51,11 +51,22 @@ const sessionExpress = expressSession({
     resave: false,
     saveUninitialized: true
 })
-
+const postAuth = function (request, response, next) {
+    if (request.session.userinfo == undefined) {
+        let obj = {
+            data   : '',
+            success: false,
+            message: "未登录",
+        }
+        response.json(obj)
+    }
+    next()
+}
 module.exports = {
     loginAuth:loginAuth,
     sessionRedis:sessionRedis,
     sessionNormal:sessionNormal,
     sessionExpress:sessionExpress,
     sessionMongo:sessionMongo,
+    postAuth:postAuth,
 }

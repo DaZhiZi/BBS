@@ -7,7 +7,7 @@ const cors = require('cors')
 const helmet = require('helmet');
 
 const { log, exTime } = require('./tools/utils')
-const { loginAuth, sessionMongo } = require('./tools/auth')
+const { loginAuth, sessionMongo, postAuth } = require('./tools/auth')
 
 //配置信息
 app.use(helmet());
@@ -18,7 +18,7 @@ app.use(sessionMongo)
 app.use(exTime);
 app.use(cors())
 app.use(bodyParser.json({ limit: '5mb' }))
-
+app.post('*', postAuth)
 //引入路由
 const index = require('./routes/index')
 const topic = require('./routes/topic')
