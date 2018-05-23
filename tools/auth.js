@@ -52,7 +52,8 @@ const sessionExpress = expressSession({
     saveUninitialized: true
 })
 const postAuth = function (request, response, next) {
-    if (request.session.userinfo == undefined) {
+    // post 未登录 非/login
+    if (request.session.userinfo == undefined && request.path != '/login') {
         let obj = {
             data   : '',
             success: false,
@@ -60,7 +61,7 @@ const postAuth = function (request, response, next) {
         }
         response.json(obj)
     }
-    next()
+    // next()
 }
 module.exports = {
     loginAuth:loginAuth,

@@ -13,12 +13,14 @@ const { loginAuth, sessionMongo, postAuth } = require('./tools/auth')
 app.use(helmet());
 app.use(express.static('./public'))
 app.use(sessionMongo)
-    // 由于session的生成是由中间件产生的，所以session认证需要先调用session中间件
+// 由于session的生成是由中间件产生的，所以session认证需要先调用session中间件
 // app.use(loginAuth)
 app.use(exTime);
 app.use(cors())
 app.use(bodyParser.json({ limit: '5mb' }))
+
 app.post('*', postAuth)
+
 //引入路由
 const index = require('./routes/index')
 const topic = require('./routes/topic')
