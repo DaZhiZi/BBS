@@ -8,7 +8,7 @@ let topicTemplate = function (obj) {
 let apiAllTopic = function (callback) {
     var data = ajaxSync({
         method  : 'GET',
-        path    : '/topic/all',
+        url    : '/topic/all',
     })
     return data
 }
@@ -67,7 +67,7 @@ let apiGetTheme = function (topicId, pageNum) {
     history.replaceState(null, 'title', `/?topic=${topic_id}`)
     return ajaxSync({
         method  : 'GET',
-        path    : `/theme/topic/${topic_id}`,
+        url    : `/theme/topic/${topic_id}`,
         callback: function (r) {
             callback(r)
         }
@@ -149,7 +149,7 @@ let noRepTheme = function (obj) {
 let apiGetNoRep = function (callback) {
     ajax({
         method  : 'GET',
-        path    : '/theme/noReply',
+        url    : '/theme/noReply',
         callback: function (r) {
             callback(r)
         }
@@ -179,7 +179,7 @@ let cbLogOut = function (r) {
 let logOut = function () {
     ajax({
         method  : 'GET',
-        path    : `/logout`,
+        url    : `/logout`,
         callback: function (r) {
             log('注销, r.response', r.response)
             let res = JSON.parse(r.response)
@@ -205,7 +205,7 @@ let apiGetPage = function (callback, pageNum) {
     let topicId = $(".topic-current")[0].dataset.topicid
     ajax({
         method  : 'GET',
-        path    : `/theme/topic/${topicId}?page=${pageNum}`,
+        url    : `/theme/topic/${topicId}?page=${pageNum}`,
         callback: function (r) {
             callback(r)
         }

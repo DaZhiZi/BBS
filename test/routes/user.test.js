@@ -50,7 +50,7 @@ describe('user router test', function () {
 
     it('GET /info AJAX', function (done) {
         authenticatedUser
-            .get('/user/info')
+            .get('/user/info/data')
             .expect(200)
             .end(function (err, res) {
                 if (err) done(err)
@@ -63,7 +63,7 @@ describe('user router test', function () {
 
     it('POST /info AJAX', function (done) {
         authenticatedUser
-            .post('/user/info')
+            .post('/user/info/data')
             .send({
                 signature:'懒否，不懒。',
             })

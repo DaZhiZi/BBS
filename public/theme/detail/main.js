@@ -2,7 +2,7 @@ let addReply = function (data, callback) {
     ajax({
         method  : 'POST',
         data    : data,
-        path    : '/reply/add',
+        url    : '/reply/add',
         callback: function (r) {
             callback(r)
         }
@@ -72,7 +72,7 @@ let apiReplyUp = function (data, callback) {
     ajax({
         method  : 'POST',
         data    : data,
-        path    : `/reply/${data.replyId}/up`,
+        url    : `/reply/${data.replyId}/up`,
         callback: function (r) {
             callback(r)
         }
@@ -100,7 +100,7 @@ let apiThemeColl = function (id, callback) {
     ajax({
         method  : 'POST',
         data    : data,
-        path    : '/theme/collect',
+        url    : '/theme/collect',
         callback: function (r) {
             callback(r)
         }

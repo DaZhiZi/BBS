@@ -1,6 +1,6 @@
 var apiAllTopic = function (callback) {
     ajax({
-        path    : '/topic/all',
+        url    : '/topic/all',
         callback: function (r) {
             callback(r)
         }
@@ -22,7 +22,7 @@ let cbAllTopic = function (r) {
 
 var apiUserInfo = function (callback) {
     ajax({
-        path    : '/user/info',
+        url    : '/user/info/data',
         callback: function (r) {
             callback(r)
         }

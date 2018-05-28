@@ -53,7 +53,10 @@ const sessionExpress = expressSession({
 })
 const postAuth = function (request, response, next) {
     // post 未登录 非/login
-    if (request.session.userinfo == undefined && request.path != '/login') {
+    let urlArr = ['/login/', '/login', '/register']
+    let urlV = (urlArr.indexOf(request.path) == -1)
+    console.log('request.path', request.path, urlV);
+    if (request.session.userinfo == undefined && urlV) {
         let obj = {
             data   : '',
             success: false,
@@ -61,7 +64,7 @@ const postAuth = function (request, response, next) {
         }
         response.json(obj)
     }
-    // next()
+    next()
 }
 module.exports = {
     loginAuth:loginAuth,

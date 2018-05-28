@@ -8,7 +8,7 @@ let topicTemplate = function (obj) {
 let apiAllTopic = function (callback) {
     ajax({
         method  : 'GET',
-        path    : '/topic/all',
+        url    : '/topic/all',
         callback: function (r) {
             callback(r)
         }
@@ -64,7 +64,7 @@ let apiGetTheme = function (callback, topicId) {
     let path = topicId || 'all'
     ajax({
         method  : 'GET',
-        path    : `/theme/topic/${path}`,
+        url    : `/theme/topic/${path}`,
         callback: function (r) {
             callback(r)
         }
@@ -141,7 +141,7 @@ let noRepTheme = function (obj) {
 let apiGetNoRep = function (callback) {
     ajax({
         method  : 'GET',
-        path    : '/theme/noReply',
+        url    : '/theme/noReply',
         callback: function (r) {
             callback(r)
         }
@@ -171,7 +171,7 @@ let cbLogOut = function (r) {
 let logOut = function () {
     ajax({
         method  : 'GET',
-        path    : `/logout`,
+        url    : `/logout`,
         callback: function (r) {
             log('注销, r.response', r.response)
             let res = JSON.parse(r.response)
@@ -196,7 +196,7 @@ let apiGetPage = function (callback, pageNum) {
     let topicId = $(".topic-current")[0].dataset.topicid
     ajax({
         method  : 'GET',
-        path    : `/theme/topic/${topicId}?page=${pageNum}`,
+        url    : `/theme/topic/${topicId}?page=${pageNum}`,
         callback: function (r) {
             callback(r)
         }

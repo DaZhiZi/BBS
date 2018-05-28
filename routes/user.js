@@ -8,18 +8,22 @@ var upload = multer({dest: 'uploads/'})
 const Model = require('../models/user')
 const {log, sendHtml} = require('../tools/utils.js')
 /* GET users listing. */
-router.get('/', function (request, response) {
+router.get('/:userId', function (request, response) {
+    console.log('request.path', request.path);
+    if (request.path == "/info") {
+        return ""
+    }
     sendHtml(response, '/user.html')
 })
 
-router.get('/info', async function (request, response) {
+router.get('/info/data', async function (request, response) {
     let form = request.session.userinfo
     // log('user form', form,)
     let info = await Model.getInfo(form)
     response.send(info)
 })
 
-router.post('/info', async function (request, response) {
+router.post('/info/data', async function (request, response) {
     let user = request.session.userinfo
     let form = request.body
     //log('user form', user, form)

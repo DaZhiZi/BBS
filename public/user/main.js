@@ -28,7 +28,7 @@ let cbUploadFile = function (event) {
 let updatePassword = function (data, callback) {
     ajax({
         method  : 'POST',
-        path    : '/user/password',
+        url    : '/user/password',
         data    : data,
         callback: function (r) {
             callback(r)

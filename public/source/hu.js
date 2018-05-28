@@ -271,7 +271,7 @@ var ajax = function (request) {
 var ajax = function (request) {
     // 默认值
     var req = {
-        url: request.path,
+        url: request.url,
         // 传对象 自动转JSON
         data: JSON.stringify(request.data) || null,
         method: request.method || 'GET',
@@ -315,7 +315,7 @@ var ajax = function (request) {
 }
 const ajaxPromise = function(request) {
     let req = {
-        path: request.path,
+        url: request.url,
         // 传对象 自动转JSON
         data: JSON.stringify(request.data) || null,
         method: request.method || 'GET',
@@ -327,7 +327,7 @@ const ajaxPromise = function(request) {
     }
     let r = new XMLHttpRequest()
     let promise = new Promise(function(resolve, reject) {
-        r.open(req.method, req.path, true)
+        r.open(req.method, req.url, true)
         r.setRequestHeader('Content-Type', req.contentType)
         // setHeader
         Object.keys(req.header).forEach(key => {
@@ -358,7 +358,7 @@ var ajaxSync = function(request) {
     var r = new XMLHttpRequest()
     // open 的第三个参数表示是否以异步的方式发送请求
     // 如果是 false, 就是用同步
-    r.open(request.method, request.path, false)
+    r.open(request.method, request.url, false)
     if (request.contentType != undefined) {
         r.setRequestHeader('Content-Type', request.contentType)
     }

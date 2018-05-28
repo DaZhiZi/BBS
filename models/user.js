@@ -127,6 +127,7 @@ class User {
         // 2.用户和密码的限制（长度，是否包含汉字，奇异字母等）
         let msg = ''
         let status = true
+        console.log('validAdd form', form);
         let limit_len = (form.username.length > 3 && form.password.length > 3)
         if (limit_len == false) {
             msg = '用户名或密码不符合规定'

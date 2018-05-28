@@ -1,7 +1,7 @@
 var apiUserRegister = function (data, callback) {
     ajax({
         method  : 'POST',
-        path    : '/register',
+        url    : '/register',
         data    : data,
         callback: function (r) {
             callback(r)
@@ -50,7 +50,7 @@ let cbRegister = function (event) {
 var apiUserLogin = function (data, callback) {
     ajax({
         method  : 'POST',
-        path    : '/login',
+        url    : '/login',
         data    : data,
         callback: function (r) {
             callback(r)

@@ -1,7 +1,7 @@
 var apiAddTopic = function (data, callback) {
     ajax({
         method  : 'POST',
-        path    : '/topic/add',
+        url    : '/topic/add',
         data    : data,
         callback: function (r) {
             callback(r)
@@ -36,7 +36,7 @@ $(document).on('click', '.button-topic-add', function (event) {
 var apiDelTopic = function (data, callback) {
     ajax({
         method  : 'POST',
-        path    : '/topic/remove',
+        url    : '/topic/remove',
         data    : data,
         callback: function (r) {
             callback(r)

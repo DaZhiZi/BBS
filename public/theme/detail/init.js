@@ -2,7 +2,7 @@
 let apiUserInfo = function (callback) {
     ajax({
         method  : 'GET',
-        path    : '/user/info',
+        url    : '/user/info/data',
         callback: function (r) {
             callback(r)
         }
@@ -41,7 +41,7 @@ let apiThemeInfo = function (callback) {
     let theme_id = location.pathname.split('theme/detail/')[1]
     ajax({
         method  : 'GET',
-        path    : `/theme/detail/data/${theme_id}`,
+        url    : `/theme/detail/data/${theme_id}`,
         callback: function (r) {
             callback(r)
         }
@@ -105,7 +105,7 @@ let getAllReply = function (callback) {
     // log('theme_id', theme_id)
     ajax({
         method  : 'GET',
-        path    : `/reply/all/${theme_id}`,
+        url    : `/reply/all/${theme_id}`,
         callback: function (r) {
             callback(r)
         }

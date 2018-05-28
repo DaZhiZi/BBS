@@ -7,7 +7,7 @@ let topicTemplate = function (obj) {
 
 let apiAllTopic = function (callback) {
     ajax({
-        path    : '/topic/all',
+        url    : '/topic/all',
         callback: function (r) {
             callback(r)
         }
@@ -29,7 +29,7 @@ let cbAllTopic = function (r) {
 let apiUserInfo = function (callback) {
     ajax({
         method  : 'GET',
-        path    : '/user/info',
+        url    : '/user/info/data',
         callback: function (r) {
             callback(r)
         }
@@ -85,7 +85,7 @@ let apiUpdateInfo = function (data, callback) {
     ajax({
         method  : 'POST',
         data    : data,
-        path    : '/user/info',
+        url    : '/user/info/data',
         callback: function (r) {
             callback(r)
         }

@@ -1,7 +1,7 @@
 var apiAddTheme = function (data, callback) {
     ajax({
         method  : 'POST',
-        path    : '/theme/add',
+        url    : '/theme/add',
         data    : data,
         callback: function (r) {
             callback(r)
