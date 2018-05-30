@@ -1,0 +1,14 @@
+.user-info.panel .user-avatar img {
+    width: 48px;
+    height: 48px;
+    border-radius: 3px;
+}
+.user-name .dark {
+    font-size: 14px;
+    color: #778087;
+    text-decoration: none;
+}
+.user-signature {
+    font-style: italic;
+    font-size: 13px;
+}

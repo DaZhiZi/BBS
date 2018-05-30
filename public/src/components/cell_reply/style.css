@@ -1,28 +1,3 @@
-.theme-full-title {
-    font-size: 22px;
-    font-weight: 700;
-    margin: 8px 0;
-    display: inline-block;
-    vertical-align: bottom;
-    width: 75%;
-    line-height: 130%;
-}
-
-.theme-header {
-    padding: 10px;
-    background-color: #f6f6f6;
-    border-radius: 3px 3px 0 0;
-}
-
-.theme-header .changes {
-    font-size: 12px;
-    color: #838383;
-	position: relative;
-}
-
-.div-submit {
-    margin-top: 20px;
-}
 
 .all-reply .reply-item {
     background: #fff;
@@ -86,36 +61,11 @@
     content: " • ";
 }
 
-
-.button-theme-collect {
-	position: absolute;
-	right: 1px;
-	bottom: 1px;
-	border: none;
-	display: inline-block;
-	float: none;
-	padding: 3px 10px;
-	margin: 0;
-	font-size: 14px;
-	letter-spacing: 2px;
-	box-shadow: none;
-	line-height: 2em;
-	vertical-align: middle;
-	color: #fff;
-	border-radius: 3px;
-	background-color: #80bd01;
-}
-.button-theme-collect.collect-success {
-	transition: all .2s ease-in-out;
-	font-weight: 400;
-	color: #333;
-	background-color: #e5e5e5;
-}
 .content .panel.theme-main {
-	margin-bottom: 20px ;
+    margin-bottom: 20px ;
 }
 .markdown-body {
-	padding: 5px 10px;
+    padding: 5px 10px;
     font-size: 14px;
 }
 pre {
@@ -123,4 +73,7 @@ pre {
     padding: 0px;
     margin: 0px;
     border: 0px;
+}
+.reply_content {
+    padding-left: 30px;
 }

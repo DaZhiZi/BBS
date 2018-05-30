@@ -1,0 +1,61 @@
+
+.navbar {
+    background: #444;
+}
+
+.navbar li {
+    display: inline-block;
+    line-height: 50px;
+}
+
+.navbar ul li {
+    margin: 0 20px;
+}
+
+.navbar ul li a {
+    color: rgba(255, 255, 255, 0.7);
+    position: relative;
+    letter-spacing: .1rem;
+}
+
+.navbar ul li a:hover {
+    color: rgba(255, 255, 255, 1);
+}
+
+.navbar ul li a:focus {
+    text-decoration: none;
+}
+
+.navbar ul li:nth-child(2) img {
+    vertical-align: middle;
+}
+
+.navbar ul li:nth-child(2) img a {
+    font-size: 16px;
+}
+
+.bar-style {
+    width: 90%;
+    margin: 0 auto;
+    height: 100%;
+    background: transparent;
+}
+
+.logo-style {
+    line-height: 66px;
+    font-size: 18px;
+}
+
+.logo-style .Icon-style {
+    color: white;
+    font-size: 32px !important;
+    font-weight: 100;
+    opacity: 0.7;
+    vertical-align: middle;
+    margin-right: 10px;
+    transform: rotate(180deg);
+}
+
+.header-active {
+    color: #fff;
+}

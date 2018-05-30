@@ -1,0 +1,49 @@
+a {
+    color: #333;
+    text-decoration: none;
+}
+.main-content {
+    width: 90%;
+    margin: 15px auto;
+    display: flex;
+}
+
+.main-content .content {
+    margin-right: 20px;
+    flex: 1;
+}
+
+.main-content .slide {
+    width: 290px;
+    font-size: 14px;
+    float: right;
+    margin-bottom: 20px;
+}
+
+.slide ol {
+    list-style: none;
+    margin: 4px 0;
+    padding-left: 0px;
+}
+
+.slide ol img {
+    width: 150px;
+    color: #778087;
+}
+
+.theme-list {
+    border-radius: 0 0 3px 3px;
+    background-color: #fff;
+    line-height: 2em;
+}
+.content-footer {
+    margin-top: 30px;
+}
+.panel .inner.theme-inner {
+    padding-top: 0px;
+}
+/*分页样式调整 begin*/
+.ant-pagination-item {
+    margin-right: 3px;
+}
+/*分页样式调整 end*/
